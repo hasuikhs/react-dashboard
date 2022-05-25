@@ -1,7 +1,7 @@
 import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
 
-const PORT: number = 5000;
+const PORT: number = 3030;
 const WORKER_SIZE: number = 2;
 
 if (!cluster.isWorker) {
