@@ -1,5 +1,6 @@
 import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
+import apiRouter from './src/router/apiRouter';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 2;
@@ -23,7 +24,11 @@ function runServer(): Express.Application {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app
+  app.use('/api', apiRouter);
+
+  app.get('*', (req: Request, res: Response) => {
+    res.status(404).json({ message: 'error' });
+  });
 
   app.listen(PORT, () => {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
