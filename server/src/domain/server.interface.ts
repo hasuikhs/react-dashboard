@@ -10,7 +10,9 @@ interface server {
 }
 
 interface serverExt extends server {
-  idx: number;
+  idx?: number;
+  regDt?: string;
+  updDt: string;
 }
 
 export { server, serverExt };

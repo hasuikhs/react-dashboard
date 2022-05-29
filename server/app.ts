@@ -3,7 +3,7 @@ import cluster from 'cluster';
 import apiRouter from './src/router/apiRouter';
 
 const PORT: number = 3030;
-const WORKER_SIZE: number = 2;
+const WORKER_SIZE: number = 1;
 
 if (!cluster.isWorker) {
   for (let i = 0; i < WORKER_SIZE; i++) {

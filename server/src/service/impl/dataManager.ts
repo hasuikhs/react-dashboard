@@ -5,6 +5,8 @@ import { doc, docExt } from '../../domain/doc.interface';
 import { server, serverExt } from '../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
 
+import { dateToStringFormat } from '../../utils/common';
+
 class DataManager implements DataManagerInterface {
 
   private _path: string;
@@ -37,7 +39,7 @@ class DataManager implements DataManagerInterface {
 
   public async insert(doc: account | doc | server): Promise<any> {
 
-    let docExt: accountExt | docExt | serverExt = { ...doc, ...{ idx: await this.getNextIdx() } };
+    let docExt: accountExt | docExt | serverExt = { ...doc, ...{ idx: await this.getNextIdx(), regDt: dateToStringFormat(new Date()), updDt: dateToStringFormat(new Date()) } };
 
     return new Promise<any>((resolve, reject) => {
       this._curDB.insert(docExt, (err, result) => {
@@ -81,8 +83,11 @@ class DataManager implements DataManagerInterface {
   }
 
   public update(idx: number, doc: account | doc | server): Promise<any> {
+
+    let docExt: accountExt | docExt | serverExt = { ...doc, ...{ updDt: dateToStringFormat(new Date()) }};
+
     return new Promise<any>((resolve, reject) => {
-      this._curDB.update({ idx: idx }, { $set: doc }, {}, (err, result) => {
+      this._curDB.update({ idx: idx }, { $set: docExt }, {}, (err, result) => {
         if (err) reject(new Error(`Update error. cause: ${ err }`));
 
         resolve(result);

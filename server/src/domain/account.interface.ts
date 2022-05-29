@@ -1,13 +1,14 @@
 interface account {
   id: string;
+  name: string;
   password: string;
   group: string[];
-  regDt: Date;
-  updDt: Date;
 }
 
 interface accountExt extends account {
-  idx: number;
+  idx?: number;
+  regDt?: string;
+  updDt: string;
 }
 
 export { account, accountExt };
