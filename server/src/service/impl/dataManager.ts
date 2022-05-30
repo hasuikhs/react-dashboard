@@ -1,6 +1,6 @@
 import Datastore from 'nedb';
 import path from 'path';
-import { account, accountExt } from '../../domain/account.interface';
+import { user, userExt } from '../../domain/user.interface';
 import { doc, docExt } from '../../domain/doc.interface';
 import { server, serverExt } from '../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
@@ -11,7 +11,7 @@ class DataManager implements DataManagerInterface {
 
   private _path: string;
   private _curDB: Datastore;
-  private types: string[] = ['account', 'doc', 'server'];
+  private types: string[] = ['user', 'doc', 'server'];
 
   constructor(type: string) {
     this._path = `${ path.dirname(__filename) }/../../../data`;
@@ -37,9 +37,9 @@ class DataManager implements DataManagerInterface {
     });
   }
 
-  public async insert(doc: account | doc | server): Promise<any> {
+  public async insert(doc: user | doc | server): Promise<any> {
 
-    let docExt: accountExt | docExt | serverExt = { ...doc, ...{ idx: await this.getNextIdx(), regDt: dateToStringFormat(new Date()), updDt: dateToStringFormat(new Date()) } };
+    let docExt: userExt | docExt | serverExt = { ...doc, ...{ idx: await this.getNextIdx(), regDt: dateToStringFormat(new Date()), updDt: dateToStringFormat(new Date()) } };
 
     return new Promise<any>((resolve, reject) => {
       this._curDB.insert(docExt, (err, result) => {
@@ -82,9 +82,9 @@ class DataManager implements DataManagerInterface {
     }
   }
 
-  public update(idx: number, doc: account | doc | server): Promise<any> {
+  public update(idx: number, doc: user | doc | server): Promise<any> {
 
-    let docExt: accountExt | docExt | serverExt = { ...doc, ...{ updDt: dateToStringFormat(new Date()) }};
+    let docExt: userExt | docExt | serverExt = { ...doc, ...{ updDt: dateToStringFormat(new Date()) }};
 
     return new Promise<any>((resolve, reject) => {
       this._curDB.update({ idx: idx }, { $set: docExt }, {}, (err, result) => {

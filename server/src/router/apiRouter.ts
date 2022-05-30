@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import accountRouter from './api/account.router';
+import userRouter from './api/user.router';
 import docRouter from './api/doc.router';
 import serverRouter from './api/server.router';
 
 const apiRouter: Router = Router();
 
-apiRouter.use('/account', accountRouter);
+apiRouter.use('/user', userRouter);
 apiRouter.use('/doc', docRouter);
 apiRouter.use('/server', serverRouter);
 
