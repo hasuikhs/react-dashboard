@@ -1,22 +1,37 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
+import verifyToken from '../utils/verifyToken';
 require('dotenv').config();
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    req.body.decoded = jwt.verify(req.headers.authorization || '', process.env.JWT_SECRET || '');
-    next();
-  } catch (error: any) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(419).json({
-        code: 419,
-        message: 'Expired token.'
-      });
-    }
+const jwtRouter: Router = Router();
 
-    return res.status(401).json({
-      code: 401,
-      message: 'Invalid token.'
+jwtRouter.post('/', async (req: Request, res: Response) => {
+  try {
+    const id: string = 'test';
+    const name: string = 'name';
+    const token = jwt.sign({
+      id, name
+    }, process.env.JWT_SECRET as string, {
+      expiresIn: '5m',
+      issuer: 'issuer'
+    });
+
+    return res.status(200).json({
+      code: 200,
+      message: 'Issue token.',
+      token
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: 500,
+      message: 'Server error.'
     });
   }
-}
+});
+
+jwtRouter.get('/test', verifyToken, (req: Request, res: Response) => {
+  res.json(req.body.decoded);
+});
+
+export default jwtRouter;

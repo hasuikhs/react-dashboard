@@ -1,6 +1,7 @@
 import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
 import apiRouter from './src/router/apiRouter';
+import jwtRouter from './src/router/jwtRouter';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 1;
@@ -23,6 +24,8 @@ function runServer(): Express.Application {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  app.use('/token', jwtRouter);
 
   app.use('/api', apiRouter);
 

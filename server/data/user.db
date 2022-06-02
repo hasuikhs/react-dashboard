@@ -1,0 +1,1 @@
+{"id":"test","name":"name","password":"1234","group":[1,2],"decoded":{"id":"test","name":"name","iat":1654177908,"exp":1654178208,"iss":"issuer"},"idx":1,"regDt":"2022-06-02 22:52:44","updDt":"2022-06-02 22:52:44","_id":"wvevA6qTwXG9VWRK"}
