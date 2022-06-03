@@ -54,6 +54,20 @@ class DataManager implements DataManagerInterface {
     });
   }
 
+  public login(id: string, password: string): Promise<string> {
+    return new Promise<any>((resolve, reject) => {
+      this._curDB.findOne({id, password}, (err, result) => {
+        if (err) reject(new Error(`Select error. cause: ${ err }`));
+
+        if (result === null) {
+          resolve('fail');
+        } else {
+          resolve('success');
+        }
+      });
+    });
+  }
+
   public select(idxDrGroup?: number | string): Promise<any | any[]> {
     if (typeof idxDrGroup === 'number') {
       return new Promise<any>((resolve, reject) => {

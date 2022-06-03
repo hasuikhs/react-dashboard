@@ -33,4 +33,8 @@ describe('Test DataManager methods.', () => {
   it.skip('Delete test', async (): Promise<void> => {
     await expect(userDataManager.delete(2)).resolves.toBe(1);
   })
+
+  it('Login test', async (): Promise<void> => {
+    await expect(userDataManager.login('test', '1234')).resolves.toEqual('success');
+  });
 });
