@@ -5,8 +5,6 @@ import { server } from '../../domain/server.interface';
 interface DataManagerInterface {
   insert(doc: server | user | doc): Promise<any>;
 
-  login(id: string, password: string): Promise<string>;
-
   select(): Promise<any[]>;               // overload signature
   select(idx: number): Promise<any>;      // overload signature
   select(group: string): Promise<any[]>;  // overload signature

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import verifyToken from '../utils/verifyToken';
-import DataManager from '../service/impl/dataManager';
+import LoginManager from '../service/impl/loginManager';
 require('dotenv').config();
 
 const jwtRouter: Router = Router();
@@ -11,9 +11,9 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
     const id: string = req.body.id;
     const name: string = req.body.password;
 
-    const userDataManager = new DataManager('user');
+    const loginManager = new LoginManager();
 
-    let ret = await userDataManager.login(id, name);
+    let ret = await loginManager.login(id, name);
 
     if (ret === 'fail') {
       return res.status(401).json({
