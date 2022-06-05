@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   try {
-    req.body.decoded = jwt.verify(req.headers.authorization as string, process.env.JWT_SECRET as string);
+    jwt.verify(req.headers.authorization as string, process.env.JWT_SECRET as string);
     next();
   } catch (error: any) {
     if (error.name === 'TokenExpiredError') {

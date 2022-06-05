@@ -4,6 +4,7 @@ import { user, userExt } from '../../domain/user.interface';
 import { doc, docExt } from '../../domain/doc.interface';
 import { server, serverExt } from '../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
+import LoginManager from './loginManager';
 
 import { dateToStringFormat } from '../../utils/common';
 
@@ -12,11 +13,13 @@ class DataManager implements DataManagerInterface {
   private _path: string;
   private _curDB: Datastore;
   private types: string[] = ['user', 'doc', 'server'];
+  private type: string;
 
   constructor(type: string) {
     this._path = `${ path.dirname(__filename) }/../../../data`;
 
     if (this.types.includes(type)) {
+      this.type = type;
       this._curDB = new Datastore({ filename: `${ this._path }/${ type }.db`, autoload: true });
     } else {
       throw new Error('Invalid db type.');
@@ -41,7 +44,18 @@ class DataManager implements DataManagerInterface {
 
     let docExt: userExt | docExt | serverExt = { ...doc, ...{ idx: await this.getNextIdx(), regDt: dateToStringFormat(new Date()), updDt: dateToStringFormat(new Date()) } };
 
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
+
+      if (this.type === 'user') {
+        const loginManager = new LoginManager();
+        let tmp: user = doc as user;
+        let checkDupResult = await loginManager.checkDupId(tmp.id);
+
+        if (checkDupResult === 'disallow') {
+          resolve(0);
+        }
+      }
+
       this._curDB.insert(docExt, (err, result) => {
         if (err) reject(new Error(`Insert error, cause: ${ err }`));
 
