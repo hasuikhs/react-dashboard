@@ -1,12 +1,12 @@
 interface doc {
   title: string;
   url: string;
-  regDt: Date;
-  updDt: Date;
 }
 
 interface docExt extends doc {
-  idx: number;
+  idx?: number;
+  regDt?: string;
+  updDt: string;
 }
 
 export { doc, docExt };

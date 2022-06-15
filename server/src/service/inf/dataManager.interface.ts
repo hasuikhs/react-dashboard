@@ -1,15 +1,15 @@
-import { account } from '../../domain/account.interface';
+import { user } from '../../domain/user.interface';
 import { doc } from '../../domain/doc.interface';
 import { server } from '../../domain/server.interface';
 
 interface DataManagerInterface {
-  insert(doc: server | account | doc): Promise<any>;
+  insert(doc: server | user | doc): Promise<any>;
 
   select(): Promise<any[]>;               // overload signature
   select(idx: number): Promise<any>;      // overload signature
   select(group: string): Promise<any[]>;  // overload signature
   
-  update(idx: number, doc: server | account | doc): Promise<any>;
+  update(idx: number, doc: server | user | doc): Promise<any>;
   
   delete(idx: number): Promise<any>;
 }
