@@ -5,6 +5,8 @@ import { doc, docExt } from '../../domain/doc.interface';
 import { server, serverExt } from '../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
 import LoginManager from './loginManager';
+import bcrypt from 'bcrypt';
+require('dotenv').config();
 
 import { dateToStringFormat } from '../../utils/common';
 
@@ -48,12 +50,15 @@ class DataManager implements DataManagerInterface {
 
       if (this.type === 'user') {
         const loginManager = new LoginManager();
-        let tmp: user = doc as user;
-        let checkDupResult = await loginManager.checkDupId(tmp.id);
+        let tmpExt: userExt = docExt as userExt;
+        let checkDupResult = await loginManager.checkDupId(tmpExt.id);
 
         if (checkDupResult === 'disallow') {
           resolve(0);
         }
+
+        tmpExt.password = bcrypt.hashSync(tmpExt.password, Number(process.env.PASS_SALT as string));
+        docExt = tmpExt;
       }
 
       this._curDB.insert(docExt, (err, result) => {

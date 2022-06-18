@@ -1,6 +1,8 @@
 import Datastore from 'nedb';
 import path from 'path';
 import LoginManagerInterface from '../inf/loginManager.interface';
+import bcrypt from 'bcrypt';
+require('dotenv').config();
 
 class LoginManager implements LoginManagerInterface {
 
@@ -14,10 +16,10 @@ class LoginManager implements LoginManagerInterface {
 
   public login(id: string, password: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-      this._curDB.findOne({ id, password }, (err, result) => {
+      this._curDB.findOne({ id }, (err, result) => {
         if (err) reject(new Error(`Select error. cause: ${ err }`));
 
-        if (result === null) {
+        if (result === null || !bcrypt.compareSync(password, result.password)) {
           resolve('fail');
         } else {
           resolve('success');

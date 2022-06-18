@@ -4,9 +4,9 @@ import DataManager from '../src/service/impl/dataManager';
 describe('Test DataManager methods.', () => {
   const userDataManager = new DataManager('user');
 
-  it.skip('Insert test', async (): Promise<void> => {
+  it('Insert test', async (): Promise<void> => {
     let user: user = {
-      "id": "test_id",
+      "id": "test",
       "name": "kim",
       "password": "asdf",
       "group": ["group_1"]
@@ -31,6 +31,6 @@ describe('Test DataManager methods.', () => {
   });
 
   it.skip('Delete test', async (): Promise<void> => {
-    await expect(userDataManager.delete(2)).resolves.toBe(1);
-  })
+    await expect(userDataManager.delete(1)).resolves.toBe(1);
+  });
 });

@@ -9,11 +9,11 @@ const jwtRouter: Router = Router();
 jwtRouter.post('/', async (req: Request, res: Response) => {
   try {
     const id: string = req.body.id;
-    const name: string = req.body.password;
+    const password: string = req.body.password;
 
     const loginManager = new LoginManager();
 
-    let ret = await loginManager.login(id, name);
+    let ret = await loginManager.login(id, password);
 
     if (ret === 'fail') {
       return res.status(401).json({
@@ -23,7 +23,7 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
     }
 
     const token =  jwt.sign({
-      id, name
+      id, password
     }, process.env.JWT_SECRET as string, {
       expiresIn: '3m',
       issuer: 'issuer'
@@ -45,7 +45,7 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
 });
 
 jwtRouter.get('/test', verifyToken, (req: Request, res: Response) => {
-  res.json(req.body.decoded);
+  res.json(req.body);
 });
 
 export default jwtRouter;

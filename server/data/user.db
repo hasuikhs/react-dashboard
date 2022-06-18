@@ -1,3 +1,1 @@
-{"id":"test","name":"name","password":"1234","group":[1,2],"decoded":{"id":"test","name":"name","iat":1654177908,"exp":1654178208,"iss":"issuer"},"idx":1,"regDt":"2022-06-02 22:52:44","updDt":"2022-06-02 22:52:44","_id":"wvevA6qTwXG9VWRK"}
-{"id":"test1","name":"name","password":"1234","group":[1,2],"idx":2,"regDt":"2022-06-04 14:45:14","updDt":"2022-06-04 14:45:14","_id":"R4sIH6URM1jsHdXj"}
-{"$$deleted":true,"_id":"wvevA6qTwXG9VWRK"}
+{"id":"test","name":"kim","password":"$2b$04$O91awFd2Y42FI7p0UQuS2uTqlM3TuJUgNJU1z9DCx/yO/T2B9rKHW","group":["group_1"],"idx":1,"regDt":"2022-06-18 23:08:19","updDt":"2022-06-18 23:08:19","_id":"TUTTC3I2h4wuNoSq"}
