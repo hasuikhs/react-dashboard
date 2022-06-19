@@ -1,8 +1,7 @@
 import Datastore from 'nedb';
 import path from 'path';
 import LoginManagerInterface from '../inf/loginManager.interface';
-import bcrypt from 'bcrypt';
-require('dotenv').config();
+import { checkPassword } from '../../utils/passwordUtil';
 
 class LoginManager implements LoginManagerInterface {
 
@@ -19,7 +18,7 @@ class LoginManager implements LoginManagerInterface {
       this._curDB.findOne({ id }, (err, result) => {
         if (err) reject(new Error(`Select error. cause: ${ err }`));
 
-        if (result === null || !bcrypt.compareSync(password, result.password)) {
+        if (result === null || !checkPassword(password, result.password)) {
           resolve('fail');
         } else {
           resolve('success');

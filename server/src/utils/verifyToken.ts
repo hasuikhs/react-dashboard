@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
     jwt.verify(req.headers.authorization as string, process.env.JWT_SECRET as string);
     next();

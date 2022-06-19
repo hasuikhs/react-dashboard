@@ -5,8 +5,7 @@ import { doc, docExt } from '../../domain/doc.interface';
 import { server, serverExt } from '../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
 import LoginManager from './loginManager';
-import bcrypt from 'bcrypt';
-require('dotenv').config();
+import { encodePassword } from '../../utils/passwordUtil';
 
 import { dateToStringFormat } from '../../utils/common';
 
@@ -57,7 +56,7 @@ class DataManager implements DataManagerInterface {
           resolve(0);
         }
 
-        tmpExt.password = bcrypt.hashSync(tmpExt.password, Number(process.env.PASS_SALT as string));
+        tmpExt.password = encodePassword(tmpExt.password);
         docExt = tmpExt;
       }
 
