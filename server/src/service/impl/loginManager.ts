@@ -10,7 +10,7 @@ class LoginManager implements LoginManagerInterface {
 
   constructor() {
     this._path = `${ path.dirname(__filename) }/../../../data`;
-    this._curDB = new Datastore({ filename: `${ this._path }/user.db`, autoload: true });
+    this._curDB = new Datastore({ filename: `data/user.db`, autoload: true });
   }
 
   public login(id: string, password: string): Promise<string> {

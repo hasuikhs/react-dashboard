@@ -1,5 +1,6 @@
 import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
+import cors from 'cors';
 import apiRouter from './src/router/apiRouter';
 import jwtRouter from './src/router/jwtRouter';
 
@@ -22,6 +23,8 @@ function runServer(): Express.Application {
 
   const app: Express = express();
 
+  app.use(cors());
+  app.use(express.static('./'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
