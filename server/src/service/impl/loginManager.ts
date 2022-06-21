@@ -1,7 +1,7 @@
 import Datastore from 'nedb';
 import path from 'path';
 import LoginManagerInterface from '../inf/loginManager.interface';
-import { checkPassword } from '../../utils/passwordUtil';
+import { checkPassword, test } from '../../utils/passwordUtil';
 
 class LoginManager implements LoginManagerInterface {
 
@@ -17,6 +17,11 @@ class LoginManager implements LoginManagerInterface {
     return new Promise<string>((resolve, reject) => {
       this._curDB.findOne({ id }, (err, result) => {
         if (err) reject(new Error(`Select error. cause: ${ err }`));
+
+        console.log(password)
+        console.log(result.password)
+        console.log(checkPassword(password, result.password))
+        console.log(test(password))
 
         if (result === null || !checkPassword(password, result.password)) {
           resolve('fail');

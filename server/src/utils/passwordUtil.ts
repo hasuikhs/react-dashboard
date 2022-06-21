@@ -9,4 +9,12 @@ function checkPassword(password: string, encodedPassword: string): boolean {
   return bcrypt.compareSync(password, encodedPassword);
 }
 
-export { encodePassword, checkPassword };
+function test(password: string) {
+  console.log(password);
+
+  let end = bcrypt.hashSync(password, Number(process.env.PASS_SALT as string));
+
+  return bcrypt.compareSync(password, end);
+}
+
+export { encodePassword, checkPassword, test };
