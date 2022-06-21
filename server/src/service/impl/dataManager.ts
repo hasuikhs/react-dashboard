@@ -21,7 +21,7 @@ class DataManager implements DataManagerInterface {
 
     if (this.types.includes(type)) {
       this.type = type;
-      this._curDB = new Datastore({ filename: `${ this._path }/${ type }.db`, autoload: true });
+      this._curDB = new Datastore({ filename: `data/${ type }.db`, autoload: true });
     } else {
       throw new Error('Invalid db type.');
     }

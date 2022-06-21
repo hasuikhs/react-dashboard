@@ -18,11 +18,6 @@ class LoginManager implements LoginManagerInterface {
       this._curDB.findOne({ id }, (err, result) => {
         if (err) reject(new Error(`Select error. cause: ${ err }`));
 
-        console.log(password)
-        console.log(result.password)
-        console.log(checkPassword(password, result.password))
-        console.log(test(password))
-
         if (result === null || !checkPassword(password, result.password)) {
           resolve('fail');
         } else {
