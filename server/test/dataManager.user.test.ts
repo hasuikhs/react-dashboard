@@ -4,7 +4,7 @@ import DataManager from '../src/service/impl/dataManager';
 describe('Test DataManager methods.', () => {
   const userDataManager = new DataManager('user');
 
-  it('Insert test', async (): Promise<void> => {
+  it.skip('Insert test', async (): Promise<void> => {
     let user: user = {
       "id": "test",
       "name": "kim",
