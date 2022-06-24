@@ -1,0 +1,10 @@
+CREATE TABLE tb_license (
+  `seq` INT NOT NULL AUTO_INCREMENT COMMENT '시퀀스',
+  `license_nm` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '라이센스명',
+  `license_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '라이센스 ID',
+  `license_pw` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '라이센스 비밀번호',
+  `is_main` TINYINT NOT NULL COMMENT '주계정 여부',
+  `reg_dt` DATETIME NOT NULL DEFAULT '2022-01-01 00:00:00' COMMENT '등록일',
+  `upd_dt` DATETIME NOT NULL DEFAULT '2022-01-01 00:00:00' COMMENT '수정일',
+  PRIMARY KEY (`seq`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
