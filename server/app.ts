@@ -1,6 +1,7 @@
 import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
 import cors from 'cors';
+import schedule from 'node-schedule';
 import apiRouter from './src/router/apiRouter';
 import jwtRouter from './src/router/jwtRouter';
 
@@ -38,6 +39,10 @@ function runServer(): Express.Application {
 
   app.listen(PORT, () => {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
+
+    schedule.scheduleJob('*/5 * * * * *', () => {
+      console.log(new Date());
+    });
   });
 
   return app;
