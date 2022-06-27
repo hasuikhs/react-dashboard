@@ -4,6 +4,7 @@ import cors from 'cors';
 import schedule from 'node-schedule';
 import apiRouter from './src/router/apiRouter';
 import jwtRouter from './src/router/jwtRouter';
+import graphqlRouter from './src/router/graphqlRouter';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 1;
@@ -32,6 +33,8 @@ function runServer(): Express.Application {
   app.use('/token', jwtRouter);
 
   app.use('/api', apiRouter);
+
+  app.use('/graphql', graphqlRouter);
 
   app.get('*', (req: Request, res: Response) => {
     res.status(404).json({ message: 'error' });
