@@ -1,12 +1,11 @@
-import test from '../src/domain/test.interface';
-import MysqlManager from '../src/service/impl/mysqlManager';
+import MysqlLoginManager from '../src/service/impl/mysql.loginManager';
 
 describe('Test MysqlManager methods.', () => {
-  const mysqlManager = new MysqlManager();
+  const mysqlLoginManager = new MysqlLoginManager();
 
-  it('Select test', async () => {
-    let rs = await mysqlManager.selectAll();
-
-    expect(rs).toEqual([{id: 'test', password: 'test'}]);
+  it('checkDup test', async () => {
+    let ret = await mysqlLoginManager.checkDupId('test');
+    
+    console.log(ret)
   });
 });
