@@ -6,6 +6,6 @@ describe('Test MysqlManager methods.', () => {
   it('checkDup test', async () => {
     let ret = await mysqlLoginManager.checkDupId('test');
     
-    console.log(ret)
+    expect(ret).toEqual('DISALLOW');
   });
 });
