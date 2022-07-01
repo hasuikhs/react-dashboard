@@ -8,4 +8,10 @@ describe('Test MysqlManager methods.', () => {
     
     expect(ret).toEqual('DISALLOW');
   });
+
+  it('login', async () => {
+    let ret = await mysqlLoginManager.login('test', 'test');
+
+    expect(ret).toEqual('FAIL');
+  });
 });
