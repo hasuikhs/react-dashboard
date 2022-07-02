@@ -1,5 +1,5 @@
 import { user } from '../src/domain/user.interface';
-import DataManager from '../src/service/impl/dataManager';
+import DataManager from '../src/service/back/impl/dataManager';
 
 describe('Test DataManager methods.', () => {
   const userDataManager = new DataManager('user');

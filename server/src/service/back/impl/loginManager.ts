@@ -1,7 +1,7 @@
 import Datastore from 'nedb';
 import path from 'path';
 import LoginManagerInterface from '../inf/loginManager.interface';
-import { checkPassword, test } from '../../utils/passwordUtil';
+import { checkPassword, test } from '../../../utils/passwordUtil';
 
 class LoginManager implements LoginManagerInterface {
 

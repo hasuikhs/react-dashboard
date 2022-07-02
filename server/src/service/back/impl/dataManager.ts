@@ -1,13 +1,13 @@
 import Datastore from 'nedb';
 import path from 'path';
-import { user, userExt } from '../../domain/user.interface';
-import { doc, docExt } from '../../domain/doc.interface';
-import { server, serverExt } from '../../domain/server.interface';
+import { user, userExt } from '../../../domain/user.interface';
+import { doc, docExt } from '../../../domain/doc.interface';
+import { server, serverExt } from '../../../domain/server.interface';
 import DataManagerInterface from '../inf/dataManager.interface';
 import LoginManager from './loginManager';
-import { encodePassword } from '../../utils/passwordUtil';
+import { encodePassword } from '../../../utils/passwordUtil';
 
-import { dateToStringFormat } from '../../utils/common';
+import { dateToStringFormat } from '../../../utils/common';
 
 class DataManager implements DataManagerInterface {
 

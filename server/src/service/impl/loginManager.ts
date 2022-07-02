@@ -11,7 +11,7 @@ class LoginManager implements LoginManagerInterface {
     this._conn = pool;
   }
 
-  login(id: string, password: string): Promise<string> {
+  public async login(id: string, password: string): Promise<string> {
 
     const sql = `
       SELECT user_id, user_pw
@@ -40,7 +40,7 @@ class LoginManager implements LoginManagerInterface {
     });
   }
 
-  checkDupId(id: string): Promise<string> {
+  public async checkDupId(id: string): Promise<string> {
 
     const sql: string = `
       SELECT *
