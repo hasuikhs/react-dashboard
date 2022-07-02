@@ -1,45 +1,74 @@
-import Datastore from 'nedb';
-import path from 'path';
 import LoginManagerInterface from '../inf/loginManager.interface';
-import { checkPassword, test } from '../../utils/passwordUtil';
+import pool from '../../utils/mysqlConnection';
+import mysql from 'mysql';
+import { checkPassword } from '../../utils/passwordUtil';
 
 class LoginManager implements LoginManagerInterface {
 
-  private _path: string;
-  private _curDB: Datastore;
+  private _conn: mysql.Pool;
 
   constructor() {
-    this._path = `${ path.dirname(__filename) }/../../../data`;
-    this._curDB = new Datastore({ filename: `data/user.db`, autoload: true });
+    this._conn = pool;
   }
 
-  public login(id: string, password: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      this._curDB.findOne({ id }, (err, result) => {
-        if (err) reject(new Error(`Select error. cause: ${ err }`));
+  login(id: string, password: string): Promise<string> {
 
-        if (result === null || !checkPassword(password, result.password)) {
-          resolve('fail');
-        } else {
-          resolve('success');
-        }
+    const sql = `
+      SELECT user_id, user_pw
+      FROM tb_user
+      WHERE user_id = ?
+    `;
+    const params: string[] = [ id ];
+
+    return new Promise<string>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, rows, fields) => {
+          if (err) reject(new Error(`login method error. cuase: ${ err }`));
+
+          if (!rows.length || !checkPassword(password, rows[0]?.user_pw)) {
+            resolve('FAIL');
+          } else {
+            resolve('SUCCESS');
+          }
+        });
+
+        // return connection pool
+        conn.release();
       });
     });
   }
 
-  public checkDupId(id: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      this._curDB.findOne({ id }, (err, result) => {
-        if (err) reject(new Error(`Select error. cause: ${ err }`));
+  checkDupId(id: string): Promise<string> {
 
-        if (result === null) {
-          resolve('allow');
-        } else {
-          resolve('disallow');
-        }
+    const sql: string = `
+      SELECT *
+      FROM tb_user
+      WHERE user_id = ?
+    `;
+    const params: string[] = [ id ];
+
+    return new Promise<string>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, rows, fields) => {
+          if (err) reject(new Error(`checkDupId method error. cause: ${ err }`));
+
+          if (rows.length) {
+            resolve('DISALLOW');
+          } else {
+            resolve('ALLOW');
+          }
+        });
+
+        // return connection pool
+        conn.release();
       });
     });
   }
+
 }
 
 export default LoginManager;
