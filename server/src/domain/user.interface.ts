@@ -1,14 +1,15 @@
 interface user {
-  id: string;
-  name: string;
-  password: string;
-  group: string[];
+  user_nm: string;
+  user_id: string;
+  user_pw?: string;
 }
 
 interface userExt extends user {
-  idx?: number;
-  regDt?: string;
-  updDt: string;
+  seq: number;
+  is_admin?: string;
+  login_dt: Date;
+  reg_dt: Date;
+  upd_dt: Date;
 }
 
 export { user, userExt };
