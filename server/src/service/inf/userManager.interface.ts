@@ -1,7 +1,7 @@
-import { user, userExt } from '../../domain/user.mysql.interface'
+import { user, userExt } from '../../domain/user.interface';
 
 interface UserManagerInterface {
-  insert(doc: user): Promise<number>;
+  insert(user: user): Promise<number>;
 
   selectAll(): Promise<userExt[]>;
 
