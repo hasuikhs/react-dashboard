@@ -100,7 +100,7 @@ class SheetManager implements SheetManagerInterface {
     });
   }
 
-  public async update(props: { seq: number; sheet_nm: string; sheet_url: string; }): Promise<number> {
+  public async update(props: { seq: number, sheet_nm: string, sheet_url: string }): Promise<number> {
     const sql = `
       UPDATE tb_sheet
       SET sheet_nm = ?, sheet_url = ?, upd_dt = NOW()
