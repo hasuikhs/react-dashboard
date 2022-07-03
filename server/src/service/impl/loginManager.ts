@@ -24,7 +24,7 @@ class LoginManager implements LoginManagerInterface {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`connection pool error. cause: ${ connErr }`));
 
-        conn.query(sql, params, (err, rows, fields) => {
+        conn.query(sql, params, (err, rows) => {
           if (err) reject(new Error(`login method error. cuase: ${ err }`));
 
           if (!rows.length || !checkPassword(password, rows[0]?.user_pw)) {
@@ -53,7 +53,7 @@ class LoginManager implements LoginManagerInterface {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`connection pool error. cause: ${ connErr }`));
 
-        conn.query(sql, params, (err, rows, fields) => {
+        conn.query(sql, params, (err, rows) => {
           if (err) reject(new Error(`checkDupId method error. cause: ${ err }`));
 
           if (rows.length) {

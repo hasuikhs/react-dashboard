@@ -1,5 +1,5 @@
 import UserManagerInterface from '../inf/userManager.interface';
-import { user, userExt } from '../../domain/user.interface';
+import user from '../../domain/user.interface';
 import pool from '../../utils/mysqlConnection';
 import { encodePassword  } from '../../utils/passwordUtil';
 import LoginManager from './loginManager';
@@ -16,17 +16,17 @@ class UserManager implements UserManagerInterface {
 
   public async insert(user: user): Promise<number> {
 
-    user.user_pw = encodePassword(user.user_pw || '');
+    user.userPw = encodePassword(user.userPw || '');
 
     const sql: string = `
       INSERT INTO tb_user(user_nm, user_id, user_pw, login_dt, reg_dt, upd_dt)
       VALUES (?, ?, ?, NOW(), NOW(), NOW())
     `;
-    const params: string[] = [ user.user_nm, user.user_id, user.user_pw ];
+    const params: string[] = [ user.userNm, user.userId, user.userPw ];
 
     return new Promise<number>(async (resolve, reject) => {
       const loginManager = new LoginManager();
-      const checkDupResult = await loginManager.checkDupId(user.user_id);
+      const checkDupResult = await loginManager.checkDupId(user.userId);
 
       if (checkDupResult === 'DISALLOW') {
         resolve(0);
@@ -47,7 +47,7 @@ class UserManager implements UserManagerInterface {
     });
   }
 
-  public async selectAll(): Promise<userExt[]> {
+  public async selectAll(): Promise<user[]> {
     const sql: string = `
       SELECT *
       FROM tb_user
@@ -55,22 +55,22 @@ class UserManager implements UserManagerInterface {
       ORDER BY seq DESC
     `;
     
-    return new Promise<userExt[]>(async (resolve, reject) => {
+    return new Promise<user[]>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, (err, rows) => {
           if (err) reject(new Error(`UserManager selectAll error. cause: ${ err }`));
 
-          const dataList: userExt[] = [];
+          const dataList: user[] = [];
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              user_nm: row.user_nm,
-              user_id: row.user_id,
-              login_dt: row.login_dt,
-              reg_dt: row.reg_dt,
-              upd_dt: row.upd_dt
+              userNm: row.userNm,
+              userId: row.userId,
+              loginDt: row.loginDt,
+              regDt: row.regDt,
+              updDt: row.updDt
             });
           }
 
@@ -83,7 +83,7 @@ class UserManager implements UserManagerInterface {
     });
   }
 
-  public async select(seq: number): Promise<userExt> {
+  public async select(seq: number): Promise<user> {
     const sql: string = `
       SELECT *
       FROM tb_user
@@ -92,7 +92,7 @@ class UserManager implements UserManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<userExt>(async (resolve, reject) => {
+    return new Promise<user>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -102,11 +102,11 @@ class UserManager implements UserManagerInterface {
           result = result[0];
           resolve({
             seq: result.seq,
-            user_nm: result.user_nm,
-            user_id: result.user_id,
-            login_dt: result.login_dt,
-            reg_dt: result.reg_dt,
-            upd_dt: result.upd_dt
+            userNm: result.userNm,
+            userId: result.userId,
+            loginDt: result.loginDt,
+            regDt: result.regDt,
+            updDt: result.updDt
           });
         });
 
@@ -116,23 +116,23 @@ class UserManager implements UserManagerInterface {
     });
   }
 
-  public async update(props: {seq: number, user_nm: string, user_pw?: string}): Promise<number> {
-    const sql = `
+  public async update(props: {seq: number, userNm: string, userPw?: string}): Promise<number> {
+    const sql: string = `
       UPDATE tb_user
-      SET user_nm = ?, ${ props.user_pw ? `user_pw = ?,` : '' } upd_dt = NOW()
+      SET user_nm = ?, ${ props.userPw ? `user_pw = ?,` : '' } upd_dt = NOW()
       WHERE seq = ?
     `;
     
     let params: (string | number)[];
-    if (props.user_pw) {
-      props.user_pw = encodePassword(props.user_pw);
+    if (props.userPw) {
+      props.userPw = encodePassword(props.userPw);
       
-      params = [ props.user_nm, props.user_pw, props.seq ];
+      params = [ props.userNm, props.userPw, props.seq ];
     } else {
-      params = [ props.user_nm, props.seq ];
+      params = [ props.userNm, props.seq ];
     }
 
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -155,7 +155,7 @@ class UserManager implements UserManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 

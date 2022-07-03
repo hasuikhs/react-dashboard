@@ -1,13 +1,13 @@
-import { sheet, sheetExt } from '../../domain/sheet.interface';
+import sheet from '../../domain/sheet.interface';
 
 interface SheetManagerInterface {
   insert(sheet: sheet): Promise<number>;
 
-  selectAll(): Promise<sheetExt[]>;
+  selectAll(): Promise<sheet[]>;
 
-  select(seq: number): Promise<sheetExt>;
+  select(seq: number): Promise<sheet>;
 
-  update(props: {seq: number, sheet_nm: string, sheet_url: string}): Promise<number>;
+  update(props: {seq: number, sheetNm: string, sheetUrl: string}): Promise<number>;
 
   delete(seq: number): Promise<number>;
 }

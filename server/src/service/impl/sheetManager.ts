@@ -1,5 +1,5 @@
 import SheetManagerInterface from '../inf/sheetManager.interface';
-import { sheet, sheetExt } from '../../domain/sheet.interface';
+import sheet from '../../domain/sheet.interface';
 import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';
@@ -14,12 +14,12 @@ class SheetManager implements SheetManagerInterface {
 
   public async insert(sheet: sheet): Promise<number> {
     const sql: string = `
-      INSERT INTO tb_sheet(sheet_nm, sheet_url)
+      INSERT INTO tb_sheet(sheet_nm, sheet_url, reg_dt, upd_dt)
       VALUES (?, ?, NOW(), NOW())
     `;
-    const params: string[] = [ sheet.sheet_nm, sheet.sheet_url ];
+    const params: string[] = [ sheet.sheetNm, sheet.sheetUrl ];
 
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -35,28 +35,28 @@ class SheetManager implements SheetManagerInterface {
     });
   }
 
-  public async selectAll(): Promise<sheetExt[]> {
+  public async selectAll(): Promise<sheet[]> {
     const sql: string = `
       SELECT *
       FROM tb_sheet
       ORDER BY seq DESC
     `;
 
-    return new Promise<sheetExt[]>(async (resolve, reject) => {
+    return new Promise<sheet[]>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, (err, rows) => {
           if (err) reject(new Error(`SheetManager selectAll error. cause: ${ err }`));
 
-          const dataList: sheetExt[] = [];
+          const dataList: sheet[] = [];
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              sheet_nm: row.sheet_nm,
-              sheet_url: row.sheet_url,
-              reg_dt: row.reg_dt,
-              upd_dt: row.upd_dt
+              sheetNm: row.sheetNm,
+              sheetUrl: row.sheetUrl,
+              regDt: row.regDt,
+              updDt: row.updDt
             });
           }
 
@@ -69,7 +69,7 @@ class SheetManager implements SheetManagerInterface {
     });
   }
 
-  public async select(seq: number): Promise<sheetExt> {
+  public async select(seq: number): Promise<sheet> {
     const sql: string = `
       SELECT *
       FROM tb_sheet
@@ -77,7 +77,7 @@ class SheetManager implements SheetManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<sheetExt>(async (resolve, reject) => {
+    return new Promise<sheet>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -87,10 +87,10 @@ class SheetManager implements SheetManagerInterface {
           result = result[0];
           resolve({
             seq: result.seq,
-            sheet_nm: result.sheet_nm,
-            sheet_url: result.sheet_url,
-            reg_dt: result.reg_dt,
-            upd_dt: result.upd_dt
+            sheetNm: result.sheetNm,
+            sheetUrl: result.sheetUrl,
+            regDt: result.regDt,
+            updDt: result.updDt
           });
         });
 
@@ -100,15 +100,15 @@ class SheetManager implements SheetManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, sheet_nm: string, sheet_url: string }): Promise<number> {
+  public async update(props: { seq: number, sheetNm: string, sheetUrl: string }): Promise<number> {
     const sql = `
       UPDATE tb_sheet
       SET sheet_nm = ?, sheet_url = ?, upd_dt = NOW()
       WHERE seq = ?
     `;
-    const params: (string | number)[] = [ props.sheet_nm, props.sheet_url, props.seq ];
+    const params: (string | number)[] = [ props.sheetNm, props.sheetUrl, props.seq ];
 
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -131,7 +131,7 @@ class SheetManager implements SheetManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<number>(async (resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -146,4 +146,7 @@ class SheetManager implements SheetManagerInterface {
       });
     });
   }
+
 }
+
+export default SheetManager;

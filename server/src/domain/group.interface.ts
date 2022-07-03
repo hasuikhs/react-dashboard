@@ -1,11 +1,8 @@
 interface group {
-  group_nm: string;
+  seq?: number;
+  groupNm: string;
+  regDt?: Date;
+  updDt?: Date;
 }
 
-interface groupExt extends group {
-  seq: number;
-  reg_dt: Date;
-  upd_dt: Date;
-}
-
-export { group, groupExt };
+export default group;

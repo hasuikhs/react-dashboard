@@ -1,15 +1,12 @@
 interface user {
-  user_nm: string;
-  user_id: string;
-  user_pw?: string;
+  seq?: number;
+  userNm: string;
+  userId: string;
+  userPw?: string;
+  isAdmin?: string;
+  loginDt?: Date;
+  regDt?: Date;
+  updDt?: Date;
 }
 
-interface userExt extends user {
-  seq: number;
-  is_admin?: string;
-  login_dt: Date;
-  reg_dt: Date;
-  upd_dt: Date;
-}
-
-export { user, userExt };
+export default user;

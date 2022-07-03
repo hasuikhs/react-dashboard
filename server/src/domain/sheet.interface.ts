@@ -1,12 +1,9 @@
 interface sheet {
-  sheet_nm: string;
-  sheet_url: string;
+  seq?: number;
+  sheetNm: string;
+  sheetUrl: string;
+  regDt?: Date;
+  updDt?: Date;
 }
 
-interface sheetExt extends sheet {
-  seq: number;
-  reg_dt: Date;
-  upd_dt: Date;
-}
-
-export { sheet, sheetExt };
+export default sheet;

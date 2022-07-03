@@ -1,13 +1,13 @@
-import { user, userExt } from '../../domain/user.interface';
+import user from '../../domain/user.interface';
 
 interface UserManagerInterface {
   insert(user: user): Promise<number>;
 
-  selectAll(): Promise<userExt[]>;
+  selectAll(): Promise<user[]>;
 
-  select(seq: number): Promise<userExt>;
+  select(seq: number): Promise<user>;
 
-  update(props: {seq: number, user_nm: string, user_pw?: string}): Promise<number>;
+  update(props: {seq: number, userNm: string, userPw?: string}): Promise<number>;
 
   delete(seq: number): Promise<number>;
 }
