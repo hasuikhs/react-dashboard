@@ -53,10 +53,10 @@ class SheetManager implements SheetManagerInterface {
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              sheetNm: row.sheetNm,
-              sheetUrl: row.sheetUrl,
-              regDt: row.regDt,
-              updDt: row.updDt
+              sheetNm: row.sheet_nm,
+              sheetUrl: row.sheet_url,
+              regDt: row.reg_dt,
+              updDt: row.upd_dt
             });
           }
 
@@ -87,10 +87,10 @@ class SheetManager implements SheetManagerInterface {
           result = result[0];
           resolve({
             seq: result.seq,
-            sheetNm: result.sheetNm,
-            sheetUrl: result.sheetUrl,
-            regDt: result.regDt,
-            updDt: result.updDt
+            sheetNm: result.sheet_nm,
+            sheetUrl: result.sheet_url,
+            regDt: result.reg_dt,
+            updDt: result.upd_dt
           });
         });
 

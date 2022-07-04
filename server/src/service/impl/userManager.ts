@@ -66,11 +66,11 @@ class UserManager implements UserManagerInterface {
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              userNm: row.userNm,
-              userId: row.userId,
-              loginDt: row.loginDt,
-              regDt: row.regDt,
-              updDt: row.updDt
+              userNm: row.user_nm,
+              userId: row.user_id,
+              loginDt: row.login_dt,
+              regDt: row.reg_dt,
+              updDt: row.upd_dt
             });
           }
 
@@ -102,11 +102,11 @@ class UserManager implements UserManagerInterface {
           result = result[0];
           resolve({
             seq: result.seq,
-            userNm: result.userNm,
-            userId: result.userId,
-            loginDt: result.loginDt,
-            regDt: result.regDt,
-            updDt: result.updDt
+            userNm: result.user_nm,
+            userId: result.user_id,
+            loginDt: result.login_dt,
+            regDt: result.reg_dt,
+            updDt: result.upd_dt
           });
         });
 

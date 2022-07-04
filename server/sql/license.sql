@@ -4,6 +4,7 @@ CREATE TABLE tb_license (
   `license_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '라이센스 ID',
   `license_pw` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '라이센스 비밀번호',
   `is_main` TINYINT NOT NULL COMMENT '주계정 여부',
+  `group_seq` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '그룹 시퀀스들',
   `reg_dt` DATETIME NOT NULL DEFAULT '2022-01-01 00:00:00' COMMENT '등록일',
   `upd_dt` DATETIME NOT NULL DEFAULT '2022-01-01 00:00:00' COMMENT '수정일',
   PRIMARY KEY (`seq`)

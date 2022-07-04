@@ -57,16 +57,16 @@ class ServerManager implements ServerManagerInterface {
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              serverNm: row.serverNm,
-              serverId: row.serverId,
-              cpuCnt: row.cpuCnt,
+              serverNm: row.server_nm,
+              serverId: row.server_id,
+              cpuCnt: row.cpu_cnt,
               ram: row.ram,
               disk: row.disk,
               os: row.os,
-              isActive: row.isActive,
-              groupSeq: row.groupSeq,
-              regDt: row.regDt,
-              updDt: row.updDt
+              isActive: row.is_active,
+              groupSeq: row.group_seq,
+              regDt: row.reg_dt,
+              updDt: row.upd_dt
             });
           }
 
@@ -105,16 +105,16 @@ class ServerManager implements ServerManagerInterface {
           for (const row of rows) {
             dataList.push({
               seq: row.seq,
-              serverNm: row.serverNm,
-              serverId: row.serverId,
-              cpuCnt: row.cpuCnt,
+              serverNm: row.server_nm,
+              serverId: row.server_id,
+              cpuCnt: row.cpu_cnt,
               ram: row.ram,
               disk: row.disk,
               os: row.os,
-              isActive: row.isActive,
-              groupSeq: row.groupSeq,
-              regDt: row.regDt,
-              updDt: row.updDt
+              isActive: row.is_active,
+              groupSeq: row.group_seq,
+              regDt: row.reg_dt,
+              updDt: row.upd_dt
             });
           }
 
@@ -145,16 +145,16 @@ class ServerManager implements ServerManagerInterface {
           result = result[0];
           resolve({
             seq: result.seq,
-            serverNm: result.serverNm,
-            serverId: result.serverId,
-            cpuCnt: result.cpuCnt,
+            serverNm: result.server_nm,
+            serverId: result.server_d,
+            cpuCnt: result.cpu_cnt,
             ram: result.ram,
             disk: result.disk,
             os: result.os,
-            isActive: result.isActive,
-            groupSeq: result.groupSeq,
-            regDt: result.regDt,
-            updDt: result.updDt
+            isActive: result.is_active,
+            groupSeq: result.group_seq,
+            regDt: result.reg_dt,
+            updDt: result.upd_dt
           });
         });
 
