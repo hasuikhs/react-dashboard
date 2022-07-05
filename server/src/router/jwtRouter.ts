@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import verifyToken from '../utils/verifyToken';
-import LoginManager from '../service/back/impl/loginManager';
+import LoginManager from '../service/impl/loginManager';
 require('dotenv').config();
 
 const jwtRouter: Router = Router();

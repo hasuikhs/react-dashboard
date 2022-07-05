@@ -1,31 +1,31 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import DataManager from '../../service/back/impl/dataManager';
+import ServerManager from '../../service/impl/serverManager';
 
 const serverRouter = Router();
-const serverDataManager = new DataManager('server');
+const serverManager = new ServerManager();
 
 serverRouter.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
 serverRouter.get('/', async (req: Request, res: Response) => {
-  return res.status(200).json( await serverDataManager.select() );
+  return res.status(200).json( await serverManager.selectAll() );
 });
 
 serverRouter.get('/:idx([0-9]+)', async (req: Request, res: Response) => {
-  return res.status(200).json( await serverDataManager.select(parseInt(req.params.idx)) );
+  return res.status(200).json( await serverManager.select(parseInt(req.params.idx)) );
 });
 
 serverRouter.post('/', async (req: Request, res: Response) => {
-  return res.status(200).json( await serverDataManager.insert(req.body) );
+  return res.status(200).json( await serverManager.insert(req.body) );
 });
 
 serverRouter.put('/:idx([0-9]+)', async (req: Request, res: Response) => {
-  return res.status(200).json( await serverDataManager.update(parseInt(req.params.idx), req.body) );
+  return res.status(200).json( await serverManager.update(req.body) );
 });
 
 serverRouter.delete('/:idx([0-9]+)', async (req: Request, res: Response) => {
-  return res.status(200).json( await serverDataManager.delete(parseInt(req.params.idx)) );
+  return res.status(200).json( await serverManager.delete(parseInt(req.params.idx)) );
 });
 
 export default serverRouter;
