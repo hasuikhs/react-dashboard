@@ -54,20 +54,22 @@ class ServerManager implements ServerManagerInterface {
           if (err) reject(new Error(`ServerManager selectAll error. cause: ${ err }`));
 
           const dataList: server[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              serverNm: row.server_nm,
-              serverId: row.server_id,
-              cpuCnt: row.cpu_cnt,
-              ram: row.ram,
-              disk: row.disk,
-              os: row.os,
-              isActive: row.is_active,
-              groupSeq: row.group_seq,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                serverNm: row.server_nm,
+                serverId: row.server_id,
+                cpuCnt: row.cpu_cnt,
+                ram: row.ram,
+                disk: row.disk,
+                os: row.os,
+                isActive: row.is_active,
+                groupSeq: row.group_seq,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
 
           resolve(dataList);
@@ -102,20 +104,22 @@ class ServerManager implements ServerManagerInterface {
           if (err) reject(new Error(`ServerManager selectAllByGroupSeq error. cause: ${ err }`));
 
           const dataList: server[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              serverNm: row.server_nm,
-              serverId: row.server_id,
-              cpuCnt: row.cpu_cnt,
-              ram: row.ram,
-              disk: row.disk,
-              os: row.os,
-              isActive: row.is_active,
-              groupSeq: row.group_seq,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                serverNm: row.server_nm,
+                serverId: row.server_id,
+                cpuCnt: row.cpu_cnt,
+                ram: row.ram,
+                disk: row.disk,
+                os: row.os,
+                isActive: row.is_active,
+                groupSeq: row.group_seq,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
 
           resolve(dataList);
@@ -135,7 +139,7 @@ class ServerManager implements ServerManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<server>((resolve, reject) => {
+    return new Promise<server | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -143,7 +147,7 @@ class ServerManager implements ServerManagerInterface {
           if (err) reject(new Error(`ServerManager select error. cause: ${ err }`));
 
           result = result[0];
-          resolve({
+          resolve(result ? {
             seq: result.seq,
             serverNm: result.server_nm,
             serverId: result.server_d,
@@ -155,7 +159,7 @@ class ServerManager implements ServerManagerInterface {
             groupSeq: result.group_seq,
             regDt: result.reg_dt,
             updDt: result.upd_dt
-          });
+          }: {});
         });
 
         // return connection pool

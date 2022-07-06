@@ -50,18 +50,22 @@ class LicenseManager implements LicenseManagerInterface {
           if (err) reject(new Error(`LicenseManager selectAll error. cause: ${ err }`));
 
           const dataList: license[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              licenseNm: row.license_nm,
-              licenseId: row.license_id,
-              licensePw: row.license_pw,
-              isMain: row.is_main,
-              groupSeq: row.group_seq,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                licenseNm: row.license_nm,
+                licenseId: row.license_id,
+                licensePw: row.license_pw,
+                isMain: row.is_main,
+                groupSeq: row.group_seq,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
+
+          resolve(dataList);
         });
 
         // return connection pool
@@ -78,7 +82,7 @@ class LicenseManager implements LicenseManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<license>((resolve, reject) => {
+    return new Promise<license | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -86,7 +90,7 @@ class LicenseManager implements LicenseManagerInterface {
           if (err) reject(new Error(`LicenseManager select error. cause: ${ err }`));
 
           result = result[0];
-          resolve({
+          resolve(result ? {
             seq: result.seq,
             licenseNm: result.license_nm,
             licenseId: result.license_id,
@@ -95,7 +99,7 @@ class LicenseManager implements LicenseManagerInterface {
             groupSeq: result.group_seq,
             regDt: result.reg_dt,
             updDt: result.upd_dt
-          });
+          }: {});
         });
 
         // reutrn connection pool

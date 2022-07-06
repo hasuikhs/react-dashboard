@@ -50,13 +50,15 @@ class GroupManager implements GroupManagerInterface {
           if (err) reject(new Error(`SheetManager selectAll error. cause: ${ err }`));
 
           const dataList: group[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              groupNm: row.group_nm,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                groupNm: row.group_nm,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
 
           resolve(dataList);
@@ -76,7 +78,7 @@ class GroupManager implements GroupManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<group>((resolve, reject) => {
+    return new Promise<group | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -84,12 +86,12 @@ class GroupManager implements GroupManagerInterface {
           if (err) reject(new Error(`SheetManager select error. cause: ${ err }`));
 
           result = result[0];
-          resolve({
+          resolve(result ? {
             seq: result.seq,
             groupNm: result.group_nm,
             regDt: result.reg_dt,
             updDt: result.upd_dt
-          });
+          } : {});
         });
 
         // return connection pool

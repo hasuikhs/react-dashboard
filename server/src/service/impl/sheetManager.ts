@@ -50,14 +50,16 @@ class SheetManager implements SheetManagerInterface {
           if (err) reject(new Error(`SheetManager selectAll error. cause: ${ err }`));
 
           const dataList: sheet[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              sheetNm: row.sheet_nm,
-              sheetUrl: row.sheet_url,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                sheetNm: row.sheet_nm,
+                sheetUrl: row.sheet_url,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
 
           resolve(dataList);
@@ -77,7 +79,7 @@ class SheetManager implements SheetManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<sheet>((resolve, reject) => {
+    return new Promise<sheet | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -85,13 +87,14 @@ class SheetManager implements SheetManagerInterface {
           if (err) reject(new Error(`SheetManager select error. cause: ${ err }`));
 
           result = result[0];
-          resolve({
+
+          resolve(result ? {
             seq: result.seq,
             sheetNm: result.sheet_nm,
             sheetUrl: result.sheet_url,
             regDt: result.reg_dt,
             updDt: result.upd_dt
-          });
+          } : {});
         });
 
         // return connection pool

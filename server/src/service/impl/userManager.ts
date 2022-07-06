@@ -51,7 +51,7 @@ class UserManager implements UserManagerInterface {
     const sql: string = `
       SELECT *
       FROM tb_user
-      AND is_admin != 'Y'
+      WHERE is_admin != 'Y'
       ORDER BY seq DESC
     `;
     
@@ -63,15 +63,17 @@ class UserManager implements UserManagerInterface {
           if (err) reject(new Error(`UserManager selectAll error. cause: ${ err }`));
 
           const dataList: user[] = [];
-          for (const row of rows) {
-            dataList.push({
-              seq: row.seq,
-              userNm: row.user_nm,
-              userId: row.user_id,
-              loginDt: row.login_dt,
-              regDt: row.reg_dt,
-              updDt: row.upd_dt
-            });
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                seq: row.seq,
+                userNm: row.user_nm,
+                userId: row.user_id,
+                loginDt: row.login_dt,
+                regDt: row.reg_dt,
+                updDt: row.upd_dt
+              });
+            }
           }
 
           resolve(dataList);
@@ -92,7 +94,7 @@ class UserManager implements UserManagerInterface {
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<user>((resolve, reject) => {
+    return new Promise<user | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -100,14 +102,15 @@ class UserManager implements UserManagerInterface {
           if (err) reject(new Error(`UserManager select error. cause: ${ err }`));
 
           result = result[0];
-          resolve({
+
+          resolve(result ? {
             seq: result.seq,
             userNm: result.user_nm,
             userId: result.user_id,
             loginDt: result.login_dt,
             regDt: result.reg_dt,
             updDt: result.upd_dt
-          });
+          } : {});
         });
 
         // return connection pool
