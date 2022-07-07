@@ -15,15 +15,15 @@ describe('Test MysqlManager methods.', () => {
 
   //   expect(ret).toEqual('FAIL');
   // });
-  // const userManager = new UserManager();
+  const userManager = new UserManager();
 
-  // it.skip('insert user', async () => {
-  //   let ret = await userManager.insert({
-  //     user_nm: 'test',
-  //     user_id: 'test',
-  //     user_pw: 'test'
-  //   });
-  // });
+  it('insert user', async () => {
+    let ret = await userManager.insert({
+      userNm: 'test',
+      userId: 'test',
+      userPw: 'test'
+    });
+  });
 
   // it('update user', async () => {
   //   let ret = await userManager.update({
