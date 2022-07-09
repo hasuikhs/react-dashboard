@@ -37,7 +37,7 @@ function runServer(): Express.Application {
 
   app.use('/graphql', graphqlRouter);
 
-  app.get('*', (req: Request, res: Response) => {
+  app.get('*', verifyToken, (req: Request, res: Response) => {
     res.status(404).json({ message: 'error' });
   });
 
@@ -45,7 +45,7 @@ function runServer(): Express.Application {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
 
     schedule.scheduleJob('*/10 * * * * *', () => {
-      console.log(new Date());
+      console.log(new Date().toString());
     });
   });
 

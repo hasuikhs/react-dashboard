@@ -15,7 +15,7 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
 
     let ret = await loginManager.login(id, password);
 
-    if (ret === 'fail') {
+    if (ret === 'FAIL') {
       return res.status(200).json({
         code: 401,
         message: 'Unauthorized'
