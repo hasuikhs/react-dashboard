@@ -27,8 +27,6 @@ class LoginManager implements LoginManagerInterface {
         conn.query(sql, params, (err, rows) => {
           if (err) reject(new Error(`login method error. cuase: ${ err }`));
 
-          console.log(rows)
-
           if (!rows.length || !checkPassword(password, rows[0]?.user_pw)) {
             resolve('FAIL');
           } else {
