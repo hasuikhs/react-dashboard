@@ -1,32 +1,28 @@
-import React from 'react';
-import API from './common/API';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import routes from './routes';
 
-function App() {
-
-  const get = async () => {
-    let res = await API.post('token', {
-      'id': 'test',
-      'password': 'asdf'
-    });
-
-    console.log('t', res.data)
-
-    let res2 = await API.get('api/user/1', {
-      headers: {
-        'Authorization': res.data.token
-      }
-    });
-
-    // api test
-    console.log('ret', res2.data)
-
-  }
-
-  get();
-
+function App(): JSX.Element {
   return (
-    <div className="App">
-    </div>
+    <Router>
+      <div className="app">
+        <Suspense>
+          <Routes>
+            {
+              routes.map(route => {
+                return (
+                  <Route 
+                    key={ route.path ? route.path : null }
+                    path={ route.path }
+                    element={ <route.component /> }
+                  />
+                );
+              })
+            }
+          </Routes>
+        </Suspense>
+      </div>
+    </Router>
   );
 }
 
