@@ -47,13 +47,13 @@ function Login(): JSX.Element {
         <form onSubmit={ onSubmit }>
 
           <div className="form-floating">
-            <label htmlFor="userId">ID</label>
             <input id="userId" ref={ idInput } className="form-control" type="text" placeholder="ID" value={ id } onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value) } />
+            <label htmlFor="userId">ID</label>
           </div>
 
           <div className="form-floating">
-            <label htmlFor="userPw">PW</label>
             <input id="userPw" ref={ passwordInput } className="form-control" type="password" placeholder="PASSWORD" value={ password } onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value) } />
+            <label htmlFor="userPw">PW</label>
           </div>
 
           <button className="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
