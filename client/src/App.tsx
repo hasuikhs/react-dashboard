@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import routes from './routes';
 
 function App(): JSX.Element {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="app">
         <Suspense>
           <Routes>
@@ -22,7 +22,7 @@ function App(): JSX.Element {
           </Routes>
         </Suspense>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

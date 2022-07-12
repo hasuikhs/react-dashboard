@@ -18,7 +18,7 @@ function NotFound(): JSX.Element {
             <button 
               onClick={ () => navigate(-1) }
               className="btn btn-primary btn-md"
-              >
+            >
               뒤로 가기
             </button>
           </div>

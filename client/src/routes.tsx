@@ -8,10 +8,16 @@ interface RouteType {
 const Login = lazy(() => import('./pages/Login'));
 const NotFound = lazy(() => import('./pages/404'));
 
+const Home = lazy(() => import('./pages/Home'));
+
 const routes: RouteType[] = [
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/',
+    component: Home
   },
   {
     path: '*',

@@ -25,7 +25,7 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
     const token =  jwt.sign({
       id, password
     }, process.env.JWT_SECRET as string, {
-      expiresIn: '30m',
+      expiresIn: '1m',
       issuer: 'issuer'
     });
 
@@ -44,8 +44,11 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
   }
 });
 
-jwtRouter.get('/test', verifyToken, (req: Request, res: Response) => {
-  res.json(req.body);
+jwtRouter.post('/check', verifyToken, (req: Request, res: Response) => {
+  res.json({ 
+    code: 200,
+    message: 'Valid token.'
+  });
 });
 
 export default jwtRouter;

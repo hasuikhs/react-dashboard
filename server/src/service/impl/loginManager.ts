@@ -30,7 +30,21 @@ class LoginManager implements LoginManagerInterface {
           if (!rows.length || !checkPassword(password, rows[0]?.user_pw)) {
             resolve('FAIL');
           } else {
-            resolve('SUCCESS');
+            // 로그인 성공시 로그인 시간(login_dt) 업데이트
+            this._conn.getConnection((connErr, conn) => {
+              const updSql = `
+                UPDATE tb_user
+                SET login_dt = NOW()
+                WHERE user_id= ?
+              `;
+              const params: number[] = [ rows[0].user_id ];
+
+              conn.query(updSql, params, (err, rows) => {
+                if (err) reject(new Error(`login method update error. cause: ${ err }`));
+
+                resolve('SUCCESS');
+              });
+            });
           }
         });
 
