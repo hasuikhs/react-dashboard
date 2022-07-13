@@ -46,8 +46,10 @@ function Login(): JSX.Element {
     });
 
     if (ret.data.code === 200) {
-      console.log(ret.data)
+      API.defaults.headers.common['Authorization'] = ret.data.token;
       sessionStorage.setItem('token', ret.data.token);
+      sessionStorage.setItem('isLogin', 'true' );
+
       return navigate('/');
     } else {
       return Swal.fire({

@@ -1,32 +1,10 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-
-import API from '../common/API';
 
 function MainBar(): JSX.Element {
 
   const navigate = useNavigate();
-
-  // 페이지 랜더링시 마다 토큰 유효성 확인
-  useEffect(() => {
-    checkToken();
-  }, []);
-
-  const checkToken = async () => {
-    try {
-      API.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') as string;
-      const ret = await API.post('/token/check');
-    } catch (err) {
-      Swal.fire({
-        title: '로그인 세션이 만료되었습니다.',
-        icon: 'error',
-        confirmButtonText: '확인',
-        didClose: () => navigate('/login')
-      });
-    }
-  }
 
   return (
     <>
