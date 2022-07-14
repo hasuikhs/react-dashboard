@@ -10,16 +10,16 @@ function NotFound({ authentificated }: { authentificated: boolean }): JSX.Elemen
     <div className="row">
       <div className="col-md-12">
         <div className={ styles['error-template'] }>
-          <h2>404 Not Found</h2>
+          <h2>403 Forbidden</h2>
           <div className="error-details">
-            죄송합니다. 요청하신 페이지를 찾을 수 없습니다.
+            죄송합니다. 권한이 없습니다.
           </div>
           <div className={ styles['error-actions'] }>
             <button 
-              onClick={ () => navigate(-1) }
+              onClick={ () => navigate('/login') }
               className="btn btn-primary btn-md"
             >
-              뒤로 가기
+              로그인 하기
             </button>
           </div>
         </div>

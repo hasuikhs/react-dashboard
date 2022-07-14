@@ -2,27 +2,34 @@ import { lazy } from 'react';
 
 interface RouteType {
   path: string;
-  component: React.ComponentType;
+  component: React.ReactElement;
 }
 
 const Login = lazy(() => import('./pages/Login'));
 const NotFound = lazy(() => import('./pages/404'));
+const Forbidden = lazy(() => import('./pages/403'));
 
 const Home = lazy(() => import('./pages/Home'));
 
 const routes: RouteType[] = [
   {
     path: '/login',
-    component: Login
+    component: <Login authentificated={ false } />
   },
   {
     path: '/',
-    component: Home
+    component: <Home authentificated={ false } />
   },
   {
     path: '*',
-    component: NotFound
+    component: <NotFound authentificated={ false } />
   }
 ];
 
+const forbidden: RouteType = {
+  path: '*',
+  component: <Forbidden authentificated={ false } />
+};
+
 export default routes;
+export { forbidden };

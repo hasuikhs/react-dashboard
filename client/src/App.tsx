@@ -1,7 +1,6 @@
-import React, { Suspense, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import routes from './routes';
+import React, { Suspense, useEffect, useState } from 'react';
+import { Routes, Route, useNavigate, useLocation, NavigateFunction, Location, useRoutes } from 'react-router-dom';
+import routes, { forbidden } from './routes';
 
 import Swal from 'sweetalert2';
 
@@ -9,13 +8,18 @@ import API from './common/API';
 
 function App(): JSX.Element {
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+
+  const [user, setUser] = useState(null);
+  const authentificated = user != null;
 
   useEffect(() => {
-    if (window.location.pathname !== '/login') {
+    console.log(authentificated)
+    if (location.pathname !== '/login') {
       checkToken();
     }
-  }, []);
+  }, [ location ]);
 
   const checkToken = async () => {
     try {
@@ -24,6 +28,7 @@ function App(): JSX.Element {
       Swal.fire({
         title: '로그인 세션이 만료되었습니다.',
         icon: 'error',
+        backdrop: `rgba(166, 166, 166, 0.9)`,
         confirmButtonText: '확인',
         didClose: () => {
           sessionStorage.removeItem('token');
@@ -33,23 +38,13 @@ function App(): JSX.Element {
       })
     }
   }
-
+  
+  const route = useRoutes(routes.map(route => ({ path: route.path, element: route.component })));
+  
   return (
     <div className="app">
-      <Suspense>
-        <Routes>
-          {
-            routes.map(route => {
-              return (
-                <Route 
-                  key={ route.path ? route.path : null }
-                  path={ route.path }
-                  element={ <route.component /> }
-                />
-              );
-            })
-          }
-        </Routes>
+      <Suspense fallback={ <p>로딩</p> }>
+        { route }
       </Suspense>
     </div>
   );

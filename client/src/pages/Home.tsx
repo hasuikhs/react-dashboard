@@ -2,7 +2,7 @@ import { Container } from 'react-bootstrap';
 import MainBar from '../components/MainBar';
 import './css/Home.module.css';
 
-function Home(): JSX.Element {
+function Home({ authentificated }: { authentificated: boolean }): JSX.Element {
   return (
     <>
       <MainBar />

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Container } from 'react-bootstrap'; 
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -7,15 +7,15 @@ import styles from './css/Login.module.css';
 
 import API from '../common/API';
 
-function Login(): JSX.Element {
+function Login({ authentificated }: { authentificated: boolean }): JSX.Element {
 
   const [id, setId] = useState<string | ''>('');
   const [password, setPassword] = useState<string | ''>('');
 
-  const idInput = useRef<HTMLInputElement>(null);
-  const passwordInput = useRef<HTMLInputElement>(null);
+  const idInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
+  const passwordInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   // 최초 ID focus
   useEffect(() => {
