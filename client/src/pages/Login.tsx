@@ -7,7 +7,7 @@ import styles from './css/Login.module.css';
 
 import API from '../common/API';
 
-function Login({ authentificated }: { authentificated: boolean }): JSX.Element {
+function Login(): JSX.Element {
 
   const [id, setId] = useState<string | ''>('');
   const [password, setPassword] = useState<string | ''>('');

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './css/error.module.css';
 
-function NotFound({ authentificated }: { authentificated: boolean }): JSX.Element {
+function NotFound(): JSX.Element {
 
   const navigate = useNavigate();
 

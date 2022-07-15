@@ -7,29 +7,25 @@ interface RouteType {
 
 const Login = lazy(() => import('./pages/Login'));
 const NotFound = lazy(() => import('./pages/404'));
-const Forbidden = lazy(() => import('./pages/403'));
 
 const Home = lazy(() => import('./pages/Home'));
 
-const routes: RouteType[] = [
-  {
-    path: '/login',
-    component: <Login authentificated={ false } />
-  },
+const privateRoutes: RouteType[] = [
   {
     path: '/',
-    component: <Home authentificated={ false } />
+    component: <Home />
+  },
+];
+
+const publicRoutes: RouteType[] = [
+  {
+    path: '/login',
+    component: <Login />
   },
   {
     path: '*',
-    component: <NotFound authentificated={ false } />
+    component: <NotFound />
   }
-];
+]
 
-const forbidden: RouteType = {
-  path: '*',
-  component: <Forbidden authentificated={ false } />
-};
-
-export default routes;
-export { forbidden };
+export { privateRoutes, publicRoutes };

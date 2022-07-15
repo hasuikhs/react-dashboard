@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, useLocation, NavigateFunction, Location, useRoutes } from 'react-router-dom';
-import routes, { forbidden } from './routes';
+import { Routes, Route, useNavigate, useLocation, NavigateFunction, Location, useRoutes, Navigate } from 'react-router-dom';
+import { privateRoutes, publicRoutes } from './routes';
+// import ProtectedRoute from './components/ProtectedRoute';
 
 import Swal from 'sweetalert2';
 
@@ -14,12 +15,12 @@ function App(): JSX.Element {
   const [user, setUser] = useState(null);
   const authentificated = user != null;
 
-  useEffect(() => {
-    console.log(authentificated)
-    if (location.pathname !== '/login') {
-      checkToken();
-    }
-  }, [ location ]);
+  // useEffect(() => {
+  //   console.log(authentificated)
+  //   if (location.pathname !== '/login') {
+  //     checkToken();
+  //   }
+  // }, [ location ]);
 
   const checkToken = async () => {
     try {
@@ -39,15 +40,37 @@ function App(): JSX.Element {
     }
   }
   
-  const route = useRoutes(routes.map(route => ({ path: route.path, element: route.component })));
-  
+  const privateRoute = useRoutes(privateRoutes.map(route => ({
+    path: route.path,
+    element: (
+      <ProtectedRoute
+        authentificated={ authentificated }
+      >
+        { route.component }
+      </ProtectedRoute>
+    )
+  })));
+  const publicRoute = useRoutes(publicRoutes.map(route => ({
+    path: route.path,
+    element: route.component
+  })));
+
   return (
     <div className="app">
-      <Suspense fallback={ <p>로딩</p> }>
-        { route }
+      <Suspense fallback={ <p>Loading...</p> }>
+        { publicRoute }
+        { privateRoute }
       </Suspense>
     </div>
   );
+}
+
+function ProtectedRoute({ authentificated, children }: { authentificated: boolean, children: any }) {
+  if (!authentificated) {
+    return <Navigate to="/login" />
+  }
+
+  return children;
 }
 
 export default App;
