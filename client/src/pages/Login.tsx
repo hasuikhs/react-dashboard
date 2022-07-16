@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { Container } from 'react-bootstrap'; 
-import Swal, { SweetAlertResult } from 'sweetalert2';
+import CustomAlert from '../components/CustomAlert';
 
 import styles from './css/Login.module.css';
 
@@ -22,22 +22,20 @@ function Login(): JSX.Element {
     idInput.current?.focus();
   }, []);
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void | SweetAlertResult<any>> => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!id) {
-      return Swal.fire({
+      return CustomAlert({
         title: 'ID를 입력해주세요.',
         icon: 'warning',
-        confirmButtonText: '확인',
-        didClose: () => idInput.current?.focus()
-      });
+        didCloseCallback: () => idInput.current?.focus()
+      })
     } else if (!password) {
-      return Swal.fire({
+      return CustomAlert({
         title: '비밀번호를 입력해주세요.',
         icon: 'warning',
-        confirmButtonText: '확인',
-        didClose: () => passwordInput.current?.focus()
+        didCloseCallback: () => passwordInput.current?.focus()
       });
     }
 
@@ -48,15 +46,13 @@ function Login(): JSX.Element {
     if (ret.data.code === 200) {
       API.defaults.headers.common['Authorization'] = ret.data.token;
       sessionStorage.setItem('token', ret.data.token);
-      sessionStorage.setItem('isLogin', 'true' );
 
       return navigate('/');
     } else {
-      return Swal.fire({
+      return CustomAlert({
         title: '계정 정보를 확인해주세요.',
         icon: 'error',
-        confirmButtonText: '확인'
-      });
+      })
     }
   }
 
