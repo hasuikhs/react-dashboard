@@ -2,6 +2,7 @@ import LoginManagerInterface from '../inf/loginManager.interface';
 import pool from '../../utils/mysqlConnection';
 import mysql from 'mysql';
 import { checkPassword } from '../../utils/passwordUtil';
+import user from '../../domain/user.interface';
 
 class LoginManager implements LoginManagerInterface {
 
@@ -11,16 +12,16 @@ class LoginManager implements LoginManagerInterface {
     this._conn = pool;
   }
 
-  public async login(id: string, password: string): Promise<string> {
+  public async login(id: string, password: string): Promise<string|user> {
 
     const sql = `
-      SELECT user_id, user_pw
+      SELECT user_id, user_pw, user_nm, login_dt
       FROM tb_user
       WHERE user_id = ?
     `;
     const params: string[] = [ id ];
 
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<string|user>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`connection pool error. cause: ${ connErr }`));
 
@@ -39,10 +40,14 @@ class LoginManager implements LoginManagerInterface {
               `;
               const params: number[] = [ rows[0].user_id ];
 
-              conn.query(updSql, params, (err, rows) => {
+              conn.query(updSql, params, (err, updRow) => {
                 if (err) reject(new Error(`login method update error. cause: ${ err }`));
 
-                resolve('SUCCESS');
+                resolve({
+                  userId: rows[0].user_id,
+                  userNm: rows[0].user_nm,
+                  loginDt: rows[0].login_dt
+                });
               });
             });
           }

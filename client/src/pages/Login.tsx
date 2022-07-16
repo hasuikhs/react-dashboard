@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Dispatch, AnyAction } from 'redux';
+import { setAuth } from '../modules/auth';
 import { Container } from 'react-bootstrap'; 
-import CustomAlert from '../components/CustomAlert';
+import Swal from 'sweetalert2';
 
 import styles from './css/Login.module.css';
 
@@ -17,6 +20,8 @@ function Login(): JSX.Element {
 
   const navigate: NavigateFunction = useNavigate();
 
+  const dispatch: Dispatch<AnyAction> = useDispatch();
+
   // 최초 ID focus
   useEffect(() => {
     idInput.current?.focus();
@@ -26,33 +31,44 @@ function Login(): JSX.Element {
     event.preventDefault();
 
     if (!id) {
-      return CustomAlert({
+      return Swal.fire({
         title: 'ID를 입력해주세요.',
         icon: 'warning',
-        didCloseCallback: () => idInput.current?.focus()
-      })
-    } else if (!password) {
-      return CustomAlert({
-        title: '비밀번호를 입력해주세요.',
-        icon: 'warning',
-        didCloseCallback: () => passwordInput.current?.focus()
+        confirmButtonText: '확인',
+        didClose: () => idInput.current?.focus()
       });
+    } else if (!password) {
+      return Swal.fire({
+        title: '비밀번호를 입력해주세요',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        didClose: () => passwordInput.current?.focus()
+      })
     }
 
-    let ret = await API.post('/token', {
-      id, password
-    });
+    try {
+      let res = await API.post('/token', { id, password });
 
-    if (ret.data.code === 200) {
-      API.defaults.headers.common['Authorization'] = ret.data.token;
-      sessionStorage.setItem('token', ret.data.token);
+      API.defaults.headers.common['Authorization'] = res.data.token;
+      dispatch(setAuth({
+        token: res.data.token,
+        user: {
+          isLogin: true,
+          userNm: res.data.user.userNm,
+          loginDt: res.data.user.loginDt
+        }
+      }));
+
+      sessionStorage.setItem('token', res.data.token);
 
       return navigate('/');
-    } else {
-      return CustomAlert({
-        title: '계정 정보를 확인해주세요.',
+    } catch (error) {
+      return Swal.fire({
+        title: '아이디 또는 비밀번호를 확인해주세요.',
         icon: 'error',
-      })
+        confirmButtonText: '확인',
+        didClose: () => idInput.current?.focus()
+      });
     }
   }
 

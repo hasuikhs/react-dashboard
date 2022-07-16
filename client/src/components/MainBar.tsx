@@ -1,10 +1,15 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { Dispatch, AnyAction } from 'redux';
+import { useDispatch } from 'react-redux';
+import { resetAuth } from '../modules/auth';
 
 function MainBar(): JSX.Element {
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
+
+  const dispatch: Dispatch<AnyAction> = useDispatch();
 
   return (
     <>
@@ -29,7 +34,7 @@ function MainBar(): JSX.Element {
                   cancelButtonText: '취소'
                 }).then(result => {
                   if (result.isConfirmed) {
-                    sessionStorage.removeItem('token');
+                    dispatch(resetAuth());
                     navigate('/login');
                   }
                 })
