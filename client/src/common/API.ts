@@ -6,7 +6,6 @@ const BASE_URL: string = 'http://localhost:3030';
 const expireSessionCode: number[] = [401, 419]; // 401: invalid token, 419: expire token
 
 const expireSessionAlert = (callback: Function) => {
-  console.log(callback)
   return Swal.fire({
     title: '로그인 세션이 만료되었습니다.',
     icon: 'error',
@@ -31,13 +30,13 @@ const API: AxiosInstance = axios.create({
   timeout: 3000
 });
 
-const requestAPI = async ({httpType, url, body, callback}: { httpType: string, url: string, body?: any, callback: Function}): Promise<any> => {
-  httpType = httpType.toUpperCase();
+const requestAPI = async ({type, url, body, callback}: { type: string, url: string, body?: any, callback: Function}): Promise<any> => {
+  type = type.toUpperCase();
 
   try {
     let ret = null;
 
-    switch (httpType) {
+    switch (type) {
       case 'GET':
         ret = await API.get(url);
         break;

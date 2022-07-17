@@ -15,7 +15,6 @@ interface Action {
 // action
 const SET_AUTH: string = 'auth/SET_AUTH';
 const RESET_AUTH: string = 'auth/RESET_AUTH'
-const GET_AUTH: string = 'auth/GET_AUTH';
 
 const setAuth = (input: Auth) => ({
   type: SET_AUTH,
