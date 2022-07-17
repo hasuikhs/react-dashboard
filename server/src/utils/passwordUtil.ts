@@ -10,8 +10,6 @@ function checkPassword(password: string, encodedPassword: string): boolean {
 }
 
 function test(password: string) {
-  console.log(password);
-
   let end = bcrypt.hashSync(password, Number(process.env.PASS_SALT as string));
 
   return bcrypt.compareSync(password, end);

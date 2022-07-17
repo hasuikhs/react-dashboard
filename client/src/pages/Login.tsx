@@ -48,8 +48,8 @@ function Login(): JSX.Element {
 
     try {
       let res = await API.post('/token', { id, password });
-
       API.defaults.headers.common['Authorization'] = res.data.token;
+
       dispatch(setAuth({
         token: res.data.token,
         user: {
@@ -58,8 +58,6 @@ function Login(): JSX.Element {
           loginDt: res.data.user.loginDt
         }
       }));
-
-      sessionStorage.setItem('token', res.data.token);
 
       return navigate('/');
     } catch (error) {

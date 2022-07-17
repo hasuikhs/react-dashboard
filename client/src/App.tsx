@@ -2,8 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useNavigate, NavigateFunction, Navigate, Outlet, useLocation, Location } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import API from './common/API';
-import Swal from 'sweetalert2';
+import API, { requestAPI } from './common/API';
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
@@ -12,28 +11,19 @@ function App(): JSX.Element {
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
 
-  const authentificated = useSelector<RootState>(state => state.auth) as Auth;
+  const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
 
   useEffect(() => {
-    console.log('location');
-  }, [ location ]);
-
-  const checkToken = async () => {
-    try {
-      await API.post('/token/check');
-    } catch(err) {
-      return Swal.fire({
-        title: '로그인 세션이 만료되었습니다.',
-        icon: 'error',
-        confirmButtonText: '확인',
-        didClose: () => {
-          sessionStorage.removeItem('token');
-          sessionStorage.removeItem('user');
-          navigate('/login');
-        }
+    if (location.pathname !== '/login') {
+      API.defaults.headers.common['Authorization'] = authentificated.token as string;
+      requestAPI({
+        httpType: 'POST',
+        url: '/token/check',
+        body: {},
+        callback: () => navigate('/login')
       });
     }
-  }
+  }, [authentificated.token, location, navigate]);
 
   const Login = lazy(() => import('./pages/Login'));
   const Home = lazy(() => import('./pages/Home'));
