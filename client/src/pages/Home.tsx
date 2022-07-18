@@ -2,6 +2,8 @@ import { Container } from 'react-bootstrap';
 import MainBar from '../components/MainBar';
 import './css/Home.module.css';
 
+import Spinner from '../components/Spinner';
+
 function Home(): JSX.Element {
   return (
     <>

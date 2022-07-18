@@ -6,6 +6,8 @@ import API, { requestAPI } from './common/API';
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
+import Spinner from './components/Spinner';
+
 function App(): JSX.Element {
 
   const navigate: NavigateFunction = useNavigate();
@@ -39,7 +41,7 @@ function App(): JSX.Element {
 
   return (
     <div className="app">
-      <Suspense fallback={ <p>Loading...</p> }>
+      <Suspense fallback={ <Spinner /> }>
         <Routes>
           <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
             <Route path="" element={ <Home /> } />
