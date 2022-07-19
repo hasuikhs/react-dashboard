@@ -1,4 +1,4 @@
-import { useTable, usePagination } from 'react-table';
+import ReactTable, { useTable, usePagination } from 'react-table';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 

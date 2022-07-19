@@ -1,19 +1,28 @@
 import React, { useMemo } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import MainBar from '../components/MainBar';
 import './css/Home.module.css';
 
 import Table from '../components/Table';
 
 function User(): JSX.Element {
+
+  const tt = 'this is value'
+
   const columns = useMemo(() => [
     {
       Header: 'Name',
       accessor: 'name'
     },
     {
+      width: 4000,
       Header: 'Info',
-      accessor: 'info'
+      accessor: 'info',
+      Cell: ({ value }: any) => (
+        <Button size="sm" onClick={ () => console.log(value)} >
+          { value }
+        </Button>
+      )
     },
   ], []);
 
