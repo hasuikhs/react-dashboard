@@ -1,8 +1,10 @@
-import ReactTable, { useTable, usePagination } from 'react-table';
+import { useTable, usePagination } from 'react-table';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import BTable from 'react-bootstrap/Table';
+import TablePagination from './TablePagination';
+
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
@@ -11,7 +13,6 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     page,
     canPreviousPage,
@@ -42,7 +43,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
           )) }
         </thead>
         <tbody { ...getTableBodyProps() }>
-          { rows.map((row, i) => {
+          { page.map((row, i) => {
             prepareRow(row);
 
             return (
@@ -55,6 +56,16 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
           }) }
         </tbody>
       </BTable>
+      <TablePagination
+        pageIndex={ pageIndex }
+        pageCount={ pageCount }
+        gotoPage={ gotoPage }
+        previousPage={ previousPage }
+        canPreviousPage={ canPreviousPage }
+        nextPage={ nextPage }
+        canNextPage={ canNextPage }
+      />
+      {/* 
       <div className="pagination">
       <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
@@ -98,7 +109,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </>
     
   );
