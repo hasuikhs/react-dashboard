@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav, Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { useNavigate, NavigateFunction, useLocation } from 'react-router-dom';
 import { Dispatch, AnyAction } from 'redux';
 import { useDispatch } from 'react-redux';
 import { resetAuth, Auth } from '../modules/auth';
@@ -8,6 +8,8 @@ import { RootState } from '../modules';
 import { useSelector } from 'react-redux';
 
 function MainBar(): JSX.Element {
+
+  const location = useLocation();
 
   const navigate: NavigateFunction = useNavigate();
 
@@ -22,8 +24,9 @@ function MainBar(): JSX.Element {
           <Navbar.Brand href="/">Main</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto" activeKey={ location.pathname }>
               <Nav.Link href="/user">USER</Nav.Link>
+              <Nav.Link href="/server">SERVER</Nav.Link>
               <Nav.Link href="/">Home2</Nav.Link>
             </Nav>
 

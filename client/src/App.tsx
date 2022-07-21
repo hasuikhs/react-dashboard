@@ -35,6 +35,7 @@ function App(): JSX.Element {
   const Login = lazy(() => import('./pages/Login'));
   const Home = lazy(() => import('./pages/Home'));
   const User = lazy(() => import('./pages/User'));
+  const Server = lazy(() => import('./pages/Server'));
 
   const NotFound = lazy(() => import('./pages/404'));
   const Forbidden = lazy(() => import('./pages/403'));
@@ -46,6 +47,7 @@ function App(): JSX.Element {
           <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
             <Route path="" element={ <Home /> } />
             <Route path="/user" element={ <User /> } />
+            <Route path="/server" element={ <Server /> } />
           </Route>
           <Route path="/login" element={ <Login /> } />
           <Route path="*" element={ <NotFound /> } />
