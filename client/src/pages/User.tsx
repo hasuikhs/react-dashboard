@@ -3,7 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 import MainBar from '../components/MainBar';
 import './css/Home.module.css';
 
-import Table from '../components/Table';
+import Table from '../components/table/Table';
 
 function User(): JSX.Element {
 

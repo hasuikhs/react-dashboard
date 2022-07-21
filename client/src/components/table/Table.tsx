@@ -1,10 +1,13 @@
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import BTable from 'react-bootstrap/Table';
 import TablePagination from './TablePagination';
+import TableSearch from './TableSearch';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
@@ -14,6 +17,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    state,
     page,
     canPreviousPage,
     canNextPage,
@@ -23,21 +27,45 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize }
-  } = useTable({
-    columns,
-    data
-  }, usePagination);
+    state: { pageIndex, pageSize },
+    preGlobalFilteredRows,
+    setGlobalFilter
+  } = useTable(
+    {
+      columns,
+      data
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   // Render the UI for your table
   return (
     <>
+      <TableSearch
+        preGlobalFilteredRows={ preGlobalFilteredRows }
+        globalFilter={ state.globalFilter }
+        setGlobalFilter={ setGlobalFilter }
+        useAsyncDebounce={ useAsyncDebounce }
+      />
+
       <BTable striped bordered hover size="sm" { ...getTableProps() }>
         <thead>
           { headerGroups.map(headerGroup => (
             <tr { ...headerGroup.getHeaderGroupProps() }>
               { headerGroup.headers.map(column => (
-                <th { ...column.getHeaderProps() }>{ column.render('Header') }</th>
+                <th { ...column.getHeaderProps(column.getSortByToggleProps()) }>
+                  { column.render('Header') }
+                  <span>
+                    { ' ' }
+                    { column.isSorted
+                        ? column.isSortedDesc
+                          ? <FontAwesomeIcon icon={ faSortDown } />
+                          : <FontAwesomeIcon icon={ faSortUp } />
+                        : '' }
+                  </span>
+                </th>
               )) }
             </tr>
           )) }
@@ -56,6 +84,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
           }) }
         </tbody>
       </BTable>
+
       <TablePagination
         pageIndex={ pageIndex }
         pageCount={ pageCount }
