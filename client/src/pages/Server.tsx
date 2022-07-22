@@ -1,109 +1,83 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
 
 import Table from '../components/table/Table';
+import { requestAPI } from '../common/API';
 
 function Server(): JSX.Element {
 
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
   const columns = useMemo(() => [
     {
-      Header: 'Name',
-      accessor: 'name'
+      Header: '#',
+      accessor: 'seq'
     },
     {
-      width: 4000,
-      Header: 'Info',
-      accessor: 'info',
-      Cell: ({ value }: any) => (
-        <Button size="sm" onClick={ () => console.log(value)} >
-          { value }
-        </Button>
-      )
+      Header: '서버명',
+      accessor: 'serverNm'
     },
+    {
+      Header: '서버 ID',
+      accessor: 'serverId'
+    },
+    {
+      Header: 'CPU 개수',
+      accessor: 'cpuCnt'
+    },
+    {
+      Header: '램 용량',
+      accessor: 'ram',
+    },
+    {
+      Header: 'DISK 1',
+      accessor: 'disk1'
+    },
+    {
+      Header: 'DISK 2',
+      accessor: 'disk2'
+    },
+    {
+      Header: 'OS',
+      accessor: 'os'
+    },
+    {
+      Header: '활성 상태',
+      accessor: 'isActive'
+    },
+    {
+      Header: '소속 그룹',
+      accessor: 'groupSeq'
+    },
+    {
+      Header: '등록일',
+      accessor: 'regDt'
+    },
+    {
+      Header: '수정일',
+      accessor: 'updDt'
+    }
   ], []);
 
-  const data = useMemo(() => [
-    {
-      name: 'kim1',
-      info: 'test'
-    },
-    {
-      name: 'kim2',
-      info: 'test'
-    },{
-      name: 'kim3',
-      info: 'test'
-    },{
-      name: 'kim4',
-      info: 'test'
-    },{
-      name: 'kim5',
-      info: 'test'
-    },{
-      name: 'kim6',
-      info: 'test'
-    },{
-      name: 'kim7',
-      info: 'test'
-    },{
-      name: 'kim8',
-      info: 'test'
-    },{
-      name: 'kim9',
-      info: 'test'
-    },{
-      name: 'kim10',
-      info: 'test'
-    },{
-      name: 'kim11',
-      info: 'test'
-    },{
-      name: 'kim12',
-      info: 'test'
-    },{
-      name: 'kim13',
-      info: 'test'
-    },{
-      name: 'kim14',
-      info: 'test'
-    },{
-      name: 'kim15',
-      info: 'test'
-    },{
-      name: 'kim16',
-      info: 'test'
-    },{
-      name: 'kim17',
-      info: 'test'
-    },{
-      name: 'kim18',
-      info: 'test'
-    },{
-      name: 'kim19',
-      info: 'test'
-    },{
-      name: 'kim20',
-      info: 'test'
-    },{
-      name: 'kim21',
-      info: 'test'
-    },{
-      name: 'kim22',
-      info: 'test'
-    },{
-      name: 'kim23',
-      info: 'test'
-    },{
-      name: 'kim24',
-      info: 'test'
-    },{
-      name: 'kim25',
-      info: 'test'
-    },
+  const getAllServerData = async () => {
+    let ret = await requestAPI({
+      type: 'GET',
+      url: '/api/server',
+      callback: () => navigate('/login')
+    });
 
-  ], []);
+    setData(ret);
+  }
+
+  useEffect(()=> {
+    getAllServerData();
+  }, []);
+
 
   return (
     <>

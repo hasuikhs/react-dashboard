@@ -18,10 +18,10 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
   // const prevEllipsis: number[] = [];
   // const nextEllipsis: number[] = [];
 
-  let leftSide: number = pageIndex - 5;
+  let leftSide: number = pageIndex - 10;
   if (leftSide <= 0) leftSide = 0;
 
-  let rightSide: number = pageIndex + 5;
+  let rightSide: number = pageIndex + 10;
   if (rightSide >= pageCount) rightSide = pageCount;
 
   for (let num: number = leftSide; num < rightSide; num++) {

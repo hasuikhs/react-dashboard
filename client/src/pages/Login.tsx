@@ -48,7 +48,7 @@ function Login(): JSX.Element {
 
     try {
       let res = await API.post('/token', { id, password });
-      API.defaults.headers.common['Authorization'] = res.data.token;
+      sessionStorage.setItem('token', res.data.token);
 
       dispatch(setAuth({
         token: res.data.token,

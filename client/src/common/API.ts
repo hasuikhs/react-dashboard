@@ -33,6 +33,8 @@ const API: AxiosInstance = axios.create({
 const requestAPI = async ({type, url, body, callback}: { type: string, url: string, body?: any, callback: Function}): Promise<any> => {
   type = type.toUpperCase();
 
+  API.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') as string;
+
   try {
     let ret = null;
 

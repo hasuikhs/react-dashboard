@@ -9,6 +9,6 @@ CREATE TABLE tb_data (
   `swap_memory_usage` TINYINT NOT NULL COMMENT 'Swap Memory usage',
   `disk1` TINYINT NOT NULL COMMENT 'DISK1 usage',
   `disk2` TINYINT NOT NULL COMMENT 'DISK1 usage',
-  `reg_dt` DATETIME NOT NULL DEFAULT '2022-01-01 00:00:00' COMMENT '등록일',
+  `reg_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '등록일',
   PRIMARY KEY (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
