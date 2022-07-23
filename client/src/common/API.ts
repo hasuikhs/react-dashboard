@@ -5,12 +5,14 @@ import Swal from 'sweetalert2';
 const BASE_URL: string = 'http://localhost:3030';
 const expireSessionCode: number[] = [401, 419]; // 401: invalid token, 419: expire token
 
-const expireSessionAlert = (callback: Function) => {
+const expireSessionAlert = () => {
   return Swal.fire({
     title: '로그인 세션이 만료되었습니다.',
     icon: 'error',
     confirmButtonText: '확인',
-    didClose: () => callback()
+    didClose: () => { 
+      window.location.href = '/login';
+    }
   })
 }
 
@@ -30,7 +32,7 @@ const API: AxiosInstance = axios.create({
   timeout: 3000
 });
 
-const requestAPI = async ({type, url, body, callback}: { type: string, url: string, body?: any, callback: Function}): Promise<any> => {
+const requestAPI = async ({type, url, body}: { type: string, url: string, body?: any }): Promise<any> => {
   type = type.toUpperCase();
 
   API.defaults.headers.common['Authorization'] = sessionStorage.getItem('token') as string;
@@ -58,35 +60,35 @@ const requestAPI = async ({type, url, body, callback}: { type: string, url: stri
     return ret?.data;
   } catch (error: any) {
     if (expireSessionCode.includes(error?.response.data.code)) {
-      return expireSessionAlert(callback);
+      return expireSessionAlert();
     } else {
       return etcErrorAlert();
     }
   }
 }
 
-const getAPI = async (url: string, callback: Function): Promise<any> => {
+const getAPI = async (url: string): Promise<any> => {
   try {
     let ret = await API.get(url);
 
     return ret.data;
   } catch(err: any) {
     if (expireSessionCode.includes(err?.response.data.code)) {
-      return expireSessionAlert(callback);
+      return expireSessionAlert();
     } else {
       return etcErrorAlert();
     }
   }
 }
 
-const postAPI = async  (url: string, body: any, callback: Function): Promise<any> => {
+const postAPI = async  (url: string, body: any): Promise<any> => {
   try {
     let ret = await API.post(url, body);
 
     return ret.data;
   } catch (err: any) {
     if (expireSessionCode.includes(err?.response.data.code)) {
-      return expireSessionAlert(callback);
+      return expireSessionAlert();
     } else {
       return etcErrorAlert();
     }

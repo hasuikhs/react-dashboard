@@ -68,7 +68,7 @@ function Server(): JSX.Element {
     let ret = await requestAPI({
       type: 'GET',
       url: '/api/server',
-      callback: () => navigate('/login')
+      // callback: () => navigate('/login')
     });
 
     setData(ret);

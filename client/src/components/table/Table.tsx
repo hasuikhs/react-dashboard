@@ -71,17 +71,19 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
           )) }
         </thead>
         <tbody { ...getTableBodyProps() }>
-          { page.map((row, i) => {
-            prepareRow(row);
+          { page.length > 0
+              ? page.map((row, i) => {
+                  prepareRow(row);
 
-            return (
-              <tr { ...row.getRowProps() }>
-                { row.cells.map(cell => {
-                  return <td { ...cell.getCellProps() }>{ cell.render('Cell') }</td>
-                }) }
-              </tr>
-            )
-          }) }
+                  return (
+                    <tr { ...row.getRowProps() }>
+                      { row.cells.map(cell => {
+                        return <td { ...cell.getCellProps() }>{ cell.render('Cell') }</td>
+                      }) }
+                    </tr>
+                  )
+                })
+              : <tr><td style={ { textAlign: 'center' } } colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
         </tbody>
       </BTable>
 

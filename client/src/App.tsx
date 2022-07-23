@@ -7,6 +7,7 @@ import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
 import Spinner from './components/Spinner';
+import MainBar from './components/MainBar';
 
 function App(): JSX.Element {
 
@@ -51,7 +52,6 @@ function App(): JSX.Element {
           </Route>
           <Route path="/login" element={ <Login /> } />
           <Route path="*" element={ <NotFound /> } />
-          <Route path="/403" element={ <Forbidden /> } />
         </Routes>
       </Suspense>
     </div>
@@ -59,7 +59,8 @@ function App(): JSX.Element {
 }
 
 function ProtectedRoute({ isLogin = false }: { isLogin: boolean }): JSX.Element {
-  return isLogin ? <Outlet /> : <Navigate to="/403" replace />;
+  
+  return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
 export default App;
