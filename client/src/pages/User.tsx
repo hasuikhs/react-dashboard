@@ -3,7 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 import MainBar from '../components/MainBar';
 import './css/Home.module.css';
 
-import Table from '../components/table/Table';
+import ReactTable from '../components/table/ReactTable';
 
 function User(): JSX.Element {
 
@@ -12,7 +12,11 @@ function User(): JSX.Element {
   const columns = useMemo(() => [
     {
       Header: 'Name',
-      accessor: 'name'
+      accessor: 'name',
+      Cell: ({ row }: any) => {
+        console.log(row.values.info)
+        return <span style={{ textAlign: 'center' }}>{ row.values.name}</span>
+      }
     },
     {
       width: 4000,
@@ -112,7 +116,7 @@ function User(): JSX.Element {
       <MainBar />
       <Container>
         <h1>User</h1>
-        <Table columns={ columns } data={ data }/>
+        <ReactTable columns={ columns } data={ data }/>
       </Container>
     </>
   )

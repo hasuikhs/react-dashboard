@@ -2,7 +2,7 @@ import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy }
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import BTable from 'react-bootstrap/Table';
+import Table from 'react-bootstrap/Table';
 import TablePagination from './TablePagination';
 import TableSearch from './TableSearch';
 
@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
-function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
+function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
   
   const {
     getTableProps,
@@ -50,7 +50,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
         useAsyncDebounce={ useAsyncDebounce }
       />
 
-      <BTable striped bordered hover size="sm" { ...getTableProps() }>
+      <Table striped bordered hover size="sm" { ...getTableProps() }>
         <thead>
           { headerGroups.map(headerGroup => (
             <tr { ...headerGroup.getHeaderGroupProps() }>
@@ -85,7 +85,7 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
                 })
               : <tr><td style={ { textAlign: 'center' } } colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
         </tbody>
-      </BTable>
+      </Table>
 
       <TablePagination
         pageIndex={ pageIndex }
@@ -101,4 +101,4 @@ function Table({ columns, data }: { columns: any, data: any}): JSX.Element {
   );
 }
 
-export default Table;
+export default ReactTable;

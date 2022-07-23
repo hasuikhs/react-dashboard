@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Button, OverlayTrigger, Popover } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, OverlayTrigger, Popover, NavDropdown } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { useNavigate, NavigateFunction, useLocation } from 'react-router-dom';
 import { Dispatch, AnyAction } from 'redux';
@@ -21,13 +21,17 @@ function MainBar(): JSX.Element {
     <>
       <Navbar expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Main</Navbar.Brand>
+          <Navbar.Brand href="/">MAIN</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" activeKey={ location.pathname }>
-              <Nav.Link href="/user">USER</Nav.Link>
-              <Nav.Link href="/server">SERVER</Nav.Link>
-              <Nav.Link href="/">Home2</Nav.Link>
+              <Nav.Link href="/">HOME</Nav.Link>
+              
+              <NavDropdown title="INFO">
+                <NavDropdown.Item href="/server">SERVER</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/user">USER</NavDropdown.Item>
+              </NavDropdown>
             </Nav>
 
             <Nav>

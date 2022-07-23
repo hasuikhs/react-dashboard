@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
 
-import Table from '../components/table/Table';
+import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
 
 function Server(): JSX.Element {
@@ -16,15 +16,12 @@ function Server(): JSX.Element {
   const columns = useMemo(() => [
     {
       Header: '#',
-      accessor: 'seq'
+      accessor: 'seq',
+      Cell: (props: any) => <span style={{ textAlign: 'center' }}>{ props }</span>
     },
     {
       Header: '서버명',
       accessor: 'serverNm'
-    },
-    {
-      Header: '서버 ID',
-      accessor: 'serverId'
     },
     {
       Header: 'CPU 개수',
@@ -84,7 +81,7 @@ function Server(): JSX.Element {
       <Mainbar />
       <Container>
         <h1>Server</h1>
-        <Table columns={ columns } data={ data } />
+        <ReactTable columns={ columns } data={ data } />
       </Container>
     </>
   )
