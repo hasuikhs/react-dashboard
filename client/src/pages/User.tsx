@@ -15,7 +15,7 @@ function User(): JSX.Element {
       accessor: 'name',
       Cell: ({ row }: any) => {
         console.log(row.values.info)
-        return <span style={{ textAlign: 'center' }}>{ row.values.name}</span>
+        return <span className="tc">{ row.values.name}</span>
       }
     },
     {

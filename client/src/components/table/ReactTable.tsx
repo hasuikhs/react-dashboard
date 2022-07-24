@@ -55,7 +55,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
           { headerGroups.map(headerGroup => (
             <tr { ...headerGroup.getHeaderGroupProps() }>
               { headerGroup.headers.map(column => (
-                <th { ...column.getHeaderProps(column.getSortByToggleProps()) }>
+                <th className="tc" { ...column.getHeaderProps(column.getSortByToggleProps()) }>
                   { column.render('Header') }
                   <span>
                     { ' ' }
