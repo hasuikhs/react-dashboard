@@ -1,5 +1,6 @@
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
 
+import './ReactTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Table from 'react-bootstrap/Table';
@@ -21,19 +22,18 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     page,
     canPreviousPage,
     canNextPage,
-    pageOptions,
     pageCount,
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
     preGlobalFilteredRows,
     setGlobalFilter
   } = useTable(
     {
       columns,
-      data
+      data,
+      initialState: { pageSize: 15 }
     },
     useGlobalFilter,
     useSortBy,
@@ -83,7 +83,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
                     </tr>
                   )
                 })
-              : <tr><td style={ { textAlign: 'center' } } colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
+              : <tr><td className="tc" colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
         </tbody>
       </Table>
 

@@ -1,43 +1,48 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Container, Form } from 'react-bootstrap';
+import TableSwitch from '../components/table/TableSwitch';
 
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
 
 import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
+import { toDatetimeFormat } from '../common/DateFormat';
 
 function Server(): JSX.Element {
 
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
 
   const columns = useMemo(() => [
     {
       Header: '#',
       accessor: 'seq',
-      Cell: (props: any) => <span style={{ textAlign: 'center' }}>{ props }</span>
+      Cell: ({ value }: any) => <p className="tc">{ value }</p>
     },
     {
       Header: '서버명',
-      accessor: 'serverNm'
+      accessor: 'serverNm',
+      width: 3000
     },
     {
       Header: 'CPU 개수',
-      accessor: 'cpuCnt'
+      accessor: 'cpuCnt',
+      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
     },
     {
-      Header: '램 용량',
+      Header: '램 용량(gb)',
       accessor: 'ram',
+      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
     },
     {
-      Header: 'DISK 1',
-      accessor: 'disk1'
+      Header: 'DISK 1(gb)',
+      accessor: 'disk1',
+      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
     },
     {
-      Header: 'DISK 2',
-      accessor: 'disk2'
+      Header: 'DISK 2(gb)',
+      accessor: 'disk2',
+      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
     },
     {
       Header: 'OS',
@@ -45,7 +50,14 @@ function Server(): JSX.Element {
     },
     {
       Header: '활성 상태',
-      accessor: 'isActive'
+      accessor: 'isActive',
+      Cell: ({ value }: any) => {
+        return (
+          <TableSwitch
+            isActive={ value === 'Y' ? true : false }
+          />
+        )
+      }
     },
     {
       Header: '소속 그룹',
@@ -53,19 +65,20 @@ function Server(): JSX.Element {
     },
     {
       Header: '등록일',
-      accessor: 'regDt'
+      accessor: 'regDt',
+      Cell: ({ value }: any) => <p className="tc">{ toDatetimeFormat(value) }</p>
     },
     {
       Header: '수정일',
-      accessor: 'updDt'
+      accessor: 'updDt',
+      Cell: ({ value }: any) => <p className="tc">{ toDatetimeFormat(value) }</p>
     }
   ], []);
 
   const getAllServerData = async () => {
     let ret = await requestAPI({
       type: 'GET',
-      url: '/api/server',
-      // callback: () => navigate('/login')
+      url: '/api/server'
     });
 
     setData(ret);

@@ -1,0 +1,9 @@
+table tbody td {
+  vertical-align: middle;
+  padding: 10px !important;
+}
+
+table tbody td p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

@@ -7,8 +7,6 @@ import ReactTable from '../components/table/ReactTable';
 
 function User(): JSX.Element {
 
-  const tt = 'this is value'
-
   const columns = useMemo(() => [
     {
       Header: 'Name',
