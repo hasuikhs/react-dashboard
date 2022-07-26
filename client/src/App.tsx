@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
-import Spinner from './components/Spinner';
+import Spinner from './components/spinner/Spinner';
 
 function App(): JSX.Element {
 

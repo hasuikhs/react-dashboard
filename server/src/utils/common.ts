@@ -8,3 +8,7 @@ export function dateToStringFormat(date: Date): string {
 
   return `${ year }-${ month }-${ day } ${ hour }:${ miniute }:${ second }`;
 }
+
+export function camelToSnake(string: string): string {
+  return string.replace(/\.?([A-Z])/g, function (x,y){return '_' + y.toLowerCase()}).replace(/^_/, '');
+}

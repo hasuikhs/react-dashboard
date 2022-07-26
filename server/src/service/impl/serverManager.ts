@@ -1,6 +1,7 @@
 import ServerManagerInterface from '../inf/serverManager.interface';
 import server from '../../domain/server.interface';
 import pool from '../../utils/mysqlConnection';
+import { camelToSnake } from '../../utils/common';
 
 import mysql from 'mysql';
 
@@ -18,10 +19,10 @@ class ServerManager implements ServerManagerInterface {
     server.isActive = 'Y';
 
     const sql: string = `
-      INSERT INTO tb_server(server_nm, server_id, cpu_cnt, ram, disk, os, is_active, group_seq, reg_dt, upd_dt)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+      INSERT INTO tb_server(server_nm, server_id, cpu_cnt, ram, disk1, disk2, os, is_active, group_seq, reg_dt, upd_dt)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
     `;
-    const params: (string | number)[] = [ server.serverNm, server.serverId, server.cpuCnt, server.ram, server.disk, server.os, server.isActive, server.groupSeq ];
+    const params: (string | number)[] = [ server.serverNm, server.serverId, server.cpuCnt, server.ram, server.disk1, server.disk2, server.os, server.isActive, server.groupSeq ];
 
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
@@ -62,7 +63,8 @@ class ServerManager implements ServerManagerInterface {
                 serverId: row.server_id,
                 cpuCnt: row.cpu_cnt,
                 ram: row.ram,
-                disk: row.disk,
+                disk1: row.disk1,
+                disk2: row.disk2,
                 os: row.os,
                 isActive: row.is_active,
                 groupSeq: row.group_seq,
@@ -112,7 +114,8 @@ class ServerManager implements ServerManagerInterface {
                 serverId: row.server_id,
                 cpuCnt: row.cpu_cnt,
                 ram: row.ram,
-                disk: row.disk,
+                disk1: row.disk1,
+                disk2: row.disk2,
                 os: row.os,
                 isActive: row.is_active,
                 groupSeq: row.group_seq,
@@ -153,7 +156,8 @@ class ServerManager implements ServerManagerInterface {
             serverId: result.server_d,
             cpuCnt: result.cpu_cnt,
             ram: result.ram,
-            disk: result.disk,
+            disk1: result.disk1,
+            disk2: result.disk2,
             os: result.os,
             isActive: result.is_active,
             groupSeq: result.group_seq,
@@ -168,13 +172,28 @@ class ServerManager implements ServerManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, serverNm: string, cpuCnt: number, ram: number, disk: number, os: string, isActive: string, groupSeq: number }): Promise<number> {
-    const sql: string = `
+  public async update(props: { seq: number, serverNm: string, cpuCnt: number, ram: number, disk: number, os: string, isActive?: string, groupSeq?: number }): Promise<number> {
+    // const sql: string = `
+    //   UPDATE tb_server
+    //   SET server_nm = ?, cpu_cnt = ?, ram = ?, disk = ?, os = ?, is_active = ?, group_seq = ?, upd_dt = NOW()
+    //   WHERE seq = ?
+    // `;
+    // const params: (string | number)[] = [ props.serverNm, props.cpuCnt, props.ram, props.disk, props.os, props.isActive, props.groupSeq, props.seq ];
+
+    let sql: string = `
       UPDATE tb_server
-      SET server_nm = ?, cpu_cnt = ?, ram = ?, disk = ?, os = ?, is_active = ?, group_seq = ?, upd_dt = NOW()
-      WHERE seq = ?
+      SET upd_dt = NOW()
     `;
-    const params: (string | number)[] = [ props.serverNm, props.cpuCnt, props.ram, props.disk, props.os, props.isActive, props.groupSeq, props.seq ];
+    let params: (string | number)[] = [];
+
+    for (const [key, value] of Object.entries(props)) {
+      if (value !== undefined) {
+        sql += `, ${ camelToSnake(key) } = ?`;
+        params.push(value);
+      }
+    }
+    sql += ` WHERE seq = ?`;
+    params.push(props.seq);
     
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {

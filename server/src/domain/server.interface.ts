@@ -4,7 +4,8 @@ interface server {
   serverId: string;
   cpuCnt: number;
   ram: number;
-  disk: number;
+  disk1: number;
+  disk2: number;
   os: string;
   isActive?: string;
   groupSeq: number;
