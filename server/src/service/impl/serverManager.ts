@@ -172,14 +172,7 @@ class ServerManager implements ServerManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, serverNm: string, cpuCnt: number, ram: number, disk: number, os: string, isActive?: string, groupSeq?: number }): Promise<number> {
-    // const sql: string = `
-    //   UPDATE tb_server
-    //   SET server_nm = ?, cpu_cnt = ?, ram = ?, disk = ?, os = ?, is_active = ?, group_seq = ?, upd_dt = NOW()
-    //   WHERE seq = ?
-    // `;
-    // const params: (string | number)[] = [ props.serverNm, props.cpuCnt, props.ram, props.disk, props.os, props.isActive, props.groupSeq, props.seq ];
-
+  public async update(props: { seq: number, serverNm?: string, cpuCnt?: number, ram?: number, disk1?: number, disk2?: number, os?: string, isActive?: string, groupSeq?: number }): Promise<number> {
     let sql: string = `
       UPDATE tb_server
       SET upd_dt = NOW()

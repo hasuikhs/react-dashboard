@@ -2,6 +2,8 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import API from './common/API';
+
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
@@ -11,6 +13,7 @@ function App(): JSX.Element {
 
   const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
 
+  API.defaults.headers.common['Authorization'] = authentificated.token as string;
   // pages
   const Login = lazy(() => import('./pages/Login'));
   const Home = lazy(() => import('./pages/Home'));
