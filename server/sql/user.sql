@@ -3,7 +3,7 @@ CREATE TABLE  tb_user (
   `user_nm` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '유저명',
   `user_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '유저 ID',
   `user_pw` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '비밀번호',
-  `is_admin` VARCHAR(4) NOT NULL DEFAULT '' COMMENT '관리자 여부',
+  `is_admin` TINYINT NOT NULL DEFAULT 0 COMMENT '관리자 여부',
   `login_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '마지막 로그인',
   `reg_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '등록일',
   `upd_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '수정일',

@@ -7,7 +7,7 @@ interface server {
   disk1: number;
   disk2: number;
   os: string;
-  isActive?: string;
+  isActive?: number;
   groupSeq: number;
   regDt?: Date;
   updDt?: Date;

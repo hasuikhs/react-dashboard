@@ -3,7 +3,7 @@ interface user {
   userNm: string;
   userId: string;
   userPw?: string;
-  isAdmin?: string;
+  isAdmin?: number;
   loginDt?: Date;
   regDt?: Date;
   updDt?: Date;

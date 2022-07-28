@@ -90,7 +90,7 @@ class UserManager implements UserManagerInterface {
       SELECT *
       FROM tb_user
       WHERE seq = ?
-      AND is_admin != 'Y'
+      AND is_admin != 1
     `;
     const params: number[] = [ seq ];
 

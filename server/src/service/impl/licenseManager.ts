@@ -17,7 +17,7 @@ class LicenseManager implements LicenseManagerInterface {
       INSERT INTO tb_license(license_nm, license_id, license_pw, is_main, group_seq, reg_dt, upd_dt)
       VALUES (?, ?, ?, ?, ?, NOW(), NOW())
     `;
-    const params: string[] = [ license.licenseNm, license.licenseId, license.licensePw, license.isMain, license.groupSeq ];
+    const params: (string|number)[] = [ license.licenseNm, license.licenseId, license.licensePw, license.isMain, license.groupSeq ];
 
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
@@ -108,7 +108,7 @@ class LicenseManager implements LicenseManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, licenseNm: string, licenseId: string, licensePw: string, isMain: string, groupSeq: string }): Promise<number> {
+  public async update(props: { seq: number, licenseNm: string, licenseId: string, licensePw: string, isMain: number, groupSeq: string }): Promise<number> {
     throw new Error(``);
   }
 

@@ -3,7 +3,7 @@ interface license {
   licenseNm: string;
   licenseId: string;
   licensePw: string;
-  isMain: string;
+  isMain: number;
   groupSeq: string; // split(,) string
   regDt?: Date;
   updDt?: Date;

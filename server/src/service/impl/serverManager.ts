@@ -16,7 +16,7 @@ class ServerManager implements ServerManagerInterface {
   public async insert(server: server): Promise<number> {
 
     // 최초 입력시 상태
-    server.isActive = 'Y';
+    server.isActive = 1;
 
     const sql: string = `
       INSERT INTO tb_server(server_nm, server_id, cpu_cnt, ram, disk1, disk2, os, is_active, group_seq, reg_dt, upd_dt)
@@ -172,7 +172,7 @@ class ServerManager implements ServerManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, serverNm?: string, cpuCnt?: number, ram?: number, disk1?: number, disk2?: number, os?: string, isActive?: string, groupSeq?: number }): Promise<number> {
+  public async update(props: { seq: number, serverNm?: string, cpuCnt?: number, ram?: number, disk1?: number, disk2?: number, os?: string, isActive?: number, groupSeq?: number }): Promise<number> {
     let sql: string = `
       UPDATE tb_server
       SET upd_dt = NOW()
