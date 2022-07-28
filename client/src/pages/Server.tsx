@@ -7,7 +7,7 @@ import './css/Home.module.css';
 
 import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
-import { toDatetimeFormat } from '../common/DateFormat';
+import { toDateFormat } from '../common/DateFormat';
 
 function Server(): JSX.Element {
 
@@ -25,7 +25,12 @@ function Server(): JSX.Element {
       width: 3000
     },
     {
-      Header: 'CPU 개수',
+      Header: '서버 ID',
+      accessor: 'serverId',
+      Cell: ({ value }: any) => <p className="tc">{ value }</p>
+    },
+    {
+      Header: 'CPU',
       accessor: 'cpuCnt',
       Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
     },
@@ -54,7 +59,7 @@ function Server(): JSX.Element {
       Cell: ({ value }: any) => {
         return (
           <TableSwitch
-            isActive={ value === 'Y' ? true : false }
+            isActive={ value === 1 ? true : false }
           />
         )
       }
@@ -66,12 +71,12 @@ function Server(): JSX.Element {
     {
       Header: '등록일',
       accessor: 'regDt',
-      Cell: ({ value }: any) => <p className="tc">{ toDatetimeFormat(value) }</p>
+      Cell: ({ value }: any) => <p className="tc">{ toDateFormat(value) }</p>
     },
     {
       Header: '수정일',
       accessor: 'updDt',
-      Cell: ({ value }: any) => <p className="tc">{ toDatetimeFormat(value) }</p>
+      Cell: ({ value }: any) => <p className="tc">{ toDateFormat(value) }</p>
     }
   ], []);
 
