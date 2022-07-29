@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
-function TableSwitch({ isActive }: { isActive: boolean }) {
+function UpdateSwitch({ isActive }: { isActive: boolean }) {
 
   const [isOn, setIsOn] = useState(isActive);
 
@@ -22,4 +22,4 @@ function TableSwitch({ isActive }: { isActive: boolean }) {
   )
 }
 
-export default TableSwitch;
+export default UpdateSwitch;

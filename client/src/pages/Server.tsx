@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Form } from 'react-bootstrap';
-import TableSwitch from '../components/table/TableSwitch';
+import UpdateSwitch from '../components/UpdateSwitch';
+import ControlButtonGroup from '../components/ControlButtonGroup';
 
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
@@ -8,6 +9,7 @@ import './css/Home.module.css';
 import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
 import { toDateFormat } from '../common/DateFormat';
+import Footer from '../components/Footer';
 
 function Server(): JSX.Element {
 
@@ -58,7 +60,7 @@ function Server(): JSX.Element {
       accessor: 'isActive',
       Cell: ({ value }: any) => {
         return (
-          <TableSwitch
+          <UpdateSwitch
             isActive={ value === 1 ? true : false }
           />
         )
@@ -77,6 +79,10 @@ function Server(): JSX.Element {
       Header: '수정일',
       accessor: 'updDt',
       Cell: ({ value }: any) => <p className="tc">{ toDateFormat(value) }</p>
+    },
+    {
+      Header: '관리',
+      Cell: ({ value }: any) => <ControlButtonGroup />
     }
   ], []);
 
@@ -101,6 +107,7 @@ function Server(): JSX.Element {
         <h1>Server</h1>
         <ReactTable columns={ columns } data={ data } />
       </Container>
+      <Footer />
     </>
   )
 }
