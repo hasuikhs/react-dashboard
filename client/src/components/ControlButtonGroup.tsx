@@ -1,14 +1,15 @@
+import { MouseEventHandler } from 'react';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
 
-function ControlButtonGroup() {
+function ControlButtonGroup({ selectFunc, deleteFunc}: { selectFunc: MouseEventHandler, deleteFunc: MouseEventHandler }) {
   return (
     <>
       <Button
         variant="outline-secondary"
         size="sm"
-        onClick={ () => console.log('update') }
+        onClick={ selectFunc }
       >
         <FontAwesomeIcon icon={ faPen } />
       </Button>
@@ -16,7 +17,7 @@ function ControlButtonGroup() {
       <Button
         variant="outline-danger"
         size="sm"
-        onClick={ () => console.log('delete') }
+        onClick={ deleteFunc }
       >
         <FontAwesomeIcon icon={ faTrash } />
       </Button>

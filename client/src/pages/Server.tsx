@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container, Form } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import UpdateSwitch from '../components/UpdateSwitch';
 import ControlButtonGroup from '../components/ControlButtonGroup';
+import ServerModal from '../components/modal/ServerModal';
 
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
@@ -9,17 +10,18 @@ import './css/Home.module.css';
 import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
 import { toDateFormat } from '../common/DateFormat';
-import Footer from '../components/Footer';
 
 function Server(): JSX.Element {
 
   const [data, setData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const columns = useMemo(() => [
     {
       Header: '#',
       accessor: 'seq',
-      Cell: ({ value }: any) => <p className="tc">{ value }</p>
+      Cell: ({ value }: any) => <div className="tc">{ value }</div>
     },
     {
       Header: '서버명',
@@ -29,27 +31,27 @@ function Server(): JSX.Element {
     {
       Header: '서버 ID',
       accessor: 'serverId',
-      Cell: ({ value }: any) => <p className="tc">{ value }</p>
+      Cell: ({ value }: any) => <div className="tc">{ value }</div>
     },
     {
       Header: 'CPU',
       accessor: 'cpuCnt',
-      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
+      Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
       Header: '램 용량(gb)',
       accessor: 'ram',
-      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
+      Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
       Header: 'DISK 1(gb)',
       accessor: 'disk1',
-      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
+      Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
       Header: 'DISK 2(gb)',
       accessor: 'disk2',
-      Cell: ({ value }: any) => <p className="tr">{ Number(value).toLocaleString() }</p>
+      Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
       Header: 'OS',
@@ -73,32 +75,51 @@ function Server(): JSX.Element {
     {
       Header: '등록일',
       accessor: 'regDt',
-      Cell: ({ value }: any) => <p className="tc">{ toDateFormat(value) }</p>
+      Cell: ({ value }: any) => <div className="tc">{ toDateFormat(value) }</div>
     },
     {
       Header: '수정일',
       accessor: 'updDt',
-      Cell: ({ value }: any) => <p className="tc">{ toDateFormat(value) }</p>
+      Cell: ({ value }: any) => <div className="tc">{ toDateFormat(value) }</div>
     },
     {
       Header: '관리',
-      Cell: ({ value }: any) => <ControlButtonGroup />
+      Cell: ({ row }: any) => (
+        <div className="tc">
+          <ControlButtonGroup
+            selectFunc={ () => updateServer(row.values.seq) }
+            deleteFunc={ () => deleteServer(row.values.seq) }
+          />
+        </div>
+      )
     }
   ], []);
 
-  const getAllServerData = async () => {
+  const getAllServerData = async (): Promise<void> => {
     let ret = await requestAPI({
       type: 'GET',
       url: '/api/server'
     });
 
-    setData(ret);
+    return setData(ret);
+  }
+
+  const updateServer = (seq: number): any => {
+    console.log(`update seq: ${ seq }`);
+    setShowModal(true);
+    setModalData({
+      serverNm: '테스트',
+      serverId: '123'
+    });
+  }
+
+  const deleteServer = (seq: number): any => {
+    console.log(`delete seq: ${ seq }`);
   }
 
   useEffect(()=> {
     getAllServerData();
   }, []);
-
 
   return (
     <>
@@ -107,7 +128,12 @@ function Server(): JSX.Element {
         <h1>Server</h1>
         <ReactTable columns={ columns } data={ data } />
       </Container>
-      <Footer />
+
+      <ServerModal
+        showModal={ showModal }
+        setShowModal={ setShowModal }
+        modalData={ modalData }
+      />
     </>
   )
 }

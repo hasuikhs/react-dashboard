@@ -41,7 +41,6 @@ function App(): JSX.Element {
 }
 
 function ProtectedRoute({ isLogin = false }: { isLogin: boolean }): JSX.Element {
-  
   return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
