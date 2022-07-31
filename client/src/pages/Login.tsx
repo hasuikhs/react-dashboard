@@ -12,8 +12,8 @@ import API from '../common/API';
 
 function Login(): JSX.Element {
 
-  const [id, setId] = useState<string | ''>('');
-  const [password, setPassword] = useState<string | ''>('');
+  const [id, setId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const idInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
   const passwordInput: React.RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
@@ -43,7 +43,7 @@ function Login(): JSX.Element {
         icon: 'warning',
         confirmButtonText: '확인',
         didClose: () => passwordInput.current?.focus()
-      })
+      });
     }
 
     try {

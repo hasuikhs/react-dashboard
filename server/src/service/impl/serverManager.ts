@@ -153,7 +153,7 @@ class ServerManager implements ServerManagerInterface {
           resolve(result ? {
             seq: result.seq,
             serverNm: result.server_nm,
-            serverId: result.server_d,
+            serverId: result.server_id,
             cpuCnt: result.cpu_cnt,
             ram: result.ram,
             disk1: result.disk1,

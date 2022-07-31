@@ -104,13 +104,14 @@ function Server(): JSX.Element {
     return setData(ret);
   }
 
-  const updateServer = (seq: number): any => {
-    console.log(`update seq: ${ seq }`);
-    setShowModal(true);
-    setModalData({
-      serverNm: '테스트',
-      serverId: '123'
+  const updateServer = async (seq: number): Promise<any> => {
+    let ret = await requestAPI({
+      type: 'GET',
+      url: `/api/server/${ seq }`
     });
+
+    setShowModal(true);
+    setModalData(ret);
   }
 
   const deleteServer = (seq: number): any => {
