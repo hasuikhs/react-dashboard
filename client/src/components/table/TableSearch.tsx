@@ -20,24 +20,19 @@ function TableSearch({ preGlobalFilteredRows, globalFilter, setGlobalFilter, use
 
   return (
     <>
-      <Row>
-        <Col md={ 10 }></Col>
-        <Col md={ 2 }>
-          <InputGroup size="sm" className="mb-1">
-            <Form.Control
-              placeholder="검색어 입력"
-              value={ value || '' }
-              onChange={ e => {
-                setValue(e.target.value);
-                onChange(e.target.value);
-              } }
-            />
-            <InputGroup.Text>
-              <FontAwesomeIcon icon={ faSearch } />
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-      </Row>
+      <InputGroup size="sm" className="mb-1 fr" style={{ width: '200px' }}>
+        <Form.Control
+          placeholder="검색어 입력"
+          value={ value || '' }
+          onChange={ e => {
+            setValue(e.target.value);
+            onChange(e.target.value);
+          } }
+        />
+        <InputGroup.Text>
+          <FontAwesomeIcon icon={ faSearch } />
+        </InputGroup.Text>
+      </InputGroup>
     </>
   )
 }

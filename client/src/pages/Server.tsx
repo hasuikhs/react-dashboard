@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import UpdateSwitch from '../components/UpdateSwitch';
 import ControlButtonGroup from '../components/ControlButtonGroup';
 import ServerModal from '../components/modal/ServerModal';
 
 import Mainbar from '../components//MainBar';
 import './css/Home.module.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
@@ -25,8 +28,7 @@ function Server(): JSX.Element {
     },
     {
       Header: '서버명',
-      accessor: 'serverNm',
-      width: 3000
+      accessor: 'serverNm'
     },
     {
       Header: '서버 ID',
@@ -39,7 +41,7 @@ function Server(): JSX.Element {
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
-      Header: '램 용량(gb)',
+      Header: 'RAM',
       accessor: 'ram',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
@@ -126,7 +128,18 @@ function Server(): JSX.Element {
     <>
       <Mainbar />
       <Container>
-        <h1>Server</h1>
+        <h1 className="mb-5 mt-3">
+          <FontAwesomeIcon icon={ faServer } /> SERVER LIST
+        </h1>
+        <Button
+          type="button"
+          variant="primary"
+          className="fl"
+          size="sm"
+          onClick={ () => setShowModal(true) }
+        >
+          <FontAwesomeIcon icon={ faPlus } /> NEW SERVER
+        </Button>
         <ReactTable columns={ columns } data={ data } />
       </Container>
 
@@ -134,6 +147,7 @@ function Server(): JSX.Element {
         showModal={ showModal }
         setShowModal={ setShowModal }
         modalData={ modalData }
+        setModalData = { setModalData }
       />
     </>
   )
