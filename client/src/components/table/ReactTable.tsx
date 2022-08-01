@@ -9,10 +9,13 @@ import TableSearch from './TableSearch';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
-  
+
+  const [curPage, setCurPage] = useState(0);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -33,12 +36,17 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     {
       columns,
       data,
-      initialState: { pageSize: 15 }
+      initialState: { pageSize: 15, pageIndex: curPage }
     },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
+
+  // 테이블 등록, 수정 됐을시 보던 페이지 유지
+  useEffect(() => {
+    setCurPage(pageIndex);
+  }, [pageIndex]);
 
   // Render the UI for your table
   return (

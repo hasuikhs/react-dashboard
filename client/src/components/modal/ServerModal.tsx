@@ -9,7 +9,7 @@ import { faServer } from '@fortawesome/free-solid-svg-icons';
 
 import { requestAPI } from '../../common/API';
 
-function ServerModal({ showModal, setShowModal, modalData, setModalData }: { showModal: any, setShowModal: any, modalData: any, setModalData: any }) {
+function ServerModal({ showModal, setShowModal, modalData, setModalData, updateList, groupOptions }: { showModal: any, setShowModal: any, modalData: any, setModalData: any, updateList: any, groupOptions: any }) {
 
   const [serverSeq, setServerSeq] = useState<number|null>(null);
 
@@ -37,22 +37,6 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
   const [groupSeq, setGroupSeq] = useState<string>('');
   const groupRef: any = useRef<any>(null);
 
-  const selectStyle = {
-    control: (base: any, state: any) => ({
-      ...base,
-      border: state.isFocused
-        ? '1px solid #B2D4FF'
-        : '1px solid lightgray',
-      '&:hover': { borderColor: 'lightgray' }
-    })
-  }
-
-  const [groupOptions, setGroupOptions] = useState<any>([]);
-
-  useEffect(() => {
-    getGroupOptions();
-  }, []);
-
   useEffect(() => {
     setServerSeq(modalData.seq || null);
     setServerNm(modalData.serverNm || '');
@@ -65,23 +49,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
     setGroupSeq(modalData.groupSeq);
   }, [modalData]);
 
-  const getGroupOptions = async (): Promise<any> => {
-    let ret = await requestAPI({
-      type: 'GET',
-      url: '/api/group/'
-    });
 
-    ret = ret.sort((a: any, b: any) => a.seq - b.seq).reduce((arr: any, cur: any) => {
-      arr.push({
-        value: cur.seq,
-        label: cur.groupNm
-      });
-
-      return arr;
-    }, []);
-
-    setGroupOptions(ret);
-  }
 
   const closeModal = (): void => {
     setShowModal(false);
@@ -144,25 +112,44 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
         didClose: () => groupRef.current && groupRef.current.focus()
       });
     }
+    let dataBody: any = {
+      seq: serverSeq,
+      serverNm: serverNm,
+      serverId: serverId,
+      cpuCnt: cpu,
+      ram: ram,
+      disk1: disk1,
+      disk2: disk2,
+      os: os,
+      groupSeq: groupSeq
+    };
+
+    let affected = null;
 
     if (serverSeq) {
-      let affected = await requestAPI({
+      affected = await requestAPI({
         type: 'PUT',
         url: `/api/server/${ serverSeq }`,
-        body: {
-          seq: serverSeq,
-          serverNm: serverNm,
-          serverId: serverId,
-          cpu: cpu,
-          ram: ram,
-          disk1: disk1,
-          disk2: disk2,
-          os: os,
-          groupSeq: groupSeq
-        }
-      })
+        body: dataBody
+      });
     } else {
-      // 등록 로직
+      affected = await requestAPI({
+        type: 'POST',
+        url: '/api/server/',
+        body: dataBody
+      });
+    }
+
+    if (affected) {
+      Swal.fire({
+        title: `${ serverSeq ? '수정' : '등록' }되었습니다!`,
+        icon: 'success',
+        confirmButtonText: '확인',
+        didClose: () => {
+          closeModal();
+          updateList();
+        }
+      });
     }
   }
 
@@ -213,7 +200,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
                   />
                 </Col>
                 <Col>
-                  <Form.Label>RAM<span className="red_ico">*</span></Form.Label>
+                  <Form.Label>RAM (GB)<span className="red_ico">*</span></Form.Label>
                   <Form.Control
                     ref={ ramRef }
                     type="number"
@@ -229,7 +216,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
             <Form.Group className="mb-3" controlId="form-server-disk">
               <Row>
                 <Col>
-                  <Form.Label>DISK 1<span className="red_ico">*</span></Form.Label>
+                  <Form.Label>DISK 1 (GB)<span className="red_ico">*</span></Form.Label>
                   <Form.Control
                     ref={ disk1Ref }
                     type="number"
@@ -240,7 +227,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
                   />
                 </Col>
                 <Col>
-                  <Form.Label>DISK 2</Form.Label>
+                  <Form.Label>DISK 2 (GB)</Form.Label>
                   <Form.Control
                     ref={ disk2Ref }
                     type="number"
@@ -274,7 +261,16 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData }: { sho
                 placeholder={ '그룹을 선택해주세요.' }
                 options={ groupOptions }
                 noOptionsMessage={ () => '선택할 그룹이 없습니다.' }
-                styles={ selectStyle }
+                styles={ {
+                  control: (base: any, state: any) => ({
+                    ...base,
+                    border: state.isFocused
+                      ? '1px solid #B2D4FF'
+                      : '1px solid lightgray',
+                    '&:hover': { borderColor: 'lightgray' }
+                  })
+                } }
+                onChange={ e => setGroupSeq(e.value) }
               />
             </Form.Group>
           </Form>

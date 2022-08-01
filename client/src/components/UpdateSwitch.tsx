@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
-function UpdateSwitch({ isActive }: { isActive: boolean }) {
+function UpdateSwitch({ isActive, onChange }: { isActive: boolean, onChange: any }) {
 
   const [isOn, setIsOn] = useState(isActive);
 
   const toggleHandler = () => {
-    console.log(isOn)
+    // console.log(isOn)
     setIsOn(!isOn);
+    onChange();
   }
 
   return (

@@ -8,12 +8,13 @@ const expireSessionCode: number[] = [401, 419]; // 401: invalid token, 419: expi
 const expireSessionAlert = () => {
   return Swal.fire({
     title: '로그인 세션이 만료되었습니다.',
+    text: '로그인 화면으로 이동됩니다.',
     icon: 'error',
     confirmButtonText: '확인',
     didClose: () => { 
       window.location.href = '/login';
     }
-  })
+  });
 }
 
 const etcErrorAlert = () => {
@@ -21,7 +22,7 @@ const etcErrorAlert = () => {
     title: '서버 에러입니다. 잠시 후 다시 시도해주세요.',
     icon: 'error',
     confirmButtonText: '확인',
-  })
+  });
 }
 
 const API: AxiosInstance = axios.create({
@@ -65,33 +66,5 @@ const requestAPI = async ({type, url, body}: { type: string, url: string, body?:
   }
 }
 
-const getAPI = async (url: string): Promise<any> => {
-  try {
-    let ret = await API.get(url);
-
-    return ret.data;
-  } catch(err: any) {
-    if (expireSessionCode.includes(err?.response.data.code)) {
-      return expireSessionAlert();
-    } else {
-      return etcErrorAlert();
-    }
-  }
-}
-
-const postAPI = async  (url: string, body: any): Promise<any> => {
-  try {
-    let ret = await API.post(url, body);
-
-    return ret.data;
-  } catch (err: any) {
-    if (expireSessionCode.includes(err?.response.data.code)) {
-      return expireSessionAlert();
-    } else {
-      return etcErrorAlert();
-    }
-  }
-}
-
 export default API;
-export { getAPI, postAPI, requestAPI };
+export { requestAPI };

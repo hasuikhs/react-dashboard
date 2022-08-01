@@ -8,7 +8,7 @@ import { RootState } from '../modules';
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer, faUser, faLayerGroup, faKey, faFileExcel } from '@fortawesome/free-solid-svg-icons';
+import { faDisplay } from '@fortawesome/free-solid-svg-icons';
 
 function MainBar(): JSX.Element {
 
@@ -24,29 +24,19 @@ function MainBar(): JSX.Element {
     <>
       <Navbar expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">MAIN</Navbar.Brand>
+          <Navbar.Brand href="/"><FontAwesomeIcon icon={ faDisplay } /> MONITORING</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" activeKey={ location.pathname }>
               <Nav.Link href="/">HOME</Nav.Link>
               
               <NavDropdown title="INFO">
-                <NavDropdown.Item href="/server">
-                  <FontAwesomeIcon icon={ faServer } className="color-gray" /> SERVER
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/group">
-                  <FontAwesomeIcon icon={ faLayerGroup } className="fr color-gray" /> GROUP
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/license">
-                  <FontAwesomeIcon icon={ faKey } className="fr color-gray" /> LICENSE
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/sheet">
-                  <FontAwesomeIcon icon={ faFileExcel } className="fr color-gray" /> SHEET
-                </NavDropdown.Item>
+                <NavDropdown.Item href="/server">SERVER</NavDropdown.Item>
+                <NavDropdown.Item href="/group">GROUP</NavDropdown.Item>
+                <NavDropdown.Item href="/license">LICENSE</NavDropdown.Item>
+                <NavDropdown.Item href="/sheet">SHEET</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/user">
-                  <FontAwesomeIcon icon={ faUser } className="fr color-gray" /> USER
-                </NavDropdown.Item>
+                <NavDropdown.Item href="/user">USER</NavDropdown.Item>
               </NavDropdown>
             </Nav>
 

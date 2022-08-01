@@ -9,6 +9,7 @@ interface server {
   os: string;
   isActive?: number;
   groupSeq: number;
+  groupNm?: string;
   regDt?: Date;
   updDt?: Date;
 }

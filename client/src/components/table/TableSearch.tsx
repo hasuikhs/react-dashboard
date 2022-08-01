@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InputGroup, Row, Col, Form } from 'react-bootstrap';
+import { InputGroup, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,7 +12,6 @@ interface SearchInterface {
 
 function TableSearch({ preGlobalFilteredRows, globalFilter, setGlobalFilter, useAsyncDebounce }: SearchInterface) {
 
-  const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce((value: any) => {
     setGlobalFilter(value || undefined);
@@ -22,7 +21,7 @@ function TableSearch({ preGlobalFilteredRows, globalFilter, setGlobalFilter, use
     <>
       <InputGroup size="sm" className="mb-1 fr" style={{ width: '200px' }}>
         <Form.Control
-          placeholder="검색어 입력"
+          placeholder="검색어를 입력해주세요."
           value={ value || '' }
           onChange={ e => {
             setValue(e.target.value);

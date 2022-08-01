@@ -29,7 +29,7 @@ class ServerManager implements ServerManagerInterface {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, params, (err, result) => {
-          if (conn) reject(new Error(`ServerManager insert error. cause: ${ err }`));
+          if (err) reject(new Error(`ServerManager insert error. cause: ${ err }`));
 
           resolve(result.insertId);
         });
@@ -42,8 +42,10 @@ class ServerManager implements ServerManagerInterface {
 
   public async selectAll(): Promise<server[]> {
     const sql: string = `
-      SELECT *
-      FROM tb_server
+      SELECT ts.*, tg.group_nm
+      FROM tb_server ts
+      LEFT JOIN tb_group tg
+      ON ts.group_seq = tg.seq
       ORDER BY seq DESC
     `;
 
@@ -68,6 +70,7 @@ class ServerManager implements ServerManagerInterface {
                 os: row.os,
                 isActive: row.is_active,
                 groupSeq: row.group_seq,
+                groupNm: row.group_nm,
                 regDt: row.reg_dt,
                 updDt: row.upd_dt
               });
@@ -180,14 +183,14 @@ class ServerManager implements ServerManagerInterface {
     let params: (string | number)[] = [];
 
     for (const [key, value] of Object.entries(props)) {
-      if (value !== undefined) {
+      if (value !== undefined && key !== 'seq') {
         sql += `, ${ camelToSnake(key) } = ?`;
         params.push(value);
       }
     }
     sql += ` WHERE seq = ?`;
     params.push(props.seq);
-    
+
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
