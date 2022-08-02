@@ -3,6 +3,7 @@ CREATE TABLE tb_license (
   `license_nm` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '라이센스명',
   `license_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '라이센스 ID',
   `license_pw` VARCHAR(128) NOT NULL DEFAULT '' COMMENT '라이센스 비밀번호',
+  `login_url` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '라이센스 접속 URL',
   `group_seq` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '그룹 시퀀스들',
   `reg_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '등록일',
   `upd_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '수정일',

@@ -22,6 +22,9 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
   const [licensePw, setLicensePw] = useState<string>('');
   const licensePwRef: RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
+  const [loginUrl, setLoginUrl] = useState<string>('');
+  const loginUrlRef: RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
+
   const [groupSeq, setGroupSeq] = useState<string>('');
   const groupRef: any = useRef<any>(null);
 
@@ -30,6 +33,7 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
     setLicenseNm(modalData.licenseNm || '');
     setLicenseId(modalData.licenseId || '');
     setLicensePw(modalData.licensePw || '');
+    setLoginUrl(modalData.loginUrl || '');
     setGroupSeq(modalData.groupSeq);
   }, [modalData]);
 
@@ -40,6 +44,8 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
   }
 
   const onSubmit = async () => {
+    const httpRegex =  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+
     if (!licenseNm.trim()) {
       return Swal.fire({
         title: '라이센스명을 입력해주세요.',
@@ -61,6 +67,21 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
         confirmButtonText: '확인',
         didClose: () => licensePwRef.current?.focus()
       });
+    } else if (!loginUrl.trim()) {
+      return Swal.fire({
+        title: '로그인 URL을 입력해주세요.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        didClose: () => loginUrlRef.current?.focus()
+      });
+    } else if (!httpRegex.test(loginUrl)) {
+      return Swal.fire({
+        title: '올바른 URL을 입력해주세요.',
+        text: 'URL은 http를 포함해야합니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        didClose: () => loginUrlRef.current?.focus()
+      });
     } else if (!groupSeq) {
       return Swal.fire({
         title: '그룹을 선택해주세요.',
@@ -75,6 +96,7 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
       licenseNm: licenseNm,
       licenseId: licenseId,
       licensePw: licensePw,
+      loginUrl: loginUrl,
       groupSeq: groupSeq
     };
 
@@ -140,7 +162,7 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="form-license-id">
+            <Form.Group className="mb-3" controlId="form-license-pw">
               <Form.Label>라이센스 PW<span className="red_ico"></span></Form.Label>
               <Form.Control
                 ref={ licensePwRef }
@@ -148,6 +170,18 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
                 placeholder="라이센스 PW를 입력해주세요."
                 value={ licensePw }
                 onChange={ e => setLicensePw(e.target.value) }
+                autoComplete="off"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="form-login-url">
+              <Form.Label>로그인 URL<span className="red_ico"></span></Form.Label>
+              <Form.Control
+                ref={ loginUrlRef }
+                type="text"
+                placeholder="로그인 URL을 입력해주세요. ex) http://www.example.com"
+                value={ loginUrl }
+                onChange={ e => setLoginUrl(e.target.value) }
                 autoComplete="off"
               />
             </Form.Group>

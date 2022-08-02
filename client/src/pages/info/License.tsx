@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button, Container } from 'react-bootstrap';
-import UpdateSwitch from '../../components/UpdateSwitch';
 import ControlButtonGroup from '../../components/ControlButtonGroup';
 import LicenseModal from '../../components/modal/LicenseModal';
 
@@ -14,7 +13,6 @@ import ReactTable from '../../components/table/ReactTable';
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
 import Swal from 'sweetalert2';
-import Select, { StylesConfig } from 'react-select';
 
 function License(): JSX.Element {
 
@@ -41,6 +39,10 @@ function License(): JSX.Element {
     {
       Header: '라이센스 PW',
       accessor: 'licensePw'
+    },
+    {
+      Header: '로그인 URL',
+      accessor: 'loginUrl'
     },
     {
       Header: '그룹',

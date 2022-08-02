@@ -58,7 +58,6 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         setGlobalFilter={ setGlobalFilter }
         useAsyncDebounce={ useAsyncDebounce }
       />
-      <span className="fr me-3" style={ { lineHeight: '30px' } }> { rows.length ? `총 ${ rows.length } 개 조회` : '' } </span>
 
       <Table striped bordered hover size="sm" { ...getTableProps() }>
         <thead>
@@ -96,6 +95,8 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
               : <tr><td className="tc" colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
         </tbody>
       </Table>
+
+      <span className="fl" style={ { lineHeight: '30px' } }> { rows.length ? `조회된 항목 수 ${ rows.length }` : '' } </span>
 
       <TablePagination
         pageIndex={ pageIndex }
