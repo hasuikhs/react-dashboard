@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 
-function ControlButtonGroup({ selectFunc, deleteFunc}: { selectFunc: MouseEventHandler, deleteFunc: MouseEventHandler }) {
+function ControlButtonGroup({ selectFunc, deleteFunc}: { selectFunc: MouseEventHandler, deleteFunc?: MouseEventHandler }) {
   return (
     <>
       <Button

@@ -14,10 +14,10 @@ class LicenseManager implements LicenseManagerInterface {
 
   public async insert(license: license): Promise<number> {
     const sql: string = `
-      INSERT INTO tb_license(license_nm, license_id, license_pw, is_main, group_seq, reg_dt, upd_dt)
-      VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+      INSERT INTO tb_license(license_nm, license_id, license_pw, group_seq, reg_dt, upd_dt)
+      VALUES (?, ?, ?, ?, NOW(), NOW())
     `;
-    const params: (string|number)[] = [ license.licenseNm, license.licenseId, license.licensePw, license.isMain, license.groupSeq ];
+    const params: (string|number)[] = [ license.licenseNm, license.licenseId, license.licensePw, license.groupSeq ];
 
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
@@ -57,8 +57,8 @@ class LicenseManager implements LicenseManagerInterface {
                 licenseNm: row.license_nm,
                 licenseId: row.license_id,
                 licensePw: row.license_pw,
-                isMain: row.is_main,
                 groupSeq: row.group_seq,
+                groupNm: row.group_nm,
                 regDt: row.reg_dt,
                 updDt: row.upd_dt
               });
@@ -95,7 +95,6 @@ class LicenseManager implements LicenseManagerInterface {
             licenseNm: result.license_nm,
             licenseId: result.license_id,
             licensePw: result.license_pw,
-            isMain: result.is_main,
             groupSeq: result.group_seq,
             regDt: result.reg_dt,
             updDt: result.upd_dt
@@ -108,8 +107,28 @@ class LicenseManager implements LicenseManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, licenseNm: string, licenseId: string, licensePw: string, isMain: number, groupSeq: string }): Promise<number> {
-    throw new Error(``);
+  public async update(props: { seq: number, licenseNm: string, licenseId: string, licensePw: string, groupSeq: string }): Promise<number> {
+    let sql: string = `
+      UPDATE tb_license
+      SET license_nm = ?, license_id = ?, license_pw = ?, group_seq = ?, upd_dt = NOW()
+      WHERE seq = ?
+    `;
+    let params: (string | number)[] = [ props.licenseNm, props.licenseId, props.licensePw, props.groupSeq, props.seq ];
+
+    return new Promise<number>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, result) => {
+          if (err) reject(new Error(`LicenseManager update error. cause: ${ err }`));
+
+          resolve(result.affectedRows);
+        });
+
+        // return connection pool
+        conn.release();
+      });
+    });
   }
 
   public async delete(seq: number): Promise<number> {

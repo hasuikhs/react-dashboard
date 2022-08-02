@@ -25,7 +25,7 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
     const token =  jwt.sign({
       id, password
     }, process.env.JWT_SECRET as string, {
-      expiresIn: '30m',
+      expiresIn: '60m',
       issuer: 'issuer'
     });
 

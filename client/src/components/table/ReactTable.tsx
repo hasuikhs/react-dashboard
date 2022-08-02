@@ -8,7 +8,7 @@ import TablePagination from './TablePagination';
 import TableSearch from './TableSearch';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { faSortDown, faSortUp, faSort } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
@@ -25,6 +25,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     page,
     canPreviousPage,
     canNextPage,
+    rows,
     pageCount,
     gotoPage,
     nextPage,
@@ -57,20 +58,21 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         setGlobalFilter={ setGlobalFilter }
         useAsyncDebounce={ useAsyncDebounce }
       />
+      <span className="fr me-3" style={ { lineHeight: '30px' } }> { rows.length ? `총 ${ rows.length } 개 조회` : '' } </span>
 
       <Table striped bordered hover size="sm" { ...getTableProps() }>
         <thead>
           { headerGroups.map(headerGroup => (
             <tr { ...headerGroup.getHeaderGroupProps() }>
               { headerGroup.headers.map(column => (
-                <th className="tc" { ...column.getHeaderProps(column.getSortByToggleProps()) }>
+                <th className="tc" { ...column.getHeaderProps(column.getSortByToggleProps()) } >
                   { column.render('Header') }
                   <span>
                     { ' ' }
                     { column.isSorted
                         ? column.isSortedDesc
-                          ? <FontAwesomeIcon icon={ faSortDown } />
-                          : <FontAwesomeIcon icon={ faSortUp } />
+                          ? <FontAwesomeIcon icon={ faSortDown } style={{ fontSize: '10px' }} />
+                          : <FontAwesomeIcon icon={ faSortUp } style={{ fontSize: '10px' }} />
                         : '' }
                   </span>
                 </th>

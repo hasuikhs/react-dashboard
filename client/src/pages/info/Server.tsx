@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
-import UpdateSwitch from '../components/UpdateSwitch';
-import ControlButtonGroup from '../components/ControlButtonGroup';
-import ServerModal from '../components/modal/ServerModal';
+import { Button, Container } from 'react-bootstrap';
+import UpdateSwitch from '../../components/UpdateSwitch';
+import ControlButtonGroup from '../../components/ControlButtonGroup';
+import ServerModal from '../../components/modal/ServerModal';
 
-import Mainbar from '../components//MainBar';
-import './css/Home.module.css';
+import Mainbar from '../../components//MainBar';
+import '../css/Home.module.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faServer, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import ReactTable from '../components/table/ReactTable';
-import { requestAPI } from '../common/API';
-import { toDatetimeFormat } from '../common/DateFormat';
+import ReactTable from '../../components/table/ReactTable';
+import { requestAPI } from '../../common/API';
+import { toDatetimeFormat } from '../../common/DateFormat';
 import Swal from 'sweetalert2';
 import Select, { StylesConfig } from 'react-select';
 
 function Server(): JSX.Element {
 
-  const [data, setData] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
 
@@ -77,17 +77,17 @@ function Server(): JSX.Element {
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
-      Header: 'RAM (GB)',
+      Header: 'RAM',
       accessor: 'ram',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
-      Header: 'DISK 1 (GB)',
+      Header: 'DISK 1',
       accessor: 'disk1',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
     {
-      Header: 'DISK 2 (GB)',
+      Header: 'DISK 2',
       accessor: 'disk2',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
@@ -124,7 +124,7 @@ function Server(): JSX.Element {
       Cell: ({ row }: any) => (
         <div className="tc">
           <ControlButtonGroup
-            selectFunc={ () => updateServer(row.values.seq) }
+            selectFunc={ () => selectServer(row.values.seq) }
             deleteFunc={ () => deleteServer(row.values.seq, row.values.serverNm) }
           />
         </div>
@@ -135,10 +135,10 @@ function Server(): JSX.Element {
   const getGroupOptions = async (): Promise<any> => {
     let ret = await requestAPI({
       type: 'GET',
-      url: '/api/group/'
+      url: '/api/group'
     });
 
-    ret = ret.sort((a: any, b: any) => a.seq - b.seq).reduce((arr: any, cur: any) => {
+    ret = ret.sort((a: any, b: any) => a.seq - b.seq).reduce((arr: any[], cur: any) => {
       arr.push({
         value: cur.seq,
         label: cur.groupNm
@@ -167,7 +167,7 @@ function Server(): JSX.Element {
       });
     }
 
-    return setData(ret);
+    return setTableData(ret);
   }
 
   const updateActive = async (seq: number, isActive: boolean): Promise<any> => {
@@ -192,7 +192,7 @@ function Server(): JSX.Element {
     }
   }
 
-  const updateServer = async (seq: number): Promise<any> => {
+  const selectServer = async (seq: number): Promise<any> => {
     let ret = await requestAPI({
       type: 'GET',
       url: `/api/server/${ seq }`
@@ -202,7 +202,7 @@ function Server(): JSX.Element {
     setModalData(ret);
   }
 
-  const deleteServer = async (seq: number, serverNm: string): Promise<any>=> {
+  const deleteServer = async (seq: number, serverNm: string): Promise<any> => {
     // 1차 확인
     Swal.fire({
       title: `${ serverNm } 서버를 삭제하시겠습니까?`,
@@ -241,13 +241,13 @@ function Server(): JSX.Element {
     });
   }
 
+  // 최초 랜더링
   useEffect(()=> {
-    console.log('init')
     getGroupOptions();
   }, []);
 
+  // 최초 랜더링에서 그룹 필터가 그려지고 state 할당될때 변화
   useEffect(() => {
-    console.log('tt')
     getAllServerData();
   }, [groupSeqFilter]);
 
@@ -279,7 +279,7 @@ function Server(): JSX.Element {
           onChange={ (e: any) => setGroupSeqFilter(e?.value) }
         />
 
-        <ReactTable columns={ columns } data={ data } />
+        <ReactTable columns={ columns } data={ tableData } />
       </Container>
 
       <ServerModal

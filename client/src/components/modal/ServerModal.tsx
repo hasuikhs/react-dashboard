@@ -49,8 +49,6 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
     setGroupSeq(modalData.groupSeq);
   }, [modalData]);
 
-
-
   const closeModal = (): void => {
     setShowModal(false);
 
@@ -112,6 +110,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
         didClose: () => groupRef.current && groupRef.current.focus()
       });
     }
+
     let dataBody: any = {
       seq: serverSeq,
       serverNm: serverNm,
@@ -135,7 +134,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
     } else {
       affected = await requestAPI({
         type: 'POST',
-        url: '/api/server/',
+        url: '/api/server',
         body: dataBody
       });
     }
@@ -163,7 +162,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="form-server-nm">
-              <Form.Label>서버명<span className="red_ico">*</span></Form.Label>
+              <Form.Label>서버명<span className="red_ico"></span></Form.Label>
               <Form.Control
                 ref={ serverNmRef }
                 type="text"
@@ -175,7 +174,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="form-server-id">
-              <Form.Label>서버 ID<span className="red_ico">*</span></Form.Label>
+              <Form.Label>서버 ID<span className="red_ico"></span></Form.Label>
               <Form.Control
                 ref={ serverIdRef }
                 type="text"
@@ -189,7 +188,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
             <Form.Group className="mb-3" controlId="form-server-spec">
               <Row>
                 <Col>
-                  <Form.Label>CPU<span className="red_ico">*</span></Form.Label>
+                  <Form.Label>CPU<span className="red_ico"></span></Form.Label>
                   <Form.Control
                     ref={ cpuRef }
                     type="number"
@@ -200,7 +199,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
                   />
                 </Col>
                 <Col>
-                  <Form.Label>RAM (GB)<span className="red_ico">*</span></Form.Label>
+                  <Form.Label>RAM (GB)<span className="red_ico"></span></Form.Label>
                   <Form.Control
                     ref={ ramRef }
                     type="number"
@@ -216,7 +215,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
             <Form.Group className="mb-3" controlId="form-server-disk">
               <Row>
                 <Col>
-                  <Form.Label>DISK 1 (GB)<span className="red_ico">*</span></Form.Label>
+                  <Form.Label>DISK 1 (GB)<span className="red_ico"></span></Form.Label>
                   <Form.Control
                     ref={ disk1Ref }
                     type="number"
@@ -253,7 +252,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="form-server-group">
-              <Form.Label>그룹<span className="red_ico">*</span></Form.Label>
+              <Form.Label>그룹<span className="red_ico"></span></Form.Label>
               <Select
                 ref={ groupRef }
                 value={ groupOptions.find((item: any) => item.value === groupSeq) }
@@ -278,7 +277,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
 
         <Modal.Footer>
           <Button variant="secondary" onClick={ closeModal } >닫기</Button>
-          <Button variant="primary" onClick={ onSubmit }>{ serverSeq ? '수정' : '등록' }하기</Button>
+          <Button variant="primary" onClick={ onSubmit } >{ serverSeq ? '수정' : '등록' }하기</Button>
         </Modal.Footer>
       </Modal>
     </>

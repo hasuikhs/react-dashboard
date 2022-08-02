@@ -12,7 +12,8 @@ code {
     monospace;
 }
 
-.red_ico {
+.red_ico:after {
+  content: '*';
   color: red;
 }
 

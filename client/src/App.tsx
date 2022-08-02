@@ -17,8 +17,10 @@ function App(): JSX.Element {
   // pages
   const Login = lazy(() => import('./pages/Login'));
   const Home = lazy(() => import('./pages/Home'));
-  const User = lazy(() => import('./pages/User'));
-  const Server = lazy(() => import('./pages/Server'));
+
+  const Server = lazy(() => import('./pages/info/Server'));
+  const License = lazy(() => import('./pages/info/License'));
+  const User = lazy(() => import('./pages/info/User'));
 
   const NotFound = lazy(() => import('./pages/404'));
   // const Forbidden = lazy(() => import('./pages/403'));
@@ -31,6 +33,7 @@ function App(): JSX.Element {
             <Route path="" element={ <Home /> } />
             <Route path="/user" element={ <User /> } />
             <Route path="/server" element={ <Server /> } />
+            <Route path="/license" element={ <License /> } />
           </Route>
           <Route path="/login" element={ <Login /> } />
           <Route path="*" element={ <NotFound /> } />

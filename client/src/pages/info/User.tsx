@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import MainBar from '../components/MainBar';
-import './css/Home.module.css';
+import MainBar from '../../components/MainBar';
+import '../css/Home.module.css';
 
-import ReactTable from '../components/table/ReactTable';
+import ReactTable from '../../components/table/ReactTable';
 
 function User(): JSX.Element {
 
