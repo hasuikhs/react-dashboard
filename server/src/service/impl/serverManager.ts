@@ -88,8 +88,10 @@ class ServerManager implements ServerManagerInterface {
 
   public async selectAllByGroupSeq(groupSeq: number, isActive?: string): Promise<server[]> {
     const sql: string = `
-      SELECT *
-      FROM tb_server
+      SELECT ts.*, tg.group_nm
+      FROM tb_server ts
+      LEFT JOIN tb_group tg
+      ON ts.group_seq = tg.seq
       WHERE group_seq = ?
       ${ isActive ? `AND is_active = ?` : `` }
     `;
@@ -122,6 +124,7 @@ class ServerManager implements ServerManagerInterface {
                 os: row.os,
                 isActive: row.is_active,
                 groupSeq: row.group_seq,
+                groupNm: row.group_nm,
                 regDt: row.reg_dt,
                 updDt: row.upd_dt
               });

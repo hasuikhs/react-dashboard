@@ -16,6 +16,10 @@ serverRouter.get('/:idx([0-9]+)', async (req: Request, res: Response) => {
   return res.status(200).json( await serverManager.select(parseInt(req.params.idx)) );
 });
 
+serverRouter.get('/group/:idx([0-9]+)', async (req: Request, res: Response) => {
+  return res.status(200).json( await serverManager.selectAllByGroupSeq(parseInt(req.params.idx)) );
+});
+
 serverRouter.post('/', async (req: Request, res: Response) => {
   return res.status(200).json( await serverManager.insert(req.body) );
 });

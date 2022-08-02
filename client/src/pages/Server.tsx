@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import UpdateSwitch from '../components/UpdateSwitch';
 import ControlButtonGroup from '../components/ControlButtonGroup';
@@ -14,7 +14,7 @@ import ReactTable from '../components/table/ReactTable';
 import { requestAPI } from '../common/API';
 import { toDatetimeFormat } from '../common/DateFormat';
 import Swal from 'sweetalert2';
-import Select from 'react-select';
+import Select, { StylesConfig } from 'react-select';
 
 function Server(): JSX.Element {
 
@@ -22,7 +22,39 @@ function Server(): JSX.Element {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
 
+  const selectGroupRef: any = useRef<any>(null);
+
+  const [groupSeqFilter, setGroupSeqFilter] = useState<number|undefined>(undefined);
   const [groupOptions, setGroupOptions] = useState<any>([]);
+
+  const groupSelectStyles: StylesConfig = {
+    control: (base: any) => ({
+      ...base,
+      height: '31px',
+      minHeight: '31px',
+      width: 250
+    }),
+    placeholder: (base: any) => ({
+      ...base,
+      height: '30px'
+    }),
+    container: (base: any) => ({
+      ...base,
+      height: '30px'
+    }),
+    valueContainer: (base: any) => ({
+      ...base,
+      height: '30px'
+    }),
+    singleValue: (base: any) => ({
+      ...base,
+      height: '32px'
+    }),
+    indicatorsContainer: (base: any) => ({
+      ...base,
+      height: '30px'
+    })
+  }
 
   const columns = useMemo(() => [
     {
@@ -119,10 +151,21 @@ function Server(): JSX.Element {
   }
 
   const getAllServerData = async (): Promise<void> => {
-    let ret = await requestAPI({
-      type: 'GET',
-      url: '/api/server'
-    });
+    let selected = selectGroupRef.current?.getValue();
+    let selectedGroupSeq = selected[0]?.value;
+
+    let ret = null;
+    if (selectedGroupSeq){
+      ret = await requestAPI({
+        type: 'GET',
+        url: `/api/server/group/${ selectedGroupSeq }`
+      });
+    } else {
+      ret = await requestAPI({
+        type: 'GET',
+        url: '/api/server'
+      });
+    }
 
     return setData(ret);
   }
@@ -199,9 +242,14 @@ function Server(): JSX.Element {
   }
 
   useEffect(()=> {
-    getAllServerData();
+    console.log('init')
     getGroupOptions();
   }, []);
+
+  useEffect(() => {
+    console.log('tt')
+    getAllServerData();
+  }, [groupSeqFilter]);
 
   return (
     <>
@@ -222,38 +270,13 @@ function Server(): JSX.Element {
         </Button>
 
         <Select
+          ref={ selectGroupRef }
           className="fl"
           isClearable={ true }
           placeholder={ '그룹 필터' }
           options={ groupOptions }
-          styles={ {
-            control: (base) => ({
-              ...base,
-              height: '31px',
-              minHeight: '31px',
-              width: 250
-            }),
-            placeholder: (provided) => ({
-              ...provided,
-              height: '30px'
-            }),
-            container: (provided) => ({
-              ...provided,
-              height: '30px'
-            }),
-            valueContainer: (provided) => ({
-              ...provided,
-              height: '30px'
-            }),
-            singleValue: (provided) => ({
-              ...provided,
-              height: '32px'
-            }),
-            indicatorsContainer: (provided) => ({
-              ...provided,
-              height: '30px'
-            })
-          } }
+          styles={ groupSelectStyles }
+          onChange={ (e: any) => setGroupSeqFilter(e?.value) }
         />
 
         <ReactTable columns={ columns } data={ data } />
