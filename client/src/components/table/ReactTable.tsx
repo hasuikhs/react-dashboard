@@ -59,7 +59,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         useAsyncDebounce={ useAsyncDebounce }
       />
 
-      <Table striped bordered hover size="sm" { ...getTableProps() }>
+      <Table striped bordered hover size="sm" { ...getTableProps() } className="mb-2">
         <thead>
           { headerGroups.map(headerGroup => (
             <tr { ...headerGroup.getHeaderGroupProps() }>
