@@ -51,7 +51,7 @@ class UserManager implements UserManagerInterface {
     const sql: string = `
       SELECT *
       FROM tb_user
-      WHERE is_admin != 'Y'
+      WHERE is_admin != 1
       ORDER BY seq DESC
     `;
     

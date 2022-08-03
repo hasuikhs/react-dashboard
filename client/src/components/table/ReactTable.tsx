@@ -68,11 +68,13 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
                   { column.render('Header') }
                   <span>
                     { ' ' }
-                    { column.isSorted
+                    { column.getSortByToggleProps().title
+                      ? column.isSorted
                         ? column.isSortedDesc
                           ? <FontAwesomeIcon icon={ faSortDown } style={{ fontSize: '10px' }} />
                           : <FontAwesomeIcon icon={ faSortUp } style={{ fontSize: '10px' }} />
-                        : <FontAwesomeIcon icon={ faSort } style={{ fontSize: '10px', color: '#C5C5C5' }} /> }
+                        : <FontAwesomeIcon icon={ faSort } style={{ fontSize: '10px', color: '#C5C5C5' }} />
+                      : '' }
                   </span>
                 </th>
               )) }

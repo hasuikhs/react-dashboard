@@ -67,7 +67,6 @@ function License(): JSX.Element {
     },
     {
       Header: '관리',
-      width: 100,
       Cell: ({ row }: any) => (
         <div className="tc">
           <ControlButtonGroup
@@ -148,7 +147,7 @@ function License(): JSX.Element {
         // 2차 확인
         Swal.fire({
           title: '정말요?',
-          text: '확인을 누르시면 DB에서 삭제되어 복구가 불가능합니다.',
+          text: '확인을 누르시면 영구히 삭제되어 복구가 불가능합니다.',
           icon: 'question',
           confirmButtonText: '확인',
           showCancelButton: true,
@@ -178,7 +177,7 @@ function License(): JSX.Element {
   useEffect(() => {
     getGroupOptions();
     getAllLicenseData();
-  }, [])
+  }, []);
 
   return (
     <>

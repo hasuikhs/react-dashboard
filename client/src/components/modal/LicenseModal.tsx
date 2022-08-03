@@ -1,5 +1,4 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { Button, Form, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
@@ -195,6 +194,7 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
                 isSearchable={ false }
                 placeholder={ '그룹을 선택해주세요.' }
                 options={ groupOptions }
+                closeMenuOnSelect={ false }
                 noOptionsMessage={ () => '선택할 그룹이 없습니다.' }
                 styles={ {
                   control: (base: any, state: any) => ({

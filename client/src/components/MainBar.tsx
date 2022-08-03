@@ -30,13 +30,13 @@ function MainBar(): JSX.Element {
             <Nav className="me-auto" activeKey={ location.pathname }>
               <Nav.Link href="/">HOME</Nav.Link>
               
-              <NavDropdown title="INFO">
-                <NavDropdown.Item href="/server">SERVER</NavDropdown.Item>
-                <NavDropdown.Item href="/group">GROUP</NavDropdown.Item>
-                <NavDropdown.Item href="/license">LICENSE</NavDropdown.Item>
-                <NavDropdown.Item href="/sheet">SHEET</NavDropdown.Item>
-                <NavDropdown.Divider />
+              <NavDropdown title="INFO" style={{ color: 'red'}}>
                 <NavDropdown.Item href="/user">USER</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/sheet">SHEET</NavDropdown.Item>
+                <NavDropdown.Item href="/server">SERVER</NavDropdown.Item>
+                <NavDropdown.Item href="/license">LICENSE</NavDropdown.Item>
+                <NavDropdown.Item href="/group">GROUP</NavDropdown.Item>
               </NavDropdown>
             </Nav>
 

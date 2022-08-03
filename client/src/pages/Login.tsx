@@ -62,7 +62,8 @@ function Login(): JSX.Element {
       return navigate('/');
     } catch (error) {
       return Swal.fire({
-        title: '아이디 또는 비밀번호를 확인해주세요.',
+        title: '계정 정보가 올바르지 않습니다.',
+        text: '아이디 또는 비밀번호를 확인해주세요.',
         icon: 'error',
         confirmButtonText: '확인',
         didClose: () => idInput.current?.focus()
