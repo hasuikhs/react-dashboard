@@ -5,6 +5,10 @@ function NotFound(): JSX.Element {
 
   const navigate = useNavigate();
 
+  document.body.addEventListener('keyup', (e: KeyboardEvent) => {
+    if (e.key === 'Escape') navigate(-1);
+  });
+
   return (
     <>
     <div className="row">
