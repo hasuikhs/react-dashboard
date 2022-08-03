@@ -10,6 +10,9 @@ import styles from './css/Login.module.css';
 
 import API from '../common/API';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+
 function Login(): JSX.Element {
 
   const [id, setId] = useState<string>('');
@@ -81,7 +84,7 @@ function Login(): JSX.Element {
               <input
                 id="userId"
                 ref={ idInput }
-                className="form-control"
+                className="form-control mb-1"
                 type="text"
                 placeholder="ID"
                 value={ id }
@@ -103,7 +106,9 @@ function Login(): JSX.Element {
               <label htmlFor="userPw">PW</label>
             </div>
 
-            <button className="w-100 btn btn-lg btn-primary" type="submit">LOGIN</button>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
+              LOGIN <FontAwesomeIcon icon={ faRightToBracket } />
+            </button>
           </form>
         </main>
       </Container>
