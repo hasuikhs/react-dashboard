@@ -72,7 +72,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
                         ? column.isSortedDesc
                           ? <FontAwesomeIcon icon={ faSortDown } style={{ fontSize: '10px' }} />
                           : <FontAwesomeIcon icon={ faSortUp } style={{ fontSize: '10px' }} />
-                        : '' }
+                        : <FontAwesomeIcon icon={ faSort } style={{ fontSize: '10px', color: '#C5C5C5' }} /> }
                   </span>
                 </th>
               )) }

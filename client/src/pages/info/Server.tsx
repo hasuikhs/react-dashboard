@@ -91,10 +91,10 @@ function Server(): JSX.Element {
       accessor: 'disk2',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
-    {
-      Header: 'OS',
-      accessor: 'os'
-    },
+    // {
+    //   Header: 'OS',
+    //   accessor: 'os'
+    // },
     {
       Header: '사용 상태',
       accessor: 'isActive',
