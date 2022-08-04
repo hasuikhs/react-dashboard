@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-require('dotenv').config();
+import 'dotenv/config';
 
 function encodePassword(password: string): string {
   return bcrypt.hashSync(password, Number(process.env.PASS_SALT as string));
