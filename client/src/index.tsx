@@ -13,6 +13,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './modules';
 
+import { HelmetProvider } from 'react-helmet-async';
+
 const store = createStore(
   rootReducer,
   composeWithDevTools()
@@ -26,9 +28,11 @@ const root: ReactDOM.Root = ReactDOM.createRoot(
 root.render(
   <Provider store={ store }>
     <PersistGate loading={ null } persistor={ persistor }>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
     </PersistGate>
   </Provider>
 );

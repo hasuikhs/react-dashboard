@@ -23,7 +23,9 @@ function App(): JSX.Element {
   const User = lazy(() => import('./pages/info/User'));
 
   const NotFound = lazy(() => import('./pages/404'));
-  // const Forbidden = lazy(() => import('./pages/403'));
+  const Forbidden = lazy(() => import('./pages/403'));
+
+  console.log('tt')
 
   return (
     <div className="app">

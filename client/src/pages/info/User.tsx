@@ -14,6 +14,8 @@ import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
 import Swal from 'sweetalert2';
 
+import Page from '../../components/Page';
+
 function User(): JSX.Element {
 
   const [tableData, setTableData] = useState([]);
@@ -126,7 +128,7 @@ function User(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <Page title="User">
       <Mainbar />
       <Container>
         <h1 className="mb-5 mt-3">
@@ -153,7 +155,7 @@ function User(): JSX.Element {
         setModalData={ setModalData }
         updateList={ getAllUserData }
       />
-    </>
+    </Page>
   )
 }
 

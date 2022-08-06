@@ -13,6 +13,8 @@ import API from '../common/API';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
+import Page from '../components/Page';
+
 function Login(): JSX.Element {
 
   const [id, setId] = useState<string>('');
@@ -75,7 +77,8 @@ function Login(): JSX.Element {
   }
 
   return (
-    <>
+
+    <Page title="Login">
       <Container>
         <main className={ styles['form-login'] }>
           <form onSubmit={ onSubmit }>
@@ -112,7 +115,7 @@ function Login(): JSX.Element {
           </form>
         </main>
       </Container>
-    </>
+    </Page>
   )
 }
 

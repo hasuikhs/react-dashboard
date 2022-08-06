@@ -14,6 +14,8 @@ import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
 import Swal from 'sweetalert2';
 
+import Page from '../../components/Page';
+
 function License(): JSX.Element {
 
   const [tableData, setTableData] = useState([]);
@@ -180,7 +182,7 @@ function License(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <Page title="License">
       <Mainbar />
       <Container>
         <h1 className="mb-5 mt-3">
@@ -208,7 +210,7 @@ function License(): JSX.Element {
         updateList={ getAllLicenseData }
         groupOptions={ groupOptions }
       />
-    </>
+    </Page>
   )
 }
 

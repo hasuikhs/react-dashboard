@@ -16,6 +16,8 @@ import { toDatetimeFormat } from '../../common/DateFormat';
 import Swal from 'sweetalert2';
 import Select, { StylesConfig } from 'react-select';
 
+import Page from '../../components/Page';
+
 function Server(): JSX.Element {
 
   const [tableData, setTableData] = useState([]);
@@ -252,7 +254,7 @@ function Server(): JSX.Element {
   }, [groupSeqFilter]);
 
   return (
-    <>
+    <Page title="Server">
       <Mainbar />
       <Container>
         <h1 className="mb-5 mt-3">
@@ -290,7 +292,7 @@ function Server(): JSX.Element {
         updateList={ getAllServerData }
         groupOptions={ groupOptions }
       />
-    </>
+    </Page>
   )
 }
 
