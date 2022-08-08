@@ -9,13 +9,15 @@ import { Auth } from './modules/auth';
 
 import Spinner from './components/spinner/Spinner';
 
+import ThemeProvider from './theme';
+
 function App(): JSX.Element {
 
   const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
 
   API.defaults.headers.common['Authorization'] = authentificated.token as string;
   // pages
-  const Login = lazy(() => import('./pages/Login'));
+  const Login = lazy(() => import('./pages/Login_new'));
   const Home = lazy(() => import('./pages/Home'));
 
   const Server = lazy(() => import('./pages/info/Server'));
@@ -28,20 +30,22 @@ function App(): JSX.Element {
   console.log('tt')
 
   return (
-    <div className="app">
-      <Suspense fallback={ <Spinner /> }>
-        <Routes>
-          <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
-            <Route path="" element={ <Home /> } />
-            <Route path="/user" element={ <User /> } />
-            <Route path="/server" element={ <Server /> } />
-            <Route path="/license" element={ <License /> } />
-          </Route>
-          <Route path="/login" element={ <Login /> } />
-          <Route path="*" element={ <NotFound /> } />
-        </Routes>
-      </Suspense>
-    </div>
+    <ThemeProvider>
+      <div className="app">
+        <Suspense fallback={ <Spinner /> }>
+          <Routes>
+            <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
+              <Route path="" element={ <Home /> } />
+              <Route path="/user" element={ <User /> } />
+              <Route path="/server" element={ <Server /> } />
+              <Route path="/license" element={ <License /> } />
+            </Route>
+            <Route path="/login" element={ <Login /> } />
+            <Route path="*" element={ <NotFound /> } />
+          </Routes>
+        </Suspense>
+      </div>
+    </ThemeProvider>
   );
 }
 
