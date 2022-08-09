@@ -15,17 +15,22 @@ jwtRouter.post('/', async (req: Request, res: Response) => {
 
     let ret = await loginManager.login(id, password);
 
-    if (ret === 'FAIL') {
+    if (ret === 'INVALID_ID') {
       return res.status(401).json({
         code: 401,
-        message: 'Unauthorized'
+        message: 'Invalid ID'
+      });
+    } else if (ret === 'INVALID_PASSWORD') {
+      return res.status(401).json({
+        code: 401,
+        message: 'Invalid Password'
       });
     }
 
     const token =  jwt.sign({
       id, password
     }, process.env.JWT_SECRET as string, {
-      expiresIn: '60m',
+      expiresIn: '30m',
       issuer: 'issuer'
     });
 

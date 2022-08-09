@@ -28,8 +28,10 @@ class LoginManager implements LoginManagerInterface {
         conn.query(sql, params, (err, rows) => {
           if (err) reject(new Error(`login method error. cuase: ${ err }`));
 
-          if (!rows.length || !checkPassword(password, rows[0]?.user_pw)) {
-            resolve('FAIL');
+          if (!rows.length) {
+            resolve('INVALID_ID');
+          } else if (!checkPassword(password, rows[0]?.user_pw)) {
+            resolve('INVALID_PASSWORD');
           } else {
             // 로그인 성공시 로그인 시간(login_dt) 업데이트
             this._conn.getConnection((connErr, conn) => {
