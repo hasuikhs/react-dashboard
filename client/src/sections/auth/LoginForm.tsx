@@ -19,11 +19,17 @@ import { FormProvider, RHFCheckbox, RHFTextField } from '../../components/hook-f
 import API from '../../common/API';
 import Swal from 'sweetalert2';
 import { RootState } from '../../modules';
+import { AxiosError } from 'axios';
 
 interface LoginInterface {
   id: string;
   password: string;
   rememberMe: boolean;
+}
+
+interface LoginErrorInterface {
+  code: number;
+  message: string;
 }
 
 function LoginForm() {
@@ -78,11 +84,15 @@ function LoginForm() {
 
       return navigate('/');
     } catch (error) {
+      const err = error as AxiosError;
+      const errBody = err.response?.data as LoginErrorInterface;
+
       return Swal.fire({
-        title: '계정 정보가 올바르지 않습니다.',
-        text: '아이디 또는 비밀번호를 확인해주세요.',
+        title: `${ errBody?.message === 'Invalid ID' ? 'ID' : '비밀번호' }가 올바르지 않습니다.`,
+        text: `${ errBody?.message === 'Invalid ID' ? 'ID' : '비밀번호' }를 확인해주세요.`,
         icon: 'error',
-        confirmButtonText: '확인'
+        confirmButtonText: '확인',
+        didClose: () => errBody?.message === 'Invalid ID' ? setFocus('id') : setFocus('password')
       });
     }
   };
@@ -97,7 +107,7 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    getStoreId()
+    getStoreId();
   }, []);
 
   return (
