@@ -129,9 +129,9 @@ function User(): JSX.Element {
 
   return (
     <Page title="User">
-      <Mainbar />
+      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5 mt-3">
+        <h1 className="mb-5">
           <FontAwesomeIcon icon={ faUser } /> User
         </h1>
 

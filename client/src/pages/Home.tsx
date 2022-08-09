@@ -7,7 +7,7 @@ import Page from '../components/Page';
 function Home(): JSX.Element {
   return (
     <Page title="Home">
-      <MainBar />
+      {/* <MainBar /> */}
       <Container>
         <h1>Main</h1>
       </Container>

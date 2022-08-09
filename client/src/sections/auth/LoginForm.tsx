@@ -2,24 +2,28 @@ import * as Yup from 'yup';
 
 import { useState, useEffect } from 'react';
 import { useNavigate, NavigateFunction } from 'react-router-dom';
-
+// redux
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch, AnyAction } from 'redux';
 import { setAuth } from '../../modules/auth';
 import { setRemember, Remember } from '../../modules/remember';
+import { RootState } from '../../modules';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+// @mui
 import { Stack, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton  } from '@mui/lab';
 
 import Iconify from '../../components/Iconify';
 import { FormProvider, RHFCheckbox, RHFTextField } from '../../components/hook-form';
 import API from '../../common/API';
+
 import Swal from 'sweetalert2';
-import { RootState } from '../../modules';
 import { AxiosError } from 'axios';
+
+
+// --------------------------------------------------------------------------------
 
 interface LoginInterface {
   id: string;
@@ -32,12 +36,16 @@ interface LoginErrorInterface {
   message: string;
 }
 
+// --------------------------------------------------------------------------------
+
 function LoginForm() {
   const navigate: NavigateFunction = useNavigate();
   const dispatch: Dispatch<AnyAction> = useDispatch();
   const remember: Remember = useSelector<RootState>(state => state.remember) as Remember;
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  // --------------------------------------------------------------------------------
 
   const LoginSchema = Yup.object().shape({
     id: Yup.string().required('ID를 입력해주세요.'),
@@ -61,6 +69,8 @@ function LoginForm() {
     setValue,
     formState: { isSubmitting }
   } = methods;
+
+  // --------------------------------------------------------------------------------
 
   const onSubmit = async ({ id, password, rememberMe} : LoginInterface) => {
     try {
@@ -106,9 +116,13 @@ function LoginForm() {
     }
   };
 
+  // --------------------------------------------------------------------------------
+
   useEffect(() => {
     getStoreId();
   }, []);
+
+  // --------------------------------------------------------------------------------
 
   return (
     <FormProvider methods={ methods } onSubmit={ handleSubmit(onSubmit) } >
@@ -141,5 +155,7 @@ function LoginForm() {
     </FormProvider>
   );
 }
+
+// --------------------------------------------------------------------------------
 
 export default LoginForm;

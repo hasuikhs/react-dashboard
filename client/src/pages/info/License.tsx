@@ -183,9 +183,9 @@ function License(): JSX.Element {
 
   return (
     <Page title="License">
-      <Mainbar />
+      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5 mt-3">
+        <h1 className="mb-5">
           <FontAwesomeIcon icon={ faKey } /> LICENSE
         </h1>
 

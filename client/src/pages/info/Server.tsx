@@ -255,9 +255,9 @@ function Server(): JSX.Element {
 
   return (
     <Page title="Server">
-      <Mainbar />
+      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5 mt-3">
+        <h1 className="mb-5">
           <FontAwesomeIcon icon={ faServer } /> SERVER
         </h1>
 

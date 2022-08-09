@@ -1,22 +1,30 @@
 import React, { lazy, Suspense } from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+// redux
 import { useSelector } from 'react-redux';
-
-import API from './common/API';
-
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
+
+import { Backdrop, CircularProgress } from '@mui/material';
+
+import Layout from './layouts';
+
+import API from './common/API';
 
 import Spinner from './components/spinner/Spinner';
 
 import ThemeProvider from './theme';
+
+// --------------------------------------------------------------------------------
 
 function App(): JSX.Element {
 
   const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
 
   API.defaults.headers.common['Authorization'] = authentificated.token as string;
-  // pages
+
+  // --------------------------------------------------------------------------------
+
   const Login = lazy(() => import('./pages/Login_new'));
   const Home = lazy(() => import('./pages/Home'));
 
@@ -27,7 +35,7 @@ function App(): JSX.Element {
   const NotFound = lazy(() => import('./pages/404'));
   const Forbidden = lazy(() => import('./pages/403'));
 
-  console.log('tt')
+  // --------------------------------------------------------------------------------
 
   return (
     <ThemeProvider>
@@ -35,7 +43,7 @@ function App(): JSX.Element {
         <Suspense fallback={ <Spinner /> }>
           <Routes>
             <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
-              <Route path="" element={ <Home /> } />
+              <Route path="/home" element={ <Home /> } />
               <Route path="/user" element={ <User /> } />
               <Route path="/server" element={ <Server /> } />
               <Route path="/license" element={ <License /> } />
@@ -50,7 +58,15 @@ function App(): JSX.Element {
 }
 
 function ProtectedRoute({ isLogin = false }: { isLogin: boolean }): JSX.Element {
-  return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
+  const { pathname } = useLocation();
+
+  return isLogin
+          ? pathname === '/'
+            ? <Navigate to="/home" />
+            : <Layout />
+          : <Navigate to="/login" replace />;
 }
+
+// --------------------------------------------------------------------------------
 
 export default App;

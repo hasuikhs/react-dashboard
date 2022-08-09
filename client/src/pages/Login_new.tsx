@@ -8,6 +8,8 @@ import Page from '../components/Page';
 
 import LoginForm from '../sections/auth/LoginForm';
 
+// --------------------------------------------------------------------------------
+
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex',
@@ -49,6 +51,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
+// --------------------------------------------------------------------------------
+
 function Login() {
   return (
     <Page title="Login">
@@ -72,5 +76,7 @@ function Login() {
     </Page>
   );
 }
+
+// --------------------------------------------------------------------------------
 
 export default Login;

@@ -1,14 +1,8 @@
 import { Breakpoint, useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 
-interface Interface {
-  query: string;
-  key: Breakpoint;
-  start: Breakpoint;
-  end: Breakpoint;
-}
 
-function useResponsive({ query, key, start, end }: Interface) {
+function useResponsive(query, key, start, end) {
   const theme = useTheme();
 
   const mediaUp = useMediaQuery(theme.breakpoints.up(key));

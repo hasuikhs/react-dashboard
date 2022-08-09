@@ -2,10 +2,9 @@ import { Navbar, Container, Nav, Button, OverlayTrigger, Popover, NavDropdown } 
 import Swal from 'sweetalert2';
 import { useNavigate, NavigateFunction, useLocation } from 'react-router-dom';
 import { Dispatch, AnyAction } from 'redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetAuth, Auth } from '../modules/auth';
 import { RootState } from '../modules';
-import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDisplay } from '@fortawesome/free-solid-svg-icons';
@@ -70,9 +69,9 @@ function MainBar(): JSX.Element {
                 }).then(result => {
                   if (result.isConfirmed) {
                     dispatch(resetAuth());
-                    navigate('/login')
+                    navigate('/login', { replace: true });
                   }
-                })
+                });
               } }
             >
               Logout
