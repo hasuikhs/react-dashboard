@@ -11,7 +11,8 @@ const expireSessionAlert = () => {
     text: '로그인 화면으로 이동됩니다.',
     icon: 'error',
     confirmButtonText: '확인',
-    didClose: () => { 
+    didClose: () => {
+      // navigate('/login', { replace: true });
       window.location.href = '/login';
     }
   });

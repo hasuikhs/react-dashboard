@@ -32,7 +32,7 @@ const initialState: Auth = {
     userNm: '',
     loginDt: null
   }
-}
+};
 
 function authReducer(state: Auth = initialState, action: Action) {
   switch (action.type) {

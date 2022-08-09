@@ -14,8 +14,8 @@ function RHFCheckbox({ name, label }: RHFCheckboxInterface) {
       label={ label }
       control={
         <Controller
-          name={name}
-          control={control}
+          name={ name }
+          control={ control }
           render={({ field }) => <Checkbox {...field} checked={field.value} />}
         />
       }

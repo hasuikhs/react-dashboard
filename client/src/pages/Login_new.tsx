@@ -55,14 +55,14 @@ function Login() {
       <RootStyle>
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }} >
-            Hi
+            MONITORING
           </Typography>
         </SectionStyle>
 
         <Container maxWidth="sm">
           <ContentStyle>
             <Typography variant="h4" gutterBottom >
-              Sign in 
+              SIGN IN
             </Typography>
 
             <LoginForm />

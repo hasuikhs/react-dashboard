@@ -9,7 +9,7 @@ interface RHFTextFieldInterface {
 }
 
 function RHFTextField({ name, label, type, InputProps }: RHFTextFieldInterface) {
-  const { control } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <Controller
@@ -18,6 +18,7 @@ function RHFTextField({ name, label, type, InputProps }: RHFTextFieldInterface) 
       render={ ({ field, fieldState: { error } }) => (
         <TextField
           { ...field }
+          { ...register(name) }
           fullWidth
           value={ typeof field.value === 'number' && field.value === 0 ? '' : field.value }
           error={ !!error }
