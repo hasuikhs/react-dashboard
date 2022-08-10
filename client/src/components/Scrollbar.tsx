@@ -35,8 +35,8 @@ const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
 // --------------------------------------------------------------------------------
 
 interface ScrollbarInterface {
-  children: JSX.Element;
-  sx: any;
+  children: JSX.Element[] | JSX.Element;
+  sx?: any;
 }
 
 // --------------------------------------------------------------------------------

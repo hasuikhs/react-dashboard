@@ -23,6 +23,7 @@ const APPBAR_DESKTOP: number = 80;
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
   backdropFilter: 'blur(6px)',
+  zIndex: 1000,
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
   backgroundColor: alpha(theme.palette.background.default, 0.72),
   [theme.breakpoints.up('lg')]: {
@@ -86,10 +87,10 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
           <Tooltip title={ `마지막 로그인: ${ new Date(auth.user.loginDt as Date).toLocaleString() }` } arrow >
             <IconButton
               onClick={ handleClick }
-              size="small"
+              size="medium"
               sx={{ ml: 2 }}
-              aria-control={ open ? 'account-menu' : undefined }
-              aria-hashpopup="true"
+              // aria-control={ open ? 'account-menu' : undefined }
+              // aria-hashpopup="true"
               aria-expanded={ open ? 'true' : undefined }
             >
               <Avatar sx={{ width: 32, height: 32 }}></Avatar>
@@ -97,7 +98,7 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
           </Tooltip>
           <Menu
             anchorEl={ anchorEl }
-            id="account-menu"
+            // id="account-menu"
             open={ open }
             onClose={ handleClose }
             onClick={ handleClose }

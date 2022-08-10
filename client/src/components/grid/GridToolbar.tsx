@@ -24,6 +24,7 @@ const SearchStyle = styled(OutlinedInput)(({ theme }: any) => ({
     borderWidth: `1px !important`,
     borderColor: `${theme.palette.grey[500_32]} !important`,
   },
+  '& legend': { display: 'none' }
 }));
 
 // --------------------------------------------------------------------------------

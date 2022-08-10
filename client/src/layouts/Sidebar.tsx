@@ -14,6 +14,7 @@ import useResponsive from '../hooks/useResponsive';
 const DRAWER_WIDTH: number = 220;
 
 const RootStyle = styled('div')(({ theme }) => ({
+  zIndex: 1000,
   [theme.breakpoints.up('lg')]: {
     flexShrink: 0,
     width: DRAWER_WIDTH,
