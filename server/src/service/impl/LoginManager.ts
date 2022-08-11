@@ -1,4 +1,4 @@
-import LoginManagerInterface from '../inf/loginManager.interface';
+import LoginManagerInterface from '../inf/LoginManager.interface';
 import pool from '../../utils/mysqlConnection';
 import mysql from 'mysql';
 import { checkPassword } from '../../utils/passwordUtil';

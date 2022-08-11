@@ -1,4 +1,4 @@
-import LicenseManagerInterface from '../inf/licenseManager.interface';
+import LicenseManagerInterface from '../inf/LicenseManager.interface';
 import license from '../../domain/license.interface';
 import pool from '../../utils/mysqlConnection';
 

@@ -1,10 +1,10 @@
-import GroupManagerInterface from '../inf/groupManager.interface';
-import group from '../../domain/group.interface';
+import SheetManagerInterface from '../inf/SheetManager.interface';
+import sheet from '../../domain/sheet.interface';
 import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';
 
-class GroupManager implements GroupManagerInterface {
+class SheetManager implements SheetManagerInterface {
 
   private _conn: mysql.Pool;
 
@@ -12,19 +12,19 @@ class GroupManager implements GroupManagerInterface {
     this._conn = pool;
   }
 
-  public async insert(group: group): Promise<number> {
+  public async insert(sheet: sheet): Promise<number> {
     const sql: string = `
-      INSERT INTO tb_group(group_nm, reg_dt, upd_dt)
-      VALUES (?, NOW(), NOW())
+      INSERT INTO tb_sheet(sheet_nm, sheet_url, reg_dt, upd_dt)
+      VALUES (?, ?, NOW(), NOW())
     `;
-    const params: string[] = [ group.groupNm ];
+    const params: string[] = [ sheet.sheetNm, sheet.sheetUrl ];
 
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, params, (err, result) => {
-          if (err) reject(new Error(`SheetManager insert error. cause: ${ err }`));
+          if (connErr) reject(new Error(`SheetManager insert error. cause: ${ err }`));
 
           resolve(result.insertId);
         });
@@ -35,26 +35,27 @@ class GroupManager implements GroupManagerInterface {
     });
   }
 
-  public async selectAll(): Promise<group[]> {
+  public async selectAll(): Promise<sheet[]> {
     const sql: string = `
       SELECT *
-      FROM tb_group
+      FROM tb_sheet
       ORDER BY seq DESC
     `;
 
-    return new Promise<group[]>((resolve, reject) => {
+    return new Promise<sheet[]>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, (err, rows) => {
           if (err) reject(new Error(`SheetManager selectAll error. cause: ${ err }`));
 
-          const dataList: group[] = [];
+          const dataList: sheet[] = [];
           if (rows.length) {
             for (const row of rows) {
               dataList.push({
                 seq: row.seq,
-                groupNm: row.group_nm,
+                sheetNm: row.sheet_nm,
+                sheetUrl: row.sheet_url,
                 regDt: row.reg_dt,
                 updDt: row.upd_dt
               });
@@ -70,15 +71,15 @@ class GroupManager implements GroupManagerInterface {
     });
   }
 
-  public async select(seq: number): Promise<group> {
+  public async select(seq: number): Promise<sheet> {
     const sql: string = `
       SELECT *
-      FROM tb_group
+      FROM tb_sheet
       WHERE seq = ?
     `;
     const params: number[] = [ seq ];
 
-    return new Promise<group | any>((resolve, reject) => {
+    return new Promise<sheet | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
@@ -86,9 +87,11 @@ class GroupManager implements GroupManagerInterface {
           if (err) reject(new Error(`SheetManager select error. cause: ${ err }`));
 
           result = result[0];
+
           resolve(result ? {
             seq: result.seq,
-            groupNm: result.group_nm,
+            sheetNm: result.sheet_nm,
+            sheetUrl: result.sheet_url,
             regDt: result.reg_dt,
             updDt: result.upd_dt
           } : {});
@@ -100,13 +103,13 @@ class GroupManager implements GroupManagerInterface {
     });
   }
 
-  public async update(props: { seq: number, groupNm: string }): Promise<number> {
-    const sql: string = `
-      UPDATE tb_group
-      SET group_nm = ?, upd_dt = NOW()
+  public async update(props: { seq: number, sheetNm: string, sheetUrl: string }): Promise<number> {
+    const sql = `
+      UPDATE tb_sheet
+      SET sheet_nm = ?, sheet_url = ?, upd_dt = NOW()
       WHERE seq = ?
     `;
-    const params: (string | number)[] = [ props.groupNm, props.seq ];
+    const params: (string | number)[] = [ props.sheetNm, props.sheetUrl, props.seq ];
 
     return new Promise<number>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
@@ -124,6 +127,29 @@ class GroupManager implements GroupManagerInterface {
     });
   }
 
+  public async delete(seq: number): Promise<number> {
+    const sql: string = `
+      DELETE FROM tb_sheet
+      WHERE seq = ?
+    `;
+    const params: number[] = [ seq ];
+
+    return new Promise<number>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, result) => {
+          if (err) reject(new Error(`SheetManager delete error. cause: ${ err }`));
+
+          resolve(result.affectedRows);
+        });
+
+        // return connection pool
+        conn.release();
+      });
+    });
+  }
+
 }
 
-export default GroupManager;
+export default SheetManager;

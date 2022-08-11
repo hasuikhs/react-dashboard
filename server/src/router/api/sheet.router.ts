@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import SheetManager from '../../service/impl/sheetManager';
+import SheetManager from '../../service/impl/SheetManager';
 
 const sheetRouter = Router();
 const sheetManager = new SheetManager();

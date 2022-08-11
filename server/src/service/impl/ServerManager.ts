@@ -1,4 +1,4 @@
-import ServerManagerInterface from '../inf/serverManager.interface';
+import ServerManagerInterface from '../inf/ServerManager.interface';
 import server from '../../domain/server.interface';
 import pool from '../../utils/mysqlConnection';
 import { camelToSnake } from '../../utils/common';

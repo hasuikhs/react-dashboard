@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import GroupManager from '../../service/impl/groupManager';
+import GroupManager from '../../service/impl/GroupManager';
 
 const groupRouter = Router();
 const groupManager = new GroupManager();
