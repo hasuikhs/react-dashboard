@@ -21,7 +21,7 @@ import Page from '../../components/Page';
 import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
-import { GridHead, GridToolbar, GridControlMenu } from '../../components/grid';
+import { TableHeader, TableToolbar, TableControlMenu } from '../../components/mui-table';
 
 import { descendingComparator, getComparator, applySortFilter } from '../../common/TableFunc';
 import ServerModal from '../../components/modal/ServerModal';
@@ -29,16 +29,17 @@ import ServerModal from '../../components/modal/ServerModal';
 // --------------------------------------------------------------------------------
 
 const TABLE_HEAD: any[] = [
-  { id: 'serverNm', label: '서버명', alignRight: false },
-  { id: 'serverId', label: '서버 ID', alignRight: false },
-  { id: 'cpuCnt', label: 'CPU', alignRight: false },
-  { id: 'ram', label: 'RAM', alignRight: false },
-  { id: 'disk1', label: 'DISK 1', alignRight: false },
-  { id: 'disk2', label: 'DISK 2', alignRight: false },
-  { id: 'isActive', label: '사용 상태', alignRight: false },
-  { id: 'groupNm', label: '그룹', alignRight: false },
-  { id: 'regDt', label: '등록 시간', alignRight: false },
-  { id: 'updDt', label: '수정 시간', alignRight: false }
+  { id: 'seq', label: '#' },
+  { id: 'serverNm', label: '서버명' },
+  { id: 'serverId', label: '서버 ID' },
+  { id: 'cpuCnt', label: 'CPU' },
+  { id: 'ram', label: 'RAM'  },
+  { id: 'disk1', label: 'DISK 1' },
+  { id: 'disk2', label: 'DISK 2' },
+  { id: 'isActive', label: '상태' },
+  { id: 'groupNm', label: '그룹' },
+  { id: 'regDt', label: '등록 시간' },
+  { id: 'updDt', label: '수정 시간' }
 ];
 
 // --------------------------------------------------------------------------------
@@ -128,19 +129,18 @@ function Server() {
         </Stack>
 
         <Card>
-          <GridToolbar numSelected={ selected.length } filterName={ filterName } onFilterName={ handleFilterByName } />
+          <TableToolbar numSelected={ selected.length } filterName={ filterName } onFilterName={ handleFilterByName } />
         
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }} >
               <Table>
-                <GridHead
+                <TableHeader
                   order={ order }
                   orderBy={ orderBy }
                   headLabel={ TABLE_HEAD }
                   rowCount={ tableData.length }
                   numSelected={ selected.length }
                   onRequestSort={ handleRequestSort }
-                  onSelectAllClick={ handleSelectAllClick }
                 />
               </Table>
             </TableContainer>

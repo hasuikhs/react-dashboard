@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 
-function descendingComparator(a: any, b: any, orderBy: string): number {
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -10,10 +10,18 @@ function descendingComparator(a: any, b: any, orderBy: string): number {
   return 0;
 }
 
-function getComparator(order: string, orderBy: string): (a: any, b: any) => number {
+type Order = 'asc' | 'desc';
+
+function getComparator<Key extends keyof any>(
+  order: Order,
+  orderBy: Key,
+): (
+  a: { [key in Key]: number | string },
+  b: { [key in Key]: number | string },
+) => number {
   return order === 'desc'
-    ? (a: any, b: any) => descendingComparator(a, b, orderBy)
-    : (a: any, b: any) => -descendingComparator(a, b, orderBy);
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function applySortFilter(array: any[], comparator: (arg0: any, arg1: any) => any, query: string) {

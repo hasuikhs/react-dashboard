@@ -10,6 +10,11 @@ const navConfig = [
     path: '/home',
     icon: getIcon('eva:home-fill')
   },
+  // {
+  //   title: 'data',
+  //   path: '/data',
+  //   icon: getIcon('bi:clipboard-data-fill')
+  // },
   {
     title: 'user',
     path: '/user',

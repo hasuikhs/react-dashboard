@@ -1,4 +1,4 @@
-import { Box, Checkbox, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
+import { Box, TableRow, TableCell, TableHead, TableSortLabel } from '@mui/material';
 
 // --------------------------------------------------------------------------------
 
@@ -21,19 +21,15 @@ interface GridHeadInterface {
   headLabel: string[];
   numSelected: number;
   onRequestSort: Function;
-  onSelectAllClick: ((event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void) | undefined;
 }
 
 // --------------------------------------------------------------------------------
 
-function GridHead({
+function TableHeader({
   order,
   orderBy,
-  rowCount,
   headLabel,
-  numSelected,
   onRequestSort,
-  onSelectAllClick
 }: GridHeadInterface) {
   const createSortHandler = (property: any) => (event: any) => {
     onRequestSort(event, property);
@@ -42,21 +38,13 @@ function GridHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-        <Checkbox
-            indeterminate={ numSelected > 0 && numSelected < rowCount }
-            checked={ rowCount > 0 && numSelected === rowCount }
-            onChange={ onSelectAllClick }
-          />
-        </TableCell>
         { headLabel.map((headCell: any) => (
           <TableCell
             key={ headCell.id }
-            align={ headCell.alignRight ? 'right' : 'left' }
+            align={ headCell?.align || 'center' }
             sortDirection={ orderBy === headCell.id ? order : false }
           >
             <TableSortLabel
-              hideSortIcon
               active={ orderBy === headCell.id }
               direction={ orderBy === headCell.id ? order : 'asc' }
               onClick={ createSortHandler(headCell.id) }
@@ -77,4 +65,4 @@ function GridHead({
 
 // --------------------------------------------------------------------------------
 
-export default GridHead;
+export default TableHeader;

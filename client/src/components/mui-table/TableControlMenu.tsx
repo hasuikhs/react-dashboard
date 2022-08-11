@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 // component
@@ -7,7 +6,7 @@ import Iconify from '../Iconify';
 
 // --------------------------------------------------------------------------------
 
-function GridControlMenu() {
+function TableControlMenu() {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,4 +46,4 @@ function GridControlMenu() {
 
 // --------------------------------------------------------------------------------
 
-export default GridControlMenu;
+export default TableControlMenu;

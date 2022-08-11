@@ -37,7 +37,7 @@ interface GridToolbarInterface {
 
 // --------------------------------------------------------------------------------
 
-function GridToolbar({ numSelected, filterName, onFilterName }: GridToolbarInterface) {
+function TableToolbar({ numSelected, filterName, onFilterName }: GridToolbarInterface) {
   return (
     <RootStyle
       sx={{
@@ -84,4 +84,4 @@ function GridToolbar({ numSelected, filterName, onFilterName }: GridToolbarInter
 
 // --------------------------------------------------------------------------------
 
-export default GridToolbar;
+export default TableToolbar;

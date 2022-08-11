@@ -1,5 +1,6 @@
 import React from 'react';
-import Pagination from 'react-bootstrap/Pagination';
+// import Pagination from 'react-bootstrap/Pagination';
+import { Stack, Pagination, PaginationItem } from '@mui/material'
 
 interface PaginationInerface {
   pageIndex: number;
@@ -10,7 +11,6 @@ interface PaginationInerface {
   previousPage: Function;
   nextPage: Function;
 }
-
 
 function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPreviousPage, nextPage, canNextPage }: PaginationInerface) {
 
@@ -40,42 +40,69 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
   //   nextEllipsis.push(rightSide + 1);
   // }
 
+  // mui
+  const onPageChange = (e: React.ChangeEvent<unknown>, page: number) => {
+    gotoPage(page);
+  };
+
   return (
-    <>
-      <Pagination className="justify-content-md-center fr">
-      <Pagination.First onClick={ () => gotoPage(0) } disabled={ !canPreviousPage } />
-        <Pagination.Prev onClick={ () => previousPage() } disabled={ !canPreviousPage } />
+    <Stack spacing={ 2 }>
+      <Pagination
+        disabled={ pageCount === 1 ? true : false }
+        showFirstButton
+        showLastButton
+        count={ pageCount }
+        page={ pageIndex }
+        onChange={ onPageChange }
+        size="medium"
+        sx={{
+          display: "flex",
+          justifyContent: "end"
+        }}
+        renderItem={ (item) => (
+          <PaginationItem { ...item } sx={{ fontSize: 14 }} />
+        ) }
+      />
+    </Stack>
+  );
 
-        {/* { prevEllipsis.map(prev => (
-            <Pagination.Ellipsis
-              key={ prev }
-              onClick={ () => gotoPage(prev) }
-            />
-        )) } */}
+  // bootstrap
+  // return (
+  //   <>
+  //     <Pagination className="justify-content-md-center fr">
+  //     <Pagination.First onClick={ () => gotoPage(0) } disabled={ !canPreviousPage } />
+  //       <Pagination.Prev onClick={ () => previousPage() } disabled={ !canPreviousPage } />
 
-        { pages.map(curPage => {
-          return (
-          <Pagination.Item
-            key={ curPage }
-            active={ curPage === pageIndex }
-            onClick={ () => gotoPage(curPage) }
-          >
-            { curPage + 1 }
-          </Pagination.Item>
-        )}) }
+  //       {/* { prevEllipsis.map(prev => (
+  //           <Pagination.Ellipsis
+  //             key={ prev }
+  //             onClick={ () => gotoPage(prev) }
+  //           />
+  //       )) } */}
 
-        {/* { nextEllipsis.map(next => (
-            <Pagination.Ellipsis
-              key={ next }
-              onClick={ () => gotoPage(next) }
-            />
-        )) } */}
+  //       { pages.map(curPage => {
+  //         return (
+  //         <Pagination.Item
+  //           key={ curPage }
+  //           active={ curPage === pageIndex }
+  //           onClick={ () => gotoPage(curPage) }
+  //         >
+  //           { curPage + 1 }
+  //         </Pagination.Item>
+  //       )}) }
 
-        <Pagination.Next onClick={ () => nextPage() } disabled={ !canNextPage } />
-        <Pagination.Last onClick={ () => gotoPage(pageCount - 1) } disabled={ !canNextPage } />
-      </Pagination>
-    </>
-  )
+  //       {/* { nextEllipsis.map(next => (
+  //           <Pagination.Ellipsis
+  //             key={ next }
+  //             onClick={ () => gotoPage(next) }
+  //           />
+  //       )) } */}
+
+  //       <Pagination.Next onClick={ () => nextPage() } disabled={ !canNextPage } />
+  //       <Pagination.Last onClick={ () => gotoPage(pageCount - 1) } disabled={ !canNextPage } />
+  //     </Pagination>
+  //   </>
+  // );
 }
 
 export default TablePagination;
