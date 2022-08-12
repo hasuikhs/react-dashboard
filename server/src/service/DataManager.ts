@@ -1,58 +1,72 @@
-import axios from 'axios';
-import Crawler from './impl/Crawler';
-import { dateToStringFormat } from '../utils/common';
+import license from '../domain/license.interface';
+import server from '../domain/server.interface';
+import { getNcpToken, getMonitoringData } from '../utils/dataUtil';
+import LicenseManager from './impl/LicenseManager';
+import ServerManager from './impl/ServerManager';
 
-const metricInfo: string[] = [
-  'mi1.avg.ld.cnt',
-  'mi5.avg.ld.cnt',
-  'mi15.avg.ld.cnt',
-  'mem.usert',
-  'swap.usert',
-  'disk.used.rto'
-];
+// --------------------------------------------------------------------------------
 
-const observeDisk: string[] = [
-  '/dev/xvda1',
-  '/dev/xvdb1',
-  '/dev/xvdc1'
-];
+async function getLicenseData(): Promise<license[]> {
+  const licenseMangager: LicenseManager = new LicenseManager();
 
-async function getNcpToken(loginURL: string, id: string, password: string): Promise<undefined|string> {
-  const crawler: Crawler = new Crawler();
+  return await licenseMangager.selectAll();
+}
 
-  let result: any = undefined;
+async function setToken(license: license): Promise<license> {
+  license.token = await getNcpToken(license.loginUrl, license.licenseId, license.licensePw);
 
-  try {
-    await crawler.moveURL(loginURL);
-    await crawler.login('#username', id, '#passwordPlain', password);
+  return license;
+}
 
-    result = await crawler.getCookieValue('ncp');
-  } catch(e) {
+async function insertData() {
 
-  } finally {
-    await crawler.close();
+  // const lic
+
+}
+
+async function test() {
+
+  console.time('TEST');
+  // 라이센스 정보 가져오기
+  const licenses: license[] = await getLicenseData();
+  
+  console.timeLog('TEST', '--- STEP 1 END ---');
+
+  // 라이센스에 크롤링 돌아서 token값 매핑
+  const licensePromises: any[] = [];
+  for (const license of licenses) {
+    if (license.seq === 1) { // 1번 계정만 테스트
+      licensePromises.push(setToken(license));
+    }
   }
 
-  return result?.value;
-}
+  console.timeLog('TEST', '--- STEP 2 END ---');
 
-async function getMonitoringData(serverId: string, token: string) {
+  // 프로미스로 동시에 가져옴 3계정 기준 30초 정도 소요
+  const licensesWithToken: license[] = await Promise.all(licensePromises);
 
-  const apiURL: string = 'https://monitoring-api.ncloud.com/monapi/pfmnc';
-  const headerConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-NCP-access-token': token
+  for (const license of licensesWithToken) {
+    const groupSeqs: string[] = license.groupSeq.split(',');
+
+    for (const group of groupSeqs) {
+      const serverManager = new ServerManager();
+
+      // 그룹별 서버 목록 가져오기
+      const servers: server[] = await serverManager.selectAllByGroupSeq(parseInt(group));
+      const serverPromises: any[] = [];
+
+      for (const server of servers) {
+        serverPromises.push(getMonitoringData(server.serverId, license.token));
+      }
+
+      const data = await Promise.all(serverPromises);
     }
-  };
+  }
+  console.timeLog('TEST', '--- STEP 3 END ---');
 
-  const curTime = dateToStringFormat(new Date()); // format: yyyyMMddHHmm
-
-  let requestBody = {};
-
-  await axios.post(apiURL, requestBody, headerConfig)
-
+  console.timeEnd('TEST');
 }
 
+test()
 
-export { getNcpToken };
+export default insertData;

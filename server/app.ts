@@ -44,7 +44,7 @@ function runServer(): Express.Application {
   app.listen(PORT, () => {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
 
-    schedule.scheduleJob('*/30 * * * *', () => {
+    schedule.scheduleJob('40 15/30 * * * *', () => {
       console.log(new Date().toString());
     });
   });

@@ -67,7 +67,7 @@ class LicenseManager implements LicenseManagerInterface {
 
           resolve(dataList);
         });
-
+        
         // return connection pool
         conn.release();
       });
@@ -85,7 +85,7 @@ class LicenseManager implements LicenseManagerInterface {
     return new Promise<license | any>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
-
+        
         conn.query(sql, params, (err, result) => {
           if (err) reject(new Error(`LicenseManager select error. cause: ${ err }`));
 

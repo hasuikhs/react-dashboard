@@ -7,6 +7,7 @@ interface license {
   groupSeq: string; // split(,) string
   regDt?: Date;
   updDt?: Date;
+  token?: string;
 }
 
 export default license;
