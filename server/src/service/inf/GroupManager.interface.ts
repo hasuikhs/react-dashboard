@@ -1,4 +1,4 @@
-import group from '../../domain/group.interface';
+import { group } from '../../domain';
 
 interface GroupManagerInterface {
   insert(group: group): Promise<number>;

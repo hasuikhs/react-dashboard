@@ -1,4 +1,4 @@
-import user from '../../domain/user.interface';
+import { user } from '../../domain';
 
 interface UserManagerInterface {
   insert(user: user): Promise<number>;

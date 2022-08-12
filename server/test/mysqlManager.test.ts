@@ -1,5 +1,4 @@
-import LoginManager from '../src/service/impl/LoginManager';
-import UserManager from '../src/service/impl/UserManager';
+import { LoginManager, UserManager } from '../src/service/impl';
 
 describe('Test MysqlManager methods.', () => {
   // const loginManager = new LoginManager();

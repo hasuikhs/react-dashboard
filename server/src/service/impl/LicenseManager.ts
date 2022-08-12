@@ -1,5 +1,5 @@
-import LicenseManagerInterface from '../inf/LicenseManager.interface';
-import license from '../../domain/license.interface';
+import { LicenseManagerInterface } from '../inf';
+import { license } from '../../domain';
 import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';

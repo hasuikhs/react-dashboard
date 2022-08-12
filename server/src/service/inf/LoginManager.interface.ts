@@ -1,4 +1,4 @@
-import user from '../../domain/user.interface';
+import { user } from '../../domain';
 
 interface LoginManagerInterface {
   login(id: string, password: string): Promise<string|user>;

@@ -1,7 +1,7 @@
-import { Builder, Key, By, ThenableWebDriver, until } from 'selenium-webdriver'
+import { Builder, Key, By, ThenableWebDriver } from 'selenium-webdriver'
 import chrome from 'selenium-webdriver/chrome';
 import 'chromedriver';
-import CrawlerInterface from '../inf/Crawler.interface';
+import { CrawlerInterface } from '../inf';
 
 class Crawler implements CrawlerInterface {
 

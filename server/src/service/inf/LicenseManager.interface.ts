@@ -1,4 +1,4 @@
-import license from '../../domain/license.interface';
+import { license } from '../../domain';
 
 interface LicenseManagerInterface {
   insert(license: license): Promise<number>;

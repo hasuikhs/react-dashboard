@@ -1,8 +1,8 @@
-import LoginManagerInterface from '../inf/LoginManager.interface';
+import { LoginManagerInterface } from '../inf';
 import pool from '../../utils/mysqlConnection';
 import mysql from 'mysql';
 import { checkPassword } from '../../utils/passwordUtil';
-import user from '../../domain/user.interface';
+import { user } from '../../domain';
 
 class LoginManager implements LoginManagerInterface {
 

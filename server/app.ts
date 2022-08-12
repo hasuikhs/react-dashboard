@@ -2,9 +2,7 @@ import express, { Request, Response, Express } from 'express';
 import cluster from 'cluster';
 import cors from 'cors';
 import schedule from 'node-schedule';
-import apiRouter from './src/router/apiRouter';
-import jwtRouter from './src/router/jwtRouter';
-import graphqlRouter from './src/router/graphqlRouter';
+import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
 
 const PORT: number = 3030;

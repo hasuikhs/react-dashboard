@@ -1,5 +1,5 @@
-import GroupManagerInterface from '../inf/GroupManager.interface';
-import group from '../../domain/group.interface';
+import { GroupManagerInterface } from '../inf';
+import { group } from '../../domain';
 import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';

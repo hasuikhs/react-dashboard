@@ -1,5 +1,5 @@
-import SheetManagerInterface from '../inf/SheetManager.interface';
-import sheet from '../../domain/sheet.interface';
+import { SheetManagerInterface } from '../inf';
+import { sheet } from '../../domain';
 import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';

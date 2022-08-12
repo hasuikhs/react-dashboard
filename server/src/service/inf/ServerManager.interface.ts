@@ -1,4 +1,4 @@
-import server from '../../domain/server.interface';
+import { server } from '../../domain';
 
 interface ServerManagerInterface {
   insert(server: server): Promise<number>;

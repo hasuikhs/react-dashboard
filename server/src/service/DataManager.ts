@@ -1,72 +1,80 @@
-import license from '../domain/license.interface';
-import server from '../domain/server.interface';
-import { getNcpToken, getMonitoringData } from '../utils/dataUtil';
-import LicenseManager from './impl/LicenseManager';
-import ServerManager from './impl/ServerManager';
+import { data, license, server } from '../domain';
+import pool from '../utils/mysqlConnection';
+import getAllMonitoringData from '../utils/dataUtil';
 
+import mysql from 'mysql';
 // --------------------------------------------------------------------------------
 
-async function getLicenseData(): Promise<license[]> {
-  const licenseMangager: LicenseManager = new LicenseManager();
+class DataManager {
 
-  return await licenseMangager.selectAll();
-}
+  private _conn: mysql.Pool;
 
-async function setToken(license: license): Promise<license> {
-  license.token = await getNcpToken(license.loginUrl, license.licenseId, license.licensePw);
-
-  return license;
-}
-
-async function insertData() {
-
-  // const lic
-
-}
-
-async function test() {
-
-  console.time('TEST');
-  // 라이센스 정보 가져오기
-  const licenses: license[] = await getLicenseData();
-  
-  console.timeLog('TEST', '--- STEP 1 END ---');
-
-  // 라이센스에 크롤링 돌아서 token값 매핑
-  const licensePromises: any[] = [];
-  for (const license of licenses) {
-    if (license.seq === 1) { // 1번 계정만 테스트
-      licensePromises.push(setToken(license));
-    }
+  constructor() {
+    this._conn = pool;
   }
 
-  console.timeLog('TEST', '--- STEP 2 END ---');
+  // public async insert(data: data): Promise<number> {
 
-  // 프로미스로 동시에 가져옴 3계정 기준 30초 정도 소요
-  const licensesWithToken: license[] = await Promise.all(licensePromises);
+  // }
 
-  for (const license of licensesWithToken) {
-    const groupSeqs: string[] = license.groupSeq.split(',');
+  public async select(serverSeq: number): Promise<data[]> {
+    const sql: string = `
+      SELECT *
+      FROM tb_data
+      WHERE server_seq = ?
+      ORDER BY reg_dt;
+    `;
+    const params: number[] = [ serverSeq ];
 
-    for (const group of groupSeqs) {
-      const serverManager = new ServerManager();
+    return new Promise<data[]>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
-      // 그룹별 서버 목록 가져오기
-      const servers: server[] = await serverManager.selectAllByGroupSeq(parseInt(group));
-      const serverPromises: any[] = [];
+        conn.query(sql, params, (err, rows) => {
+          if (err) reject(new Error(`DataManager select error. cause: ${ err }`));
 
-      for (const server of servers) {
-        serverPromises.push(getMonitoringData(server.serverId, license.token));
-      }
+          const dataList: data[] = [];
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                serverSeq: row.server_seq,
+                cpu: row.cpu,
+                mi01: row.mi01,
+                mi05: row.mi05,
+                mi15: row.mi15,
+                mem: row.mem,
+                swap: row.swap,
+                totalDisk: row.total_disk,
+                disk1: row.disk1,
+                disk2: row.disk2,
+                disk3: row.disk3,
+                regDt: row.reg_dt
+              });
+            }
+          }
 
-      const data = await Promise.all(serverPromises);
-    }
+          resolve(dataList);
+        });
+
+        // return connecion pool
+        conn.release();
+      });
+    });
   }
-  console.timeLog('TEST', '--- STEP 3 END ---');
 
-  console.timeEnd('TEST');
+  public async delete(){
+    // 일주일 이전 데이터 삭제
+    const sql: string = `
+      DELETE FROM tb_data
+      WHERE reg_dt < DATE_ADD(NOW(), INTERVAL -6 DAY)
+    `;
+
+    this._conn.getConnection((connErr, conn) => {
+      if (connErr) new Error(`Connection pool error. cause: ${ connErr }`);
+
+      conn.query(sql);
+      conn.release();
+    })
+
+  }
 }
-
-test()
-
-export default insertData;

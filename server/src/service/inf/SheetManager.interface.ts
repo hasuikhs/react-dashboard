@@ -1,4 +1,4 @@
-import sheet from '../../domain/sheet.interface';
+import { sheet } from '../../domain';
 
 interface SheetManagerInterface {
   insert(sheet: sheet): Promise<number>;

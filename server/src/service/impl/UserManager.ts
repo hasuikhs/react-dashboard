@@ -1,8 +1,8 @@
 import UserManagerInterface from '../inf/UserManager.interface';
-import user from '../../domain/user.interface';
+import { user } from '../../domain';
 import pool from '../../utils/mysqlConnection';
 import { encodePassword  } from '../../utils/passwordUtil';
-import LoginManager from './LoginManager';
+import { LoginManager } from './';
 
 import mysql from 'mysql';
 

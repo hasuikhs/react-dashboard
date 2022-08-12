@@ -1,10 +1,6 @@
 import { Router } from 'express';
 
-import userRouter from './api/user.router';
-import sheetRouter from './api/sheet.router';
-import serverRouter from './api/server.router';
-import groupRouter from './api/group.router';
-import licenseRouter from './api/license.router';
+import { userRouter, sheetRouter, serverRouter, groupRouter, licenseRouter } from './api';
 
 const apiRouter: Router = Router();
 

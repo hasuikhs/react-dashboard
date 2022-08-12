@@ -1,4 +1,3 @@
-import { getNcpToken } from '../src/service/DataManager';
 import os from 'os';
 
 describe('Test dataManager methods.', () => {
