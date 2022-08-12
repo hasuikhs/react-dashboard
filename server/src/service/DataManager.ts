@@ -3,6 +3,7 @@ import pool from '../utils/mysqlConnection';
 import getAllMonitoringData from '../utils/dataUtil';
 
 import mysql from 'mysql';
+import { CONNECTING } from 'ws';
 // --------------------------------------------------------------------------------
 
 class DataManager {
@@ -13,9 +14,41 @@ class DataManager {
     this._conn = pool;
   }
 
-  // public async insert(data: data): Promise<number> {
+  public async insert(data: data[]): Promise<number> {
+    const sql: string = `
+      INSERT INTO tb_data(server_seq, cpu, mi01, mi05, mi15, mem, swap, total_disk, disk1, disk2, disk3)
+      VALUES ?
+    `;
 
-  // }
+    const values: number[][] = data.map(item => ([
+      item.serverSeq,
+      item.cpu,
+      item.mi01,
+      item.mi05,
+      item.mi15,
+      item.mem,
+      item.swap,
+      item.totalDisk,
+      item.disk1,
+      item.disk2,
+      item.disk3
+    ]));
+
+    return new Promise<number>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, [ values ], (err, result) => {
+          if (err) reject(new Error(`DataManager insert error. cause: ${ err }`));
+
+          resolve(result.affectedRows);
+        });
+
+        // retrun connection pool
+        conn.release();
+      });
+    });
+  }
 
   public async select(serverSeq: number): Promise<data[]> {
     const sql: string = `
@@ -62,7 +95,7 @@ class DataManager {
     });
   }
 
-  public async delete(){
+  public async delete(): Promise<void> {
     // 일주일 이전 데이터 삭제
     const sql: string = `
       DELETE FROM tb_data
@@ -73,8 +106,11 @@ class DataManager {
       if (connErr) new Error(`Connection pool error. cause: ${ connErr }`);
 
       conn.query(sql);
+      this._conn.end();
       conn.release();
-    })
+    });
 
   }
 }
+
+export default DataManager;

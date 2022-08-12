@@ -8,9 +8,9 @@ CREATE TABLE tb_data (
   `mem` FLOAT NOT NULL DEFAULT 0 COMMENT 'Memory usage rto',
   `swap` FLOAT NOT NULL DEFAULT 0 COMMENT 'Swap Memory usage rto',
   `total_disk` FLOAT NOT NULL DEFAULT 0 COMMENT 'TOTAL DISK usage rto',
-  `xvda1` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvda1 usage rto',
-  `xvdb2` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvdb1 usage rto',
-  `xvdc3` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvdc1 usage rto',
+  `disk1` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvda1 usage rto',
+  `disk2` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvdb1 usage rto',
+  `disk3` FLOAT NOT NULL DEFAULT 0 COMMENT 'xvdc1 usage rto',
   `reg_dt` DATETIME NOT NULL DEFAULT NOW() COMMENT '등록일',
   PRIMARY KEY (`seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
