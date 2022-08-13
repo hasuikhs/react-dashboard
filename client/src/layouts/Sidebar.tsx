@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, NavigateFunction, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Drawer } from '@mui/material';
@@ -39,6 +39,7 @@ function Sidebar({ isOpenSidebar, onCloseSidebar }: SidebarInterface) {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (

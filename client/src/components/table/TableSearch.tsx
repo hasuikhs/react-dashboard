@@ -1,12 +1,10 @@
 import { useState } from 'react';
-
 // material
 import { styled } from '@mui/material/styles';
 import { Toolbar, OutlinedInput, InputAdornment } from '@mui/material';
-
-// import { InputGroup, Form } from 'react-bootstrap';
+// fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 // --------------------------------------------------------------------------------
 

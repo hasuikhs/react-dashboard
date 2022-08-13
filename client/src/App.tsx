@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from './modules';
 import { Auth } from './modules/auth';
 
-import { Backdrop, CircularProgress } from '@mui/material';
-
 import Layout from './layouts';
 
 import API from './common/API';
@@ -33,7 +31,7 @@ function App(): JSX.Element {
   const User = lazy(() => import('./pages/info/User'));
 
   const NotFound = lazy(() => import('./pages/404'));
-  const Forbidden = lazy(() => import('./pages/403'));
+  // const Forbidden = lazy(() => import('./pages/403'));
 
   // --------------------------------------------------------------------------------
 

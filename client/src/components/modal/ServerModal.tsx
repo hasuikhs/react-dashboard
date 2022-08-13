@@ -253,7 +253,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
               />
             </Form.Group>
 
-            {/* <Form.Group className="mb-3" controlId="form-server-group">
+            <Form.Group className="mb-3" controlId="form-server-group">
               <Form.Label>그룹<span className="red_ico"></span></Form.Label>
               <Select
                 ref={ groupRef }
@@ -273,7 +273,7 @@ function ServerModal({ showModal, setShowModal, modalData, setModalData, updateL
                 } }
                 onChange={ e => setGroupSeq(e.value) }
               />
-            </Form.Group> */}
+            </Form.Group>
           </Form>
         </Modal.Body>
 
