@@ -14,21 +14,21 @@ const navConfig = [
     path: '/data',
     icon: <FontAwesomeIcon icon={ faBolt } size="lg" />,
   },
-  {
-    title: 'info',
-    children: [
-      {
-        title: 'user',
-        path: '/user',
-        icon: <FontAwesomeIcon icon={ faUser } size="lg" />
-      },
-      {
-        title: 'server',
-        path: '/server',
-        icon: <FontAwesomeIcon icon={ faServer } size="lg" />
-      },
-    ]
-  },
+  // {
+  //   title: 'info',
+  //   children: [
+  //     {
+  //       title: 'user',
+  //       path: '/user',
+  //       icon: <FontAwesomeIcon icon={ faUser } size="lg" />
+  //     },
+  //     {
+  //       title: 'server',
+  //       path: '/server',
+  //       icon: <FontAwesomeIcon icon={ faServer } size="lg" />
+  //     },
+  //   ]
+  // },
   {
     title: 'user',
     path: '/user',

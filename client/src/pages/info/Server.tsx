@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import Swal from 'sweetalert2';
+import Select, { StylesConfig } from 'react-select';
+// material
+import { Container, Card, Stack, Typography, Button } from '@mui/material';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faServer } from '@fortawesome/free-solid-svg-icons';
+// components
 import UpdateSwitch from '../../components/UpdateSwitch';
 import ControlButtonGroup from '../../components/ControlButtonGroup';
 import ServerModal from '../../components/modal/ServerModal';
-
-import Mainbar from '../../components//MainBar';
-import '../css/Home.module.css';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer, faPlus } from '@fortawesome/free-solid-svg-icons';
-
 import ReactTable from '../../components/table/ReactTable';
+import Page from '../../components/Page';
+// utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
-import Swal from 'sweetalert2';
-import Select, { StylesConfig } from 'react-select';
 
-import Page from '../../components/Page';
+// --------------------------------------------------------------------------------
 
 function Server(): JSX.Element {
 
@@ -28,6 +28,8 @@ function Server(): JSX.Element {
 
   const [groupSeqFilter, setGroupSeqFilter] = useState<number|undefined>(undefined);
   const [groupOptions, setGroupOptions] = useState<any>([]);
+
+  // --------------------------------------------------------------------------------
 
   const groupSelectStyles: StylesConfig = {
     control: (base: any) => ({
@@ -57,6 +59,8 @@ function Server(): JSX.Element {
       height: '30px'
     })
   }
+
+  // --------------------------------------------------------------------------------
 
   const columns = useMemo(() => [
     {
@@ -93,12 +97,8 @@ function Server(): JSX.Element {
       accessor: 'disk2',
       Cell: ({ value }: any) => <div className="tr">{ Number(value).toLocaleString() }</div>
     },
-    // {
-    //   Header: 'OS',
-    //   accessor: 'os'
-    // },
     {
-      Header: '사용 상태',
+      Header: '상태',
       accessor: 'isActive',
       Cell: ({ row }: any) => (
         <UpdateSwitch
@@ -122,7 +122,7 @@ function Server(): JSX.Element {
       Cell: ({ value }: any) => <div className="tc">{ toDatetimeFormat(value) }</div>
     },
     {
-      Header: '관리',
+      Header: ' ',
       Cell: ({ row }: any) => (
         <div className="tc">
           <ControlButtonGroup
@@ -133,6 +133,8 @@ function Server(): JSX.Element {
       )
     }
   ], []);
+
+  // --------------------------------------------------------------------------------
 
   const getGroupOptions = async (): Promise<any> => {
     let ret = await requestAPI({
@@ -183,12 +185,21 @@ function Server(): JSX.Element {
     });
 
     if (affected) {
-      Swal.fire({
-        title: '상태가 변경되었습니다!',
-        icon: 'success',
-        confirmButtonText: '확인',
-        didClose: () => getAllServerData()
-      });
+        Swal.mixin({
+          toast: true,
+          position: 'bottom-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            getAllServerData()
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        }).fire({
+          icon: 'success',
+          title: '상태가 변경되었습니다!'
+        });
     } else {
       getAllServerData();
     }
@@ -243,6 +254,8 @@ function Server(): JSX.Element {
     });
   }
 
+  // --------------------------------------------------------------------------------
+
   // 최초 랜더링
   useEffect(()=> {
     getGroupOptions();
@@ -253,35 +266,38 @@ function Server(): JSX.Element {
     getAllServerData();
   }, [groupSeqFilter]);
 
+  // --------------------------------------------------------------------------------
+
   return (
     <Page title="Server">
-      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5">
-          <FontAwesomeIcon icon={ faServer } /> SERVER
-        </h1>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+          <Typography variant="h4" gutterBottom>
+          <FontAwesomeIcon icon={ faServer } style={{ marginRight: '10px' }} />
+            Server
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
+            onClick={ () => setShowModal(true) }
+          >
+            New Server
+          </Button>
+        </Stack>
 
-        <Button
-          type="button"
-          variant="primary"
-          className="fl me-2"
-          size="sm"
-          onClick={ () => setShowModal(true) }
-        >
-          <FontAwesomeIcon icon={ faPlus } /> NEW SERVER
-        </Button>
+        <Card sx={{ m: 0 }}>
+          <Select
+            ref={ selectGroupRef }
+            className="fr"
+            isClearable={ true }
+            placeholder={ '그룹 필터' }
+            options={ groupOptions }
+            styles={ groupSelectStyles }
+            onChange={ (e: any) => setGroupSeqFilter(e?.value) }
+          />
+          <ReactTable columns={ columns } data={ tableData } />
+        </Card>
 
-        <Select
-          ref={ selectGroupRef }
-          className="fl"
-          isClearable={ true }
-          placeholder={ '그룹 필터' }
-          options={ groupOptions }
-          styles={ groupSelectStyles }
-          onChange={ (e: any) => setGroupSeqFilter(e?.value) }
-        />
-
-        <ReactTable columns={ columns } data={ tableData } />
       </Container>
 
       <ServerModal
@@ -295,5 +311,7 @@ function Server(): JSX.Element {
     </Page>
   )
 }
+
+// --------------------------------------------------------------------------------
 
 export default Server;

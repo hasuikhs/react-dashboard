@@ -89,27 +89,32 @@ class DataManager {
           resolve(dataList);
         });
 
-        // return connecion pool
+        // return connection pool
         conn.release();
       });
     });
   }
 
-  public async delete(): Promise<void> {
+  public async delete(): Promise<number> {
     // 일주일 이전 데이터 삭제
     const sql: string = `
       DELETE FROM tb_data
       WHERE reg_dt < DATE_ADD(NOW(), INTERVAL -6 DAY)
     `;
 
-    this._conn.getConnection((connErr, conn) => {
-      if (connErr) new Error(`Connection pool error. cause: ${ connErr }`);
+    return new Promise<number>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) new Error(`Connection pool error. cause: ${ connErr }`);
 
-      conn.query(sql);
-      this._conn.end();
-      conn.release();
+        conn.query(sql, (err, result) => {
+          resolve(result.affectedRows);
+        });
+
+        // return connection pool
+        conn.release();
+      });
+
     });
-
   }
 }
 

@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Container } from 'react-bootstrap';
-import ControlButtonGroup from '../../components/ControlButtonGroup';
-import LicenseModal from '../../components/modal/LicenseModal';
-
-import Mainbar from '../../components/MainBar';
-import '../css/Home.module.css';
-
+import { useState, useEffect, useMemo } from 'react';
+import Swal from 'sweetalert2';
+// material
+import { Container, Card, Stack, Typography, Button } from '@mui/material';
+// fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faPlus } from '@fortawesome/free-solid-svg-icons';
-
+// components
+import ControlButtonGroup from '../../components/ControlButtonGroup';
+import LicenseModal from '../../components/modal/LicenseModal';
 import ReactTable from '../../components/table/ReactTable';
+import Page from '../../components/Page';
+// utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
-import Swal from 'sweetalert2';
 
-import Page from '../../components/Page';
+// --------------------------------------------------------------------------------
 
 function License(): JSX.Element {
 
@@ -23,6 +23,8 @@ function License(): JSX.Element {
   const [modalData, setModalData] = useState({});
 
   const [groupOptions, setGroupOptions] = useState<any>([]);
+
+  // --------------------------------------------------------------------------------
 
   const columns = useMemo(() => [
     {
@@ -68,7 +70,7 @@ function License(): JSX.Element {
       Cell: ({ value }: any) => <div className="tc">{ toDatetimeFormat(value) }</div>
     },
     {
-      Header: '관리',
+      Header: ' ',
       Cell: ({ row }: any) => (
         <div className="tc">
           <ControlButtonGroup
@@ -79,6 +81,8 @@ function License(): JSX.Element {
       )
     }
   ], []);
+
+  // --------------------------------------------------------------------------------
 
   const getGroupOptions = async (): Promise<any> => {
     let ret = await requestAPI({
@@ -175,31 +179,37 @@ function License(): JSX.Element {
     });
   }
 
+  // --------------------------------------------------------------------------------
+
   // 최초 랜더링
   useEffect(() => {
     getGroupOptions();
     getAllLicenseData();
   }, []);
 
+  // --------------------------------------------------------------------------------
+
   return (
     <Page title="License">
-      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5">
-          <FontAwesomeIcon icon={ faKey } /> LICENSE
-        </h1>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+          <Typography variant="h4" gutterBottom>
+            <FontAwesomeIcon icon={ faKey } style={{ marginRight: '10px' }} />
+            License
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
+            onClick={ () => setShowModal(true) }
+          >
+            New License
+          </Button>
+        </Stack>
 
-        <Button
-          type="button"
-          variant="primary"
-          className="fl"
-          size="sm"
-          onClick={ () => setShowModal(true) }
-        >
-          <FontAwesomeIcon icon={ faPlus } /> NEW LICENSE
-        </Button>
+        <Card>
+          <ReactTable columns={ columns } data={ tableData } />
+        </Card>
 
-        <ReactTable columns={ columns } data={ tableData } />
       </Container>
 
       <LicenseModal
@@ -213,5 +223,7 @@ function License(): JSX.Element {
     </Page>
   )
 }
+
+// --------------------------------------------------------------------------------
 
 export default License;

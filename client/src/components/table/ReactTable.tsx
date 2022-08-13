@@ -1,15 +1,28 @@
+import { useEffect, useState } from 'react';
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
-
-import './ReactTable.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Table from 'react-bootstrap/Table';
+// material
+import { styled, alpha } from '@mui/material/styles';
+import {
+  Table,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableContainer,
+} from '@mui/material';
+// components
 import TablePagination from './TablePagination';
 import TableSearch from './TableSearch';
+import ReactTableHead from './ReactTableHead';
+import SearchNotFound from './SearchNotFound';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortDown, faSortUp, faSort } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:hover': {
+    backgroundColor: '#F2F5FB !important'
+  },
+  '&:nth-of-type(odd)': {
+    backgroundColor:  alpha('#F6F6F6', 0.8),
+  }
+}));
 
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
@@ -31,13 +44,12 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     nextPage,
     previousPage,
     state: { pageIndex },
-    preGlobalFilteredRows,
     setGlobalFilter
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 15, pageIndex: curPage }
+      initialState: { pageSize: 5, pageIndex: curPage }
     },
     useGlobalFilter,
     useSortBy,
@@ -49,56 +61,58 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     setCurPage(pageIndex);
   }, [pageIndex]);
 
-  // Render the UI for your table
   return (
     <>
       <TableSearch
-        preGlobalFilteredRows={ preGlobalFilteredRows }
         globalFilter={ state.globalFilter }
         setGlobalFilter={ setGlobalFilter }
         useAsyncDebounce={ useAsyncDebounce }
       />
 
-      <Table striped bordered hover size="sm" { ...getTableProps() } className="mb-2">
-        <thead>
-          { headerGroups.map(headerGroup => (
-            <tr { ...headerGroup.getHeaderGroupProps() }>
-              { headerGroup.headers.map(column => (
-                <th className="tc" { ...column.getHeaderProps(column.getSortByToggleProps()) } >
-                  { column.render('Header') }
-                  <span>
-                    { ' ' }
-                    { column.getSortByToggleProps().title
-                      ? column.isSorted
-                        ? column.isSortedDesc
-                          ? <FontAwesomeIcon icon={ faSortDown } style={{ fontSize: '10px' }} />
-                          : <FontAwesomeIcon icon={ faSortUp } style={{ fontSize: '10px' }} />
-                        : <FontAwesomeIcon icon={ faSort } style={{ fontSize: '10px', color: '#C5C5C5' }} />
-                      : '' }
-                  </span>
-                </th>
-              )) }
-            </tr>
-          )) }
-        </thead>
-        <tbody { ...getTableBodyProps() }>
-          { page.length > 0
-              ? page.map((row, i) => {
-                  prepareRow(row);
+      <TableContainer sx={{ minWidth: 800 }} >
+        <Table { ...getTableProps() } >
+          <ReactTableHead headerGroups={ headerGroups } />
 
-                  return (
-                    <tr { ...row.getRowProps() }>
-                      { row.cells.map(cell => {
-                        return <td { ...cell.getCellProps() }>{ cell.render('Cell') }</td>
-                      }) }
-                    </tr>
-                  )
-                })
-              : <tr><td className="tc" colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
-        </tbody>
-      </Table>
+          <TableBody { ...getTableBodyProps() }>
+            {
+              page.length > 0
+                ? page.map((row, i) => {
+                    prepareRow(row);
 
-      <span className="fl" style={ { lineHeight: '30px' } }> { rows.length ? `조회된 항목 수 ${ rows.length }` : '' } </span>
+                    return (
+                      <StyledTableRow { ...row.getRowProps() } >
+                        {
+                          row.cells.map(cell => (
+                            <TableCell { ...cell.getCellProps() }>
+                              { cell.render('Cell') }
+                            </TableCell>
+                          ))
+                        }
+                      </StyledTableRow>
+                    )
+                  })
+                : (
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      colSpan={ columns.length }
+                      sx={{ py: 2 }}
+                    >
+                      <SearchNotFound searchQuery={ state.globalFilter } />
+                    </TableCell>
+                  </TableRow>
+                )
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <span
+        className="fl"
+        style={ { lineHeight: '30px', fontSize: '14px', padding: '10px' } }
+      >
+        { rows.length ? `Rows: ${ rows.length }` : '' }
+      </span>
 
       <TablePagination
         pageIndex={ pageIndex }
@@ -110,8 +124,49 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         canNextPage={ canNextPage }
       />
     </>
+  )
+
+  // Render the UI for your table
+  // return (
+  //   <>
+  //     <TableSearch
+  //       globalFilter={ state.globalFilter }
+  //       setGlobalFilter={ setGlobalFilter }
+  //       useAsyncDebounce={ useAsyncDebounce }
+  //     />
+
+  //     <Table striped bordered hover size="sm" { ...getTableProps() } className="mb-2">
+  //       <tbody { ...getTableBodyProps() }>
+  //         { page.length > 0
+  //             ? page.map((row, i) => {
+  //                 prepareRow(row);
+
+  //                 return (
+  //                   <tr { ...row.getRowProps() }>
+  //                     { row.cells.map(cell => {
+  //                       return <td { ...cell.getCellProps() }>{ cell.render('Cell') }</td>
+  //                     }) }
+  //                   </tr>
+  //                 )
+  //               })
+  //             : <tr><td className="tc" colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
+  //       </tbody>
+  //     </Table>
+
+  //     <span className="fl" style={ { lineHeight: '30px' } }> { rows.length ? `조회된 항목 수 ${ rows.length }` : '' } </span>
+
+  //     <TablePagination
+  //       pageIndex={ pageIndex }
+  //       pageCount={ pageCount }
+  //       gotoPage={ gotoPage }
+  //       previousPage={ previousPage }
+  //       canPreviousPage={ canPreviousPage }
+  //       nextPage={ nextPage }
+  //       canNextPage={ canNextPage }
+  //     />
+  //   </>
     
-  );
+  // );
 }
 
 export default ReactTable;

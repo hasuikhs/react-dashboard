@@ -46,12 +46,12 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
   };
 
   return (
-    <Stack spacing={ 2 }>
+    <Stack spacing={ 2 } sx={{ p: 1 }} >
       <Pagination
         disabled={ pageCount === 1 ? true : false }
         showFirstButton
         showLastButton
-        count={ pageCount }
+        count={ pageCount -1 }
         page={ pageIndex }
         onChange={ onPageChange }
         size="medium"

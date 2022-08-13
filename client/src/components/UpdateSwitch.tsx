@@ -1,25 +1,24 @@
 import { useState } from 'react';
-import { Form } from 'react-bootstrap';
+// material
+import { Switch } from '@mui/material';
 
 function UpdateSwitch({ isActive, onChange }: { isActive: boolean, onChange: any }) {
 
   const [isOn, setIsOn] = useState(isActive);
 
   const toggleHandler = () => {
-    // console.log(isOn)
     setIsOn(!isOn);
     onChange();
   }
 
   return (
-    <>
-      <Form.Check
-        type="switch"
-        className="tc"
-        checked={ isOn }
-        onChange= { toggleHandler }
-      />
-    </>
+    <Switch
+      size="small"
+      className="tc"
+      color="info"
+      checked={ isOn }
+      onChange={ toggleHandler }
+    />
   )
 }
 

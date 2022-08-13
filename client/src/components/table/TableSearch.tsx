@@ -1,39 +1,72 @@
 import { useState } from 'react';
-import { InputGroup, Form } from 'react-bootstrap';
+
+// material
+import { styled } from '@mui/material/styles';
+import { Toolbar, OutlinedInput, InputAdornment } from '@mui/material';
+
+// import { InputGroup, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faSearch } from '@fortawesome/free-solid-svg-icons';
+
+// --------------------------------------------------------------------------------
+
+const RootStyle = styled(Toolbar)(({ theme }) => ({
+  height: 96,
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: theme.spacing(0, 1, 0, 3),
+}));
+
+const SearchStyle = styled(OutlinedInput)(({ theme }: any) => ({
+  width: 240,
+  transition: theme.transitions.create(['box-shadow', 'width'], {
+    easing: theme.transitions.easing.easeInOut,
+    duration: theme.transitions.duration.shorter,
+  }),
+  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
+  '& fieldset': {
+    borderWidth: `1px !important`,
+    borderColor: `${theme.palette.grey[500_32]} !important`,
+  },
+  '& legend': { display: 'none' }
+}));
+
+// --------------------------------------------------------------------------------
 
 interface SearchInterface {
-  preGlobalFilteredRows: any;
   globalFilter: any;
   setGlobalFilter: any;
   useAsyncDebounce: any;
 }
 
-function TableSearch({ preGlobalFilteredRows, globalFilter, setGlobalFilter, useAsyncDebounce }: SearchInterface) {
+// --------------------------------------------------------------------------------
 
-  const [value, setValue] = useState(globalFilter);
+function TableSearch({ globalFilter, setGlobalFilter, useAsyncDebounce }: SearchInterface) {
+
+  const [searchText, setSerchText] = useState<string>(globalFilter);
   const onChange = useAsyncDebounce((value: any) => {
     setGlobalFilter(value || undefined);
   }, 200);
 
   return (
-    <>
-      <InputGroup size="sm" className="mb-1 fr" style={{ width: '200px' }}>
-        <Form.Control
-          placeholder="검색어를 입력해주세요."
-          value={ value || '' }
-          onChange={ e => {
-            setValue(e.target.value);
-            onChange(e.target.value);
-          } }
-        />
-        <InputGroup.Text>
-          <FontAwesomeIcon icon={ faSearch } />
-        </InputGroup.Text>
-      </InputGroup>
-    </>
-  )
+  <RootStyle>
+    <SearchStyle
+      placeholder="Search"
+      value={ searchText || '' }
+      onChange={ e => {
+        setSerchText(e.target.value);
+        onChange(e.target.value);
+      } }
+      startAdornment={
+        <InputAdornment position="start" >
+          <FontAwesomeIcon icon={ faMagnifyingGlass } />
+        </InputAdornment>
+      }
+    />
+  </RootStyle>
+  );
 }
+
+// --------------------------------------------------------------------------------
 
 export default TableSearch;

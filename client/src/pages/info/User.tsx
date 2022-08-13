@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { useState, useEffect, useMemo } from 'react';
+import Swal from 'sweetalert2';
+// material
+import { Container, Card, Stack, Typography, Button } from '@mui/material';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
+// components
 import ControlButtonGroup from '../../components/ControlButtonGroup';
 import UserModal from '../../components/modal/UserModal';
-
-import Mainbar from '../../components/MainBar';
-import '../css/Home.module.css';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faPlus } from '@fortawesome/free-solid-svg-icons';
-
 import ReactTable from '../../components/table/ReactTable';
+import Page from '../../components/Page';
+// utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
-import Swal from 'sweetalert2';
 
-import Page from '../../components/Page';
+// --------------------------------------------------------------------------------
 
 function User(): JSX.Element {
 
   const [tableData, setTableData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
+
+  // --------------------------------------------------------------------------------
 
   const columns = useMemo(() => [
     {
@@ -52,7 +54,7 @@ function User(): JSX.Element {
       Cell: ({ value }: any) => <div className="tc">{ toDatetimeFormat(value) }</div>
     },
     {
-      Header: '관리',
+      Header: ' ',
       Cell: ({ row }: any) => (
         <div className="tc">
           <ControlButtonGroup
@@ -63,6 +65,8 @@ function User(): JSX.Element {
       )
     }
   ], []);
+
+  // --------------------------------------------------------------------------------
 
   const getAllUserData = async (): Promise<void> => {
     let userData = await requestAPI({
@@ -122,30 +126,36 @@ function User(): JSX.Element {
     });
   }
 
+  // --------------------------------------------------------------------------------
+
   // 최초 랜더링
   useEffect(() => {
     getAllUserData();
   }, []);
 
+  // --------------------------------------------------------------------------------
+
   return (
     <Page title="User">
-      {/* <Mainbar /> */}
       <Container>
-        <h1 className="mb-5">
-          <FontAwesomeIcon icon={ faUser } /> User
-        </h1>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+          <Typography variant="h4" gutterBottom>
+            <FontAwesomeIcon icon={ faUser } style={{ marginRight: '10px' }} />
+            User
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
+            onClick={ () => setShowModal(true) }
+          >
+            New User
+          </Button>
+        </Stack>
 
-        <Button
-          type="button"
-          variant="primary"
-          className="fl"
-          size="sm"
-          onClick={ () => setShowModal(true) }
-        >
-          <FontAwesomeIcon icon={ faPlus } /> NEW USER
-        </Button>
+        <Card>
+          <ReactTable columns={ columns } data={ tableData }/>
+        </Card>
 
-        <ReactTable columns={ columns } data={ tableData }/>
       </Container>
 
       <UserModal
@@ -156,7 +166,9 @@ function User(): JSX.Element {
         updateList={ getAllUserData }
       />
     </Page>
-  )
+  );
 }
+
+// --------------------------------------------------------------------------------
 
 export default User;

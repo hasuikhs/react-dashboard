@@ -6,6 +6,7 @@ import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
 import DataManager from './src/service/DataManager';
 import getAllMonitoringData from './src/utils/dataUtil';
+import { dateToStringFormat } from './src/utils/common';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 1;
@@ -45,21 +46,29 @@ function runServer(): Express.Application {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
     const dataManager = new DataManager();
 
-    schedule.scheduleJob('40 20 * * * *', async () => {
+    schedule.scheduleJob('40 15/30 * * * *', async () => {
       console.log('---------------------------------');
-      console.log('START', new Date());
-      console.time('INSERT JOB');
+      console.log('START -', new Date().toLocaleString());
+      console.time('INSERT');
       const data = await getAllMonitoringData();
       const rows = await dataManager.insert(data);
 
       console.log(`INSERT ROWS ${ rows } OK.`)
-      console.timeEnd('INSERT JOB');
-      console.log('END', new Date());
+      console.timeEnd('INSERT');
+      console.log('END ---', new Date().toLocaleString());
       console.log('---------------------------------');
     });
 
     // 매일 01:05:00
-    schedule.scheduleJob('0 5 1 * * *', dataManager.delete);
+    schedule.scheduleJob('10 10 1 * * *', async () => {
+      console.log('---------------------------------');
+      console.log('START -', new Date().toLocaleString());
+      const rows = await dataManager.delete();
+
+      console.log(`DELETE ROWS ${ rows } OK.`)
+      console.log('END ---', new Date().toLocaleString());
+      console.log('---------------------------------');
+    });
 
   });
 
