@@ -124,49 +124,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         canNextPage={ canNextPage }
       />
     </>
-  )
-
-  // Render the UI for your table
-  // return (
-  //   <>
-  //     <TableSearch
-  //       globalFilter={ state.globalFilter }
-  //       setGlobalFilter={ setGlobalFilter }
-  //       useAsyncDebounce={ useAsyncDebounce }
-  //     />
-
-  //     <Table striped bordered hover size="sm" { ...getTableProps() } className="mb-2">
-  //       <tbody { ...getTableBodyProps() }>
-  //         { page.length > 0
-  //             ? page.map((row, i) => {
-  //                 prepareRow(row);
-
-  //                 return (
-  //                   <tr { ...row.getRowProps() }>
-  //                     { row.cells.map(cell => {
-  //                       return <td { ...cell.getCellProps() }>{ cell.render('Cell') }</td>
-  //                     }) }
-  //                   </tr>
-  //                 )
-  //               })
-  //             : <tr><td className="tc" colSpan={ headerGroups[0].headers.length }>데이터가 없습니다.</td></tr>}
-  //       </tbody>
-  //     </Table>
-
-  //     <span className="fl" style={ { lineHeight: '30px' } }> { rows.length ? `조회된 항목 수 ${ rows.length }` : '' } </span>
-
-  //     <TablePagination
-  //       pageIndex={ pageIndex }
-  //       pageCount={ pageCount }
-  //       gotoPage={ gotoPage }
-  //       previousPage={ previousPage }
-  //       canPreviousPage={ canPreviousPage }
-  //       nextPage={ nextPage }
-  //       canNextPage={ canNextPage }
-  //     />
-  //   </>
-    
-  // );
+  );
 }
 
 export default ReactTable;
