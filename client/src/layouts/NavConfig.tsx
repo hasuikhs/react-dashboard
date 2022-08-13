@@ -1,6 +1,5 @@
-import Iconify from '../components/Iconify';
-
-const getIcon = (name: string) => <Iconify icon={ name } width={ 22 } height={ 22 } />;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBolt, faServer, faHouse, faUser, faKey, faTableList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 
@@ -8,38 +7,54 @@ const navConfig = [
   {
     title: 'home',
     path: '/home',
-    icon: getIcon('eva:home-fill')
+    icon: <FontAwesomeIcon icon={ faHouse } size="lg" />,
   },
-  // {
-  //   title: 'data',
-  //   path: '/data',
-  //   icon: getIcon('bi:clipboard-data-fill')
-  // },
+  {
+    title: 'data',
+    path: '/data',
+    icon: <FontAwesomeIcon icon={ faBolt } size="lg" />,
+  },
+  {
+    title: 'info',
+    children: [
+      {
+        title: 'user',
+        path: '/user',
+        icon: <FontAwesomeIcon icon={ faUser } size="lg" />
+      },
+      {
+        title: 'server',
+        path: '/server',
+        icon: <FontAwesomeIcon icon={ faServer } size="lg" />
+      },
+    ]
+  },
   {
     title: 'user',
     path: '/user',
-    icon: getIcon('bxs:user')
+    icon: <FontAwesomeIcon icon={ faUser } size="lg" />
   },
   {
     title: 'server',
     path: '/server',
-    icon: getIcon('bxs:server')
+    icon: <FontAwesomeIcon icon={ faServer } size="lg" />
   },
   {
     title: 'license',
     path: '/license',
-    icon: getIcon('fa-solid:key')
+    icon: <FontAwesomeIcon icon={ faKey } size="lg" />
   },
   {
     title: 'sheet',
     path: '/sheet',
-    icon: getIcon('bxs:spreadsheet')
+    icon: <FontAwesomeIcon icon={ faTableList } size="lg" />
   },
   {
     title: 'group',
     path: '/group',
-    icon: getIcon('bxs:group')
+    icon: <FontAwesomeIcon icon={ faUserGroup } size="lg" />
   }
+  
 ];
 
 // ----------------------------------------------------------------------

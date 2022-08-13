@@ -11,7 +11,7 @@ import useResponsive from '../hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH: number = 220;
+const DRAWER_WIDTH: number = 240;
 
 const RootStyle = styled('div')(({ theme }) => ({
   zIndex: 1000,
@@ -60,6 +60,9 @@ function Sidebar({ isOpenSidebar, onCloseSidebar }: SidebarInterface) {
               <Drawer
                 open={ isOpenSidebar }
                 onClose={ onCloseSidebar }
+                PaperProps={{
+                  sx: { width: DRAWER_WIDTH }
+                }}
               >
                 { renderContent }
               </Drawer>

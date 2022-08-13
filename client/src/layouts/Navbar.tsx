@@ -1,10 +1,9 @@
 import { useState } from 'react';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton, Button, Tooltip, Avatar, Menu, MenuItem, Divider, ListItemIcon } from '@mui/material';
-import { PersonAdd, Settings, Logout } from '@mui/icons-material';
+import { Box, Stack, AppBar, Toolbar, IconButton, Tooltip, Avatar, Menu, MenuItem, Divider, ListItemIcon } from '@mui/material';
+import { Logout } from '@mui/icons-material';
 // components
-import Iconify from '../components/Iconify';
 
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 // redux
@@ -13,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetAuth, Auth } from '../modules/auth';
 import { RootState } from '../modules';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 // --------------------------------------------------------------------------------
 
@@ -74,7 +75,7 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
             color: 'text.primary',
             display: { lg: 'none' } }}
         >
-          <Iconify icon="eva:menu-2-fill" />
+          <FontAwesomeIcon icon={ faBars } />
         </IconButton>
 
         <Box sx={{ flexGrow: 1 }} />
@@ -93,7 +94,7 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
               // aria-hashpopup="true"
               aria-expanded={ open ? 'true' : undefined }
             >
-              <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: '#8C8C8C' }}></Avatar>
             </IconButton>
           </Tooltip>
           <Menu
@@ -132,7 +133,7 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <MenuItem>
-              <Avatar /> { `${ auth.user.userNm } 님` }
+              <Avatar sx={{ width: 32, height: 32, bgcolor: '#8C8C8C' }}/> { `${ auth.user.userNm } 님` }
             </MenuItem>
             <Divider />
             <MenuItem

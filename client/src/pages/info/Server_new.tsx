@@ -19,12 +19,13 @@ import {
 // components
 import Page from '../../components/Page';
 import Scrollbar from '../../components/Scrollbar';
-import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { TableHeader, TableToolbar, TableControlMenu } from '../../components/mui-table';
 
 import { descendingComparator, getComparator, applySortFilter } from '../../common/TableFunc';
 import ServerModal from '../../components/modal/ServerModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // --------------------------------------------------------------------------------
 
@@ -121,7 +122,7 @@ function Server() {
           </Typography>
           <Button
             variant="contained"
-            startIcon={ <Iconify icon="eva:plus-fill" /> }
+            startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
             onClick={ () => setShowModal(true) }
           >
             New Server

@@ -15,12 +15,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton  } from '@mui/lab';
 
-import Iconify from '../../components/Iconify';
 import { FormProvider, RHFCheckbox, RHFTextField } from '../../components/hook-form';
 import API from '../../common/API';
 
 import Swal from 'sweetalert2';
 import { AxiosError } from 'axios';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 // --------------------------------------------------------------------------------
@@ -135,7 +137,11 @@ function LoginForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={ () => setShowPassword(!showPassword) } edge="end">
-                  <Iconify icon={ showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill' } />
+                  {
+                    showPassword
+                      ? <FontAwesomeIcon icon={ faEye } size="sm"/>
+                      : <FontAwesomeIcon icon={ faEyeSlash } size="sm" />
+                  }
                 </IconButton>
               </InputAdornment>
             )

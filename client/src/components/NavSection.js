@@ -4,8 +4,9 @@ import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom'
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, List, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
-// components
-import Iconify from './Iconify';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown, faAngleRight} from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 
@@ -65,10 +66,11 @@ function NavItem({ item, active }) {
           <ListItemIconStyle>{ icon && icon }</ListItemIconStyle>
           <ListItemText disableTypography primary={ title } />
           { info && info }
-          <Iconify
-            icon={ open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill' }
-            sx={{ width: 16, height: 16, ml: 1 }}
-          />
+          {
+            open
+            ? <FontAwesomeIcon icon={ faAngleDown } size="sm" />
+            : <FontAwesomeIcon icon={ faAngleRight } size="sm" />
+          }
         </ListItemStyle>
 
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -125,7 +127,7 @@ function NavItem({ item, active }) {
     >
       <ListItemIconStyle>{ icon && icon }</ListItemIconStyle>
       <ListItemText disableTypography primary={ title } />
-      { info && info }
+      {/* { info && info } */}
     </ListItemStyle>
   );
 }

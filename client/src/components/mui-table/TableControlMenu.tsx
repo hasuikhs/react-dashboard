@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 // material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
-// component
-import Iconify from '../Iconify';
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisVertical, faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 // --------------------------------------------------------------------------------
 
@@ -13,7 +14,7 @@ function TableControlMenu() {
   return (
     <>
       <IconButton ref={ ref } onClick={ () => setIsOpen(true) } >
-        <Iconify icon="eva:more-vertical-fill" width={ 20 } height={ 20 } />
+        <FontAwesomeIcon icon={ faEllipsisVertical } />
       </IconButton>
 
       <Menu
@@ -28,14 +29,14 @@ function TableControlMenu() {
       >
         <MenuItem sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
-            <Iconify icon="eva:trash-2-outline" width={ 24 } height={ 24 } />
+            <FontAwesomeIcon icon={ faTrash } />
           </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
 
         <MenuItem sx={{ color: 'text.secondary' }} >
-        <ListItemIcon>
-            <Iconify icon="eva:edit-fill" width={ 24 } height={ 24 } />
+          <ListItemIcon>
+            <FontAwesomeIcon icon={ faPenToSquare } />
           </ListItemIcon>
           <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
