@@ -3,8 +3,6 @@ import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy }
 // material
 import { styled, alpha } from '@mui/material/styles';
 import {
-  Select,
-  MenuItem,
   Typography,
   Table,
   TableRow,
@@ -31,7 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
 
   const [curPage, setCurPage] = useState(0);
-  const curPageSize = 5;
+  const defaultPageSize = 5;
 
   const {
     getTableProps,
@@ -54,7 +52,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     {
       columns,
       data,
-      initialState: { pageSize: curPageSize, pageIndex: curPage }
+      initialState: { pageSize: defaultPageSize, pageIndex: curPage }
     },
     useGlobalFilter,
     useSortBy,
@@ -112,7 +110,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         </Table>
       </TableContainer>
       
-      <Typography variant="body2" sx={{ float: 'left', p: 1, paddingLeft: '15px',  lineHeight: '32px' }}>
+      <Typography variant="body2" sx={{ float: 'left', p: 1, paddingLeft: '15px',  lineHeight: '32px', margin: '5px' }}>
         { rows.length ? `Rows: ${ rows.length }` : '' }
       </Typography>
 
@@ -125,7 +123,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         canPreviousPage={ canPreviousPage }
         nextPage={ nextPage }
         canNextPage={ canNextPage }
-        pageSize={ curPageSize }
+        pageSize={ defaultPageSize }
         setPageSize={ setPageSize }
       />
       {/* <Select

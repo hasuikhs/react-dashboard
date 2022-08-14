@@ -22,6 +22,7 @@ interface PaginationInerface {
 const StyledSelect = styled(Select)(({ theme }: any) => ({
   width: 120,
   height: 30,
+  fontSize: '14px',
   borderColor: 'transparent',
   '& legend': { display: 'none' },
   '& fieldset': { border: 'none' }
@@ -68,10 +69,10 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
         defaultValue={ pageSize }
         onChange={ (e: any) => setPageSize(e?.target.value || pageSize) }
       >
-        <MenuItem value={ 5 }>5개 보기</MenuItem>
-        <MenuItem value={ 10 }>10개 보기</MenuItem>
-        <MenuItem value={ 20 }>20개 보기</MenuItem>
-        <MenuItem value={ 50 }>50개 보기</MenuItem>
+        <MenuItem value={ pageSize }>{ pageSize }개 보기</MenuItem>
+        <MenuItem value={ pageSize * 2 }>{ pageSize * 2 }개 보기</MenuItem>
+        <MenuItem value={ pageSize * 4 }>{ pageSize * 4 }개 보기</MenuItem>
+        <MenuItem value={ pageSize * 10 }>{ pageSize * 10 }개 보기</MenuItem>
       </StyledSelect>
       <Pagination
         disabled={ pageCount === 1 ? true : false }
