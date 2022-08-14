@@ -4,14 +4,14 @@ import cors from 'cors';
 import schedule from 'node-schedule';
 import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
-import DataManager from './src/service/DataManager';
+import { DataManager } from './src/service/impl';
 import getAllMonitoringData from './src/utils/dataUtil';
 import { EventEmitter} from 'events';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 1;
 
-EventEmitter.setMaxListeners(20);
+EventEmitter.setMaxListeners(30);
 
 if (!cluster.isWorker) {
   for (let i = 0; i < WORKER_SIZE; i++) {
