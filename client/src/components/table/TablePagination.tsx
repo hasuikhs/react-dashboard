@@ -65,6 +65,7 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
 
   return (
     <Stack direction="row" spacing={ 1 } sx={{ p: 1, float: 'right', margin: '5px' }} >
+
       <StyledSelect
         defaultValue={ pageSize }
         onChange={ (e: any) => setPageSize(e?.target.value || pageSize) }
@@ -74,6 +75,7 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
         <MenuItem value={ pageSize * 4 }>{ pageSize * 4 }개 보기</MenuItem>
         <MenuItem value={ pageSize * 10 }>{ pageSize * 10 }개 보기</MenuItem>
       </StyledSelect>
+
       <Pagination
         disabled={ pageCount === 1 ? true : false }
         showFirstButton
@@ -86,6 +88,7 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
           <PaginationItem { ...item } sx={{ fontSize: 14 }} />
         ) }
         />
+
     </Stack>
   );
 

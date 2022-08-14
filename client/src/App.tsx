@@ -26,6 +26,7 @@ function App(): JSX.Element {
   const Login = lazy(() => import('./pages/Login_new'));
   const Home = lazy(() => import('./pages/Home'));
 
+  const Data = lazy(() => import('./pages/info/Data'));
   const Server = lazy(() => import('./pages/info/Server'));
   const License = lazy(() => import('./pages/info/License'));
   const User = lazy(() => import('./pages/info/User'));
@@ -42,6 +43,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
               <Route path="/home" element={ <Home /> } />
+              <Route path="/data" element={ <Data /> } />
               <Route path="/user" element={ <User /> } />
               <Route path="/server" element={ <Server /> } />
               <Route path="/license" element={ <License /> } />

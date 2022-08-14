@@ -36,8 +36,8 @@ function Server(): JSX.Element {
       ...base,
       height: '62px',
       minHeight: '31px',
-      borderColor: '#dbe0e4',
-      '&:hover': { borderColor: '#dbe0e4' },
+      borderColor: '#DBE0E4',
+      '&:hover': { borderColor: '#DBE0E4' },
       borderRadius: '10px',
       width: state.isFocused ? 250 : 200,
       marginTop: '15px',
@@ -269,7 +269,7 @@ function Server(): JSX.Element {
   // --------------------------------------------------------------------------------
 
   // 최초 랜더링
-  useEffect(()=> {
+  useEffect(() => {
     getGroupOptions();
   }, []);
 
@@ -297,7 +297,7 @@ function Server(): JSX.Element {
           </Button>
         </Stack>
 
-        <Card sx={{ m: 0 }}>
+        <Card>
           <Select
             isSearchable={ false }
             ref={ selectGroupRef }

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt, faServer, faHouse, faUser, faKey, faTableList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faServer, faHouse, faUser, faKey, faTableList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ const navConfig = [
   {
     title: 'data',
     path: '/data',
-    icon: <FontAwesomeIcon icon={ faBolt } size="lg" />,
+    icon: <FontAwesomeIcon icon={ faCalendarCheck } size="lg" />,
   },
   // {
   //   title: 'info',

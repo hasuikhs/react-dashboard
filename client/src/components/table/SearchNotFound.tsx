@@ -10,7 +10,7 @@ interface SearchNotFoundInterface {
 
 function SearchNotFound({ searchQuery = '', ...other }: SearchNotFoundInterface) {
   return (
-    <Paper {...other} >
+    <Paper {...other} sx={{ minHeight: '100px', paddingTop: '22px' }}>
       <Typography gutterBottom align="center" variant="subtitle1" >
         {
           searchQuery === ''

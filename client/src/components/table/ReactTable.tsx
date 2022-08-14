@@ -126,19 +126,6 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         pageSize={ defaultPageSize }
         setPageSize={ setPageSize }
       />
-      {/* <Select
-        sx={{ float: 'right' }}
-        defaultValue={ pageSize }
-        size="small"
-        value={ pageSize }
-        displayEmpty
-        onChange={ (e: any) => setPageSize(e.target.value) }
-      >
-        <MenuItem value={ 5 }>5</MenuItem>
-        <MenuItem value={ 10 }>10</MenuItem>
-        <MenuItem value={ 20 }>20</MenuItem>
-
-      </Select> */}
     </>
   );
 }
