@@ -124,6 +124,32 @@ class GroupManager implements GroupManagerInterface {
     });
   }
 
+  public async delete(seq: number): Promise<number> {
+    const sql: string = `
+      DELETE FROM tb_group
+      WHERE seq = ?
+    `;
+    const params: number[] = [ seq ];
+
+    return  new Promise<number>((resolve, reject) => {
+
+      resolve(0);
+      // 그룹 삭제는 추천하지 않음
+      // this._conn.getConnection((connErr, conn) => {
+      //   if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+      //   conn.query(sql, params, (err, result) => {
+      //     if (err) reject(new Error(`GRoupManager delete error. cause: ${ err }`));
+
+      //     resolve(result.affectedRows);
+      //   });
+
+      //   // return connection pool
+      //   conn.release();
+      // });
+    });
+  }
+
 }
 
 export default GroupManager;

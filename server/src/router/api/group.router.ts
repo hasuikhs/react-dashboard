@@ -24,8 +24,8 @@ groupRouter.put('/:idx([0-9]+)', async (req: Request, res: Response) => {
   return res.status(200).json( await groupManager.update(req.body) );
 });
 
-// groupRouter.delete('/:idx([0-9]+)', async (req: Request, res: Response) => {
-//   return res.status(200).json( await groupManager.delete(parseInt(req.params.idx)) );
-// });
+groupRouter.delete('/:idx([0-9]+)', async (req: Request, res: Response) => {
+  return res.status(200).json( await groupManager.delete(parseInt(req.params.idx)) );
+});
 
 export default groupRouter;

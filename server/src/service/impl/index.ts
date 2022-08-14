@@ -5,3 +5,4 @@ export { default as LoginManager } from './LoginManager';
 export { default as ServerManager } from './ServerManager';
 export { default as SheetManager } from './SheetManager';
 export { default as UserManager } from './UserManager';
+export { default as DataManager} from './DataManager';

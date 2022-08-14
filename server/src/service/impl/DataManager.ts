@@ -1,12 +1,12 @@
-import { data, license, server } from '../domain';
-import pool from '../utils/mysqlConnection';
-import getAllMonitoringData from '../utils/dataUtil';
+import { DataManagerInterface } from '../inf';
+import { data } from '../../domain';
+import pool from '../../utils/mysqlConnection';
 
 import mysql from 'mysql';
-import { CONNECTING } from 'ws';
+import { unixToDatetimeString } from '../../utils/common';
 // --------------------------------------------------------------------------------
 
-class DataManager {
+class DataManager implements DataManagerInterface {
 
   private _conn: mysql.Pool;
 
@@ -50,21 +50,72 @@ class DataManager {
     });
   }
 
-  public async select(serverSeq: number): Promise<data[]> {
+  public async selectByServerSeq(serverSeq: number, psUnixtime: string): Promise<data[]> {
+    const psDate = unixToDatetimeString(parseInt(psUnixtime));
+
     const sql: string = `
       SELECT *
       FROM tb_data
       WHERE server_seq = ?
+      AND reg_dt >= ?
       ORDER BY reg_dt;
     `;
-    const params: number[] = [ serverSeq ];
+    const params: (number|string)[] = [ serverSeq, psDate ];
 
     return new Promise<data[]>((resolve, reject) => {
       this._conn.getConnection((connErr, conn) => {
         if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
 
         conn.query(sql, params, (err, rows) => {
-          if (err) reject(new Error(`DataManager select error. cause: ${ err }`));
+          if (err) reject(new Error(`DataManager selectByServerSeq error. cause: ${ err }`));
+
+          const dataList: data[] = [];
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                serverSeq: row.server_seq,
+                cpu: row.cpu,
+                mi01: row.mi01,
+                mi05: row.mi05,
+                mi15: row.mi15,
+                mem: row.mem,
+                swap: row.swap,
+                totalDisk: row.total_disk,
+                disk1: row.disk1,
+                disk2: row.disk2,
+                disk3: row.disk3,
+                regDt: row.reg_dt
+              });
+            }
+          }
+
+          resolve(dataList);
+        });
+
+        // return connection pool
+        conn.release();
+      });
+    });
+  }
+
+  public async selectByGroupSeq(groupSeq: number, psUnixtime: string): Promise<data[]> {
+    const psDate = unixToDatetimeString(parseInt(psUnixtime));
+
+    const sql: string = `
+      SELECT *
+      FROM tb_data
+      WHERE group_seq = ?
+      AND reg_dt >= ?
+      ORDER BY reg_dt;
+    `;
+    const params: (number|string)[] = [ groupSeq, psDate ];
+
+    return new Promise<data[]>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, rows) => {
+          if (err) reject(new Error(`DataManager selectByGroupSeq error. cause: ${ err }`));
 
           const dataList: data[] = [];
           if (rows.length) {
