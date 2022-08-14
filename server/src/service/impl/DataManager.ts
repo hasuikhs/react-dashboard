@@ -102,11 +102,13 @@ class DataManager implements DataManagerInterface {
     const psDate = unixToDatetimeString(parseInt(psUnixtime));
 
     const sql: string = `
-      SELECT *
-      FROM tb_data
-      WHERE group_seq = ?
-      AND reg_dt >= ?
-      ORDER BY reg_dt;
+      SELECT d.*
+      FROM tb_data d
+      LEFT JOIN tb_server s
+      ON d.server_seq = s.seq
+      WHERE s.group_seq = ?
+      AND d.reg_dt >= ?
+      ORDER BY d.reg_dt;
     `;
     const params: (number|string)[] = [ groupSeq, psDate ];
 
