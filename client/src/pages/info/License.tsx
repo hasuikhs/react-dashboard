@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
 // material
-import { Container, Card, Stack, Typography, Button } from '@mui/material';
+import { Container, Card, Stack, Typography, Button, Chip } from '@mui/material';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -54,7 +54,9 @@ function License(): JSX.Element {
       Cell: ({ row }: any) => {
         return (
           row.values.group.map((item: any) => (
-            <p key={ item.seq }>{ item.nm }</p>
+            <div className="tc" style={{ margin: '2px 0'}}>
+              <Chip variant="outlined" color="primary" label={ item.nm } />
+            </div>
           ))
         );
       }

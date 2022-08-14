@@ -3,6 +3,9 @@ import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy }
 // material
 import { styled, alpha } from '@mui/material/styles';
 import {
+  Select,
+  MenuItem,
+  Typography,
   Table,
   TableRow,
   TableBody,
@@ -28,6 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
 
   const [curPage, setCurPage] = useState(0);
+  const curPageSize = 5;
 
   const {
     getTableProps,
@@ -43,17 +47,18 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     gotoPage,
     nextPage,
     previousPage,
+    setPageSize,
     state: { pageIndex },
     setGlobalFilter
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 5, pageIndex: curPage }
+      initialState: { pageSize: curPageSize, pageIndex: curPage }
     },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
 
   // 테이블 등록, 수정 됐을시 보던 페이지 유지
@@ -69,7 +74,7 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         useAsyncDebounce={ useAsyncDebounce }
       />
 
-      <TableContainer sx={{ minWidth: 800 }} >
+      <TableContainer>
         <Table { ...getTableProps() } >
           <ReactTableHead headerGroups={ headerGroups } />
 
@@ -106,13 +111,11 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
           </TableBody>
         </Table>
       </TableContainer>
-
-      <span
-        className="fl"
-        style={ { lineHeight: '30px', fontSize: '14px', padding: '10px' } }
-      >
+      
+      <Typography variant="body2" sx={{ float: 'left', p: 1, paddingLeft: '15px',  lineHeight: '32px' }}>
         { rows.length ? `Rows: ${ rows.length }` : '' }
-      </span>
+      </Typography>
+
 
       <TablePagination
         pageIndex={ pageIndex }
@@ -122,7 +125,22 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
         canPreviousPage={ canPreviousPage }
         nextPage={ nextPage }
         canNextPage={ canNextPage }
+        pageSize={ curPageSize }
+        setPageSize={ setPageSize }
       />
+      {/* <Select
+        sx={{ float: 'right' }}
+        defaultValue={ pageSize }
+        size="small"
+        value={ pageSize }
+        displayEmpty
+        onChange={ (e: any) => setPageSize(e.target.value) }
+      >
+        <MenuItem value={ 5 }>5</MenuItem>
+        <MenuItem value={ 10 }>10</MenuItem>
+        <MenuItem value={ 20 }>20</MenuItem>
+
+      </Select> */}
     </>
   );
 }

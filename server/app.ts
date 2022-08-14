@@ -6,10 +6,12 @@ import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
 import DataManager from './src/service/DataManager';
 import getAllMonitoringData from './src/utils/dataUtil';
-import { dateToStringFormat } from './src/utils/common';
+import { EventEmitter} from 'events';
 
 const PORT: number = 3030;
 const WORKER_SIZE: number = 1;
+
+EventEmitter.setMaxListeners(20);
 
 if (!cluster.isWorker) {
   for (let i = 0; i < WORKER_SIZE; i++) {
@@ -46,7 +48,7 @@ function runServer(): Express.Application {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
     const dataManager = new DataManager();
 
-    schedule.scheduleJob('40 15/30 * * * *', async () => {
+    schedule.scheduleJob('40 20/30 * * * *', async () => {
       console.log('---------------------------------');
       console.log('START -', new Date().toLocaleString());
       console.time('INSERT');

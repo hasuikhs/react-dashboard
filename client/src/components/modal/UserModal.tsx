@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faFaceAngry, faFaceLaughBeam } from '@fortawesome/free-solid-svg-icons';
 
 import { requestAPI } from '../../common/API';
 
@@ -20,6 +20,8 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
   const [userPw, setUserPw] = useState<string>('');
   const userPwRef: RefObject<HTMLInputElement> = useRef<HTMLInputElement>(null);
 
+  const pwRegex = /^[a-zA-Z0-9]{6,10}$/;
+
   useEffect(() => {
     setUserSeq(modalData.seq || null);
     setUserNm(modalData.userNm || '');
@@ -30,7 +32,7 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
   const closeModal = (): void => {
     setShowModal(false);
 
-    setModalData([]);
+    setModalData({});
   }
 
   const onSubmit = async () => {
@@ -44,14 +46,22 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
       });
     } else if (!userId.trim()) {
       return Swal.fire({
-        title: '유저 ID를 입력해주세요.',
+        title: 'ID를 입력해주세요.',
         icon: 'warning',
         confirmButtonText: '확인',
         didClose: () => userIdRef.current?.focus()
       });
     } else if (!userPw.trim() && !userSeq) {
       return Swal.fire({
-        title: '유저 PW를 입력해주세요.',
+        title: 'Password를 입력해주세요.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        didClose: () => userPwRef.current?.focus()
+      });
+    } else if (userPw.trim() && !pwRegex.test(userPw.trim())) {
+      return Swal.fire({
+        title: 'Password를 확인해주세요.',
+        text: 'Passwords는 6~10자리 사이의 영문, 숫자입니다.',
         icon: 'warning',
         confirmButtonText: '확인',
         didClose: () => userPwRef.current?.focus()
@@ -116,11 +126,11 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="form-license-id">
-              <Form.Label>유저 ID<span className="red_ico"></span></Form.Label>
+              <Form.Label>ID<span className="red_ico"></span></Form.Label>
               <Form.Control
                 ref={ userIdRef }
                 type="text"
-                placeholder="유저 ID를 입력해주세요."
+                placeholder="ID를 입력해주세요."
                 value={ userId }
                 onChange={ e => setUserId(e.target.value) }
                 readOnly={ userSeq ? true : false }
@@ -129,19 +139,29 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="form-license-pw">
-              <Form.Label>유저 PW<span className="red_ico"></span></Form.Label>
+              <Form.Label>Password<span className="red_ico"></span></Form.Label>
               <Form.Control
                 ref={ userPwRef }
                 type="password"
                 placeholder={ 
                   userSeq
-                    ? '입력할 경우 패스워드가 수정됩니다.'
-                    : '패스워드를 입력해주세요.'
+                    ? '입력할 경우 Password가 수정됩니다.'
+                    : 'Password를 입력해주세요.'
                 }
                 value={ userPw }
                 onChange={ e => setUserPw(e.target.value) }
                 autoComplete="off"
               />
+              <Form.Text className="text-muted" style={{ marginLeft: '10px'}}>
+                { '*' }
+                {
+                  userPw
+                    ? pwRegex.test(userPw)
+                      ? <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceLaughBeam } color="#43a047"/></span>
+                      : <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceAngry } color="#e53935"/></span>
+                    : 'Passwords는 6~10자리 사이의 영문, 숫자입니다.'
+                }
+              </Form.Text>
             </Form.Group>
 
           </Form>

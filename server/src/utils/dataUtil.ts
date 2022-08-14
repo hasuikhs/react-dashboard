@@ -85,7 +85,11 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
   };
 
   const [resPost, resGet] = await Promise.all([
-    axios.post(postApiURL, requestBody, headerConfig), axios.get(getApiURL, headerConfig)
+    axios.post(postApiURL, requestBody, headerConfig).catch(err => {
+      console.log('server', server.seq, err)
+    }), axios.get(getApiURL, headerConfig).catch(err => {
+      console.log('server', server.seq, err)
+    })
   ]);
 
   const tgtData: data = {
@@ -105,7 +109,7 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
   // parsing
   for (let i = 0, len = metricInfo.length; i < len; i++) {
     const metric = metricInfo[i];
-    const findData = resPost.data?.result.find((item: any) => item.item === metric);
+    const findData = resPost?.data.result.find((item: any) => item.item === metric);
 
     switch (metric) {
       case 'avg.svr.cpu.used.rto':
@@ -136,7 +140,7 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
 
   for (let i = 0, len = fileSystem.length; i < len; i++) {
     const metric = fileSystem[i];
-    const findData = resGet.data?.rows.find((item: any) => item.devNm === metric);
+    const findData = resGet?.data.rows.find((item: any) => item.devNm === metric);
 
     switch (metric) {
       case '/dev/xvda1':

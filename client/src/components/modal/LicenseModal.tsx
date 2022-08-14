@@ -204,6 +204,10 @@ function LicenseModal({ showModal, setShowModal, modalData, setModalData, update
                       ? '1px solid #B2D4FF'
                       : '1px solid lightgray',
                     '&:hover': { borderColor: 'lightgray' }
+                  }),
+                  multiValue: (base: any) => ({
+                    ...base,
+                    backgroundColor: '#ebf7fc'
                   })
                 } }
                 onChange={ e => setGroupSeq(e.map(item => item.value).join()) }

@@ -1,6 +1,9 @@
 import React from 'react';
 // import Pagination from 'react-bootstrap/Pagination';
-import { Stack, Pagination, PaginationItem } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import { Stack, Pagination, PaginationItem, Select, MenuItem } from '@mui/material'
+
+// --------------------------------------------------------------------------------
 
 interface PaginationInerface {
   pageIndex: number;
@@ -10,9 +13,23 @@ interface PaginationInerface {
   canNextPage: boolean;
   previousPage: Function;
   nextPage: Function;
+  pageSize: number;
+  setPageSize: Function;
 }
 
-function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPreviousPage, nextPage, canNextPage }: PaginationInerface) {
+// --------------------------------------------------------------------------------
+
+const StyledSelect = styled(Select)(({ theme }: any) => ({
+  width: 120,
+  height: 30,
+  borderColor: 'transparent',
+  '& legend': { display: 'none' },
+  '& fieldset': { border: 'none' }
+}));
+
+// --------------------------------------------------------------------------------
+
+function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPreviousPage, nextPage, canNextPage, pageSize, setPageSize }: PaginationInerface) {
 
   const pages: number[] = [];
   // const prevEllipsis: number[] = [];
@@ -46,7 +63,16 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
   };
 
   return (
-    <Stack spacing={ 2 } sx={{ p: 1 }} >
+    <Stack direction="row" spacing={ 1 } sx={{ p: 1, float: 'right', margin: '5px' }} >
+      <StyledSelect
+        defaultValue={ pageSize }
+        onChange={ (e: any) => setPageSize(e?.target.value || pageSize) }
+      >
+        <MenuItem value={ 5 }>5개 보기</MenuItem>
+        <MenuItem value={ 10 }>10개 보기</MenuItem>
+        <MenuItem value={ 20 }>20개 보기</MenuItem>
+        <MenuItem value={ 50 }>50개 보기</MenuItem>
+      </StyledSelect>
       <Pagination
         disabled={ pageCount === 1 ? true : false }
         showFirstButton
@@ -55,14 +81,10 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
         page={ pageIndex }
         onChange={ onPageChange }
         size="medium"
-        sx={{
-          display: "flex",
-          justifyContent: "end"
-        }}
         renderItem={ (item) => (
           <PaginationItem { ...item } sx={{ fontSize: 14 }} />
         ) }
-      />
+        />
     </Stack>
   );
 

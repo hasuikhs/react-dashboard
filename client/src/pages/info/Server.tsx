@@ -32,31 +32,42 @@ function Server(): JSX.Element {
   // --------------------------------------------------------------------------------
 
   const groupSelectStyles: StylesConfig = {
-    control: (base: any) => ({
+    control: (base: any, state: any) => ({
       ...base,
-      height: '31px',
+      height: '62px',
       minHeight: '31px',
-      width: 250
+      borderColor: '#dbe0e4',
+      '&:hover': { borderColor: '#dbe0e4' },
+      borderRadius: '10px',
+      width: state.isFocused ? 250 : 200,
+      marginTop: '15px',
+      marginRight: '25px',
+      boxShadow: state.isFocused ? '0 8px 16px 0 rgb(145 158 171 / 24%)' : ''
     }),
     placeholder: (base: any) => ({
       ...base,
-      height: '30px'
+      height: '40px'
     }),
     container: (base: any) => ({
       ...base,
-      height: '30px'
+      height: '50px'
     }),
     valueContainer: (base: any) => ({
       ...base,
-      height: '30px'
+      height: '28px'
     }),
     singleValue: (base: any) => ({
       ...base,
-      height: '32px'
+      height: '52px',
     }),
     indicatorsContainer: (base: any) => ({
       ...base,
-      height: '30px'
+      height: '60px'
+    }),
+    menu: (base: any) => ({
+      ...base,
+      marginTop: '35px',
+      width: 250
     })
   }
 
@@ -288,6 +299,7 @@ function Server(): JSX.Element {
 
         <Card sx={{ m: 0 }}>
           <Select
+            isSearchable={ false }
             ref={ selectGroupRef }
             className="fr"
             isClearable={ true }
