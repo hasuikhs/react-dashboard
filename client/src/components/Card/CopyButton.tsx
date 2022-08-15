@@ -7,6 +7,8 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
+// --------------------------------------------------------------------------------
+
 const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -15,12 +17,33 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
   }
 }));
 
-function CopyButton() {
+// --------------------------------------------------------------------------------
+
+function CopyButton({ presentData, overData }: { presentData: any, overData: any }) {
 
   const [tooltipText, setTooltipText] = useState<string>('copy');
 
-  const changeText = () => {
-    setTooltipText('copied');
+  const copyData = async () => {
+    const text = 'test111';
+
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+
+      setTooltipText('copied!');
+    } else {
+      const textarea: HTMLTextAreaElement = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = "fixed";
+
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand('copy');
+
+      document.body.removeChild(textarea);
+      setTooltipText('copied!');
+    }
+
     setTimeout(() => {
       setTooltipText('copy');
     }, 1_000);
@@ -28,11 +51,13 @@ function CopyButton() {
 
   return (
     <CustomTooltip title={ tooltipText } placement="top" arrow>
-      <IconButton onClick={ changeText } >
+      <IconButton onClick={ copyData } >
         <FontAwesomeIcon icon={ faCopy } style={{ fontSize: '14px' }} />
       </IconButton>
     </CustomTooltip>
   );
 }
+
+// --------------------------------------------------------------------------------
 
 export default CopyButton;

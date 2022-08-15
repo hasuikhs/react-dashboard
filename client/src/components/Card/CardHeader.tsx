@@ -21,14 +21,18 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 function CardHeader({ serverInfo, monitoringData, overData }: { serverInfo: any, monitoringData: any, overData: any }) {
-
   const overCnt = Object.values(overData).reduce((acc: any, cur: any) => acc + cur.length, 0) as number;
+
+  const presentData = monitoringData.slice(-1)?.[0];
 
   return (
     <Alert
-      sx={{ borderRadius: 0, backgroundColor: overCnt > 0 ? 'rgb(250, 232, 229)' : 'rgb(226, 244, 215)' }}
+      sx={{
+        borderRadius: 0,
+        backgroundColor: overCnt > 0 ? 'rgb(250, 232, 229)' : 'rgb(226, 244, 215)'
+      }}
       severity={ overCnt > 0 ? 'error' : 'success' }
-      action={ <CopyButton /> }
+      action={ <CopyButton presentData={ presentData } overData={ overData } /> }
     >
       <CustomTooltip title={ `${ serverInfo?.cpuCnt } Core, ${ serverInfo?.ram }GB Ram` } placement="top" arrow>
         <Typography sx={{ fontWeight: 'bolder' }}>
