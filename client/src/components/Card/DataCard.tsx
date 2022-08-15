@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-// redux
-import { useSelector } from 'react-redux';
-import { RootState } from '../../modules';
-import { Auth } from '../../modules/auth';
+import { useState } from 'react';
 // mui
 import { styled } from '@mui/material/styles';
 import { Card, CardContent, CardActions } from '@mui/material';

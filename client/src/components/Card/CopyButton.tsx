@@ -1,4 +1,8 @@
 import { useState } from 'react';
+// redux
+import { useSelector } from 'react-redux';
+import { RootState } from '../../modules';
+import { Auth } from '../../modules/auth';
 // material
 import { styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
