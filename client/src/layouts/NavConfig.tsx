@@ -4,11 +4,11 @@ import { faCalendarCheck, faServer, faHouse, faUser, faKey, faTableList, faUserG
 // ----------------------------------------------------------------------
 
 const navConfig = [
-  {
-    title: 'home',
-    path: '/home',
-    icon: <FontAwesomeIcon icon={ faHouse } size="lg" />,
-  },
+  // {
+  //   title: 'home',
+  //   path: '/home',
+  //   icon: <FontAwesomeIcon icon={ faHouse } size="lg" />,
+  // },
   {
     title: 'data',
     path: '/data',

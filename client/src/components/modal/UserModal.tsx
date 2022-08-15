@@ -139,7 +139,7 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="form-license-pw">
-              <Form.Label>Password<span className="red_ico"></span></Form.Label>
+              <Form.Label>Password { userSeq ? '' : <span className="red_ico"></span> }</Form.Label>
               <Form.Control
                 ref={ userPwRef }
                 type="password"

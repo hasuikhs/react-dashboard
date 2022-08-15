@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import Swal from 'sweetalert2';
 import Select, { StylesConfig } from 'react-select';
 // material
-import { Container, Card, Stack, Typography, Button } from '@mui/material';
+import { Container, Card, Stack, Typography, Button, Alert } from '@mui/material';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faServer } from '@fortawesome/free-solid-svg-icons';
@@ -39,7 +39,8 @@ function Server(): JSX.Element {
       borderColor: '#DBE0E4',
       '&:hover': { borderColor: '#DBE0E4' },
       borderRadius: '10px',
-      width: state.isFocused ? 250 : 200,
+      width: state.isFocused ? 230 : 200,
+      transition: 'width 300ms, box-shadow 300ms',
       marginTop: '15px',
       marginRight: '25px',
       boxShadow: state.isFocused ? '0 8px 16px 0 rgb(145 158 171 / 24%)' : ''
@@ -67,7 +68,7 @@ function Server(): JSX.Element {
     menu: (base: any) => ({
       ...base,
       marginTop: '35px',
-      width: 250
+      width: 230
     })
   }
 
@@ -283,10 +284,13 @@ function Server(): JSX.Element {
   return (
     <Page title="Server">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 2 } >
           <Typography variant="h4" gutterBottom>
           <FontAwesomeIcon icon={ faServer } style={{ marginRight: '10px' }} />
             Server
+            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+              관리 중인 서버 목록입니다.
+            </Alert>
           </Typography>
           <Button
             variant="contained"

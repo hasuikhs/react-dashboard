@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
 // material
-import { Container, Card, Stack, Typography, Button, Chip } from '@mui/material';
+import { Container, Card, Stack, Typography, Button, Chip, Alert } from '@mui/material';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -54,7 +54,7 @@ function License(): JSX.Element {
       Cell: ({ row }: any) => {
         return (
           row.values.group.map((item: any) => (
-            <div className="tc" style={{ margin: '2px 0'}}>
+            <div key={ item.seq } className="tc" style={{ margin: '2px 0'}}>
               <Chip variant="outlined" color="primary" label={ item.nm } />
             </div>
           ))
@@ -195,10 +195,13 @@ function License(): JSX.Element {
   return (
     <Page title="License">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 2 } >
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faKey } style={{ marginRight: '10px' }} />
             License
+            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+              NCP 모니터링 서버에 접속 가능한 계정 목록입니다.
+            </Alert>
           </Typography>
           <Button
             variant="contained"

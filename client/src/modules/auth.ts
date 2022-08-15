@@ -2,6 +2,7 @@ interface Auth {
   token: string|null;
   user: {
     isLogin: boolean;
+    userId: string;
     userNm: string;
     loginDt: Date|null;
   }
@@ -29,6 +30,7 @@ const initialState: Auth = {
   token: null,
   user: {
     isLogin: false,
+    userId: '',
     userNm: '',
     loginDt: null
   }

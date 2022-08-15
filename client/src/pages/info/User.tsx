@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
 // material
-import { Container, Card, Stack, Typography, Button } from '@mui/material';
+import { Container, Card, Stack, Typography, Button, Alert } from '@mui/material';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -139,10 +139,13 @@ function User(): JSX.Element {
   return (
     <Page title="User">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 5 } >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 2 } >
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faUser } style={{ marginRight: '10px' }} />
             User
+            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+              모니터링 사이트에 접속 가능한 사용자 목록입니다.
+            </Alert>
           </Typography>
           <Button
             variant="contained"

@@ -59,6 +59,7 @@ function Login(): JSX.Element {
         token: res.data.token,
         user: {
           isLogin: true,
+          userId: res.data.user.userId,
           userNm: res.data.user.userNm,
           loginDt: res.data.user.loginDt
         }

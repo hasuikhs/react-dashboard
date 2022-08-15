@@ -89,12 +89,13 @@ function LoginForm() {
         token: res.data.token,
         user: {
           isLogin: true,
+          userId: res.data.user.userId,
           userNm: res.data.user.userNm,
           loginDt: res.data.user.loginDt
         }
       }));
 
-      return navigate('/');
+      return navigate('/data');
     } catch (error) {
       const err = error as AxiosError;
       const errBody = err.response?.data as LoginErrorInterface;
