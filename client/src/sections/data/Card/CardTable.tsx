@@ -26,6 +26,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
 
   const presentData = monitoringData.slice(-1)?.[0];
   const percentLimit: number = 90;
+  const diskUsageLimit: number = 80;
 
   return (
     <TableContainer>
@@ -80,7 +81,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
             <CellHaed rowSpan={ 4 }>Disk <br></br> disk1: ({ serverInfo.disk1 }GB) <br></br> disk2: ({ serverInfo.disk2 }GB)</CellHaed>
             <CellHaed>total</CellHaed>
             <CustomTableCell
-              sx={{ color: (presentData?.totalDisk || 0) > percentLimit ? 'red' : 'black' }}
+              sx={{ color: (presentData?.totalDisk || 0) > diskUsageLimit ? 'red' : 'black' }}
             >
               { (presentData?.totalDisk || 0).toFixed(2) } %
             </CustomTableCell>
@@ -88,7 +89,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
           <TableRow>
             <CellHaed>xvda1</CellHaed>
             <CustomTableCell
-              sx={{ color: (presentData?.disk1 || 0) > percentLimit ? 'red' : 'black' }}
+              sx={{ color: (presentData?.disk1 || 0) > diskUsageLimit ? 'red' : 'black' }}
             >
               { (presentData?.disk1 || 0).toFixed(2) } %
             </CustomTableCell>
@@ -96,7 +97,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
           <TableRow>
             <CellHaed>xvdb1</CellHaed>
             <CustomTableCell
-              sx={{ color: (presentData?.disk2 || 0) > percentLimit ? 'red' : 'black' }}
+              sx={{ color: (presentData?.disk2 || 0) > diskUsageLimit ? 'red' : 'black' }}
             >
               { (presentData?.disk2 || 0).toFixed(2) } %
             </CustomTableCell>
@@ -104,7 +105,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
           <TableRow>
             <CellHaed>xvdc1</CellHaed>
             <CustomTableCell
-              sx={{ color: (presentData?.disk3 || 0) > percentLimit ? 'red' : 'black' }}
+              sx={{ color: (presentData?.disk3 || 0) > diskUsageLimit ? 'red' : 'black' }}
             >
               { (presentData?.disk3 || 0).toFixed(2) } %
             </CustomTableCell>

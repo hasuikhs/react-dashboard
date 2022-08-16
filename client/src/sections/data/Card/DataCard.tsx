@@ -39,12 +39,15 @@ function DataCard({ data }: { data: any }) {
 
   const cpuCnt: number = serverInfo.cpuCnt as number;
   const percentLimit: number = 90;
+  const diskUsageLimit: number = 80;
 
   const observeMetric: string[] = ['mi01', 'mi05', 'mi15', 'mem', 'swap', 'totalDisk', 'disk1', 'disk2', 'disk3'];
 
   const overData = observeMetric.reduce((obj: any, cur) => {
     if (cur.includes('mi')) {
       obj[cur] = monitoringData.filter((item: any) => item[cur] > cpuCnt);
+    } else if (cur.includes('disk')) {
+      obj[cur] = monitoringData.filter((item: any) => item[cur] > diskUsageLimit);
     } else {
       obj[cur] = monitoringData.filter((item: any) => item[cur] > percentLimit);
     }

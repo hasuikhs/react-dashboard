@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // material
 import { styled } from '@mui/material/styles';
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemText, Alert } from '@mui/material';
 // utils
 import { requestAPI } from '../../common/API';
 
@@ -37,19 +37,27 @@ function SheetList(): JSX.Element {
   }, []);
 
 
-  return (
-    <CustomList sx={{ float: 'right' }} >
-      {
-        sheetData.map((sheet: any) => (
-          <ListItem disablePadding>
-            <ListItemButton sx={{ height: '38px' }} target="_blank" href={ sheet.sheetUrl } >
-              <ListItemText primary={ sheet.sheetNm } />
-            </ListItemButton>
-          </ListItem>
-        ))
-      }
-    </CustomList>
-  );
+  return sheetData.length > 0
+    ? ( <CustomList sx={{ float: 'right' }} >
+          {
+            sheetData.map((sheet: any) => (
+              <ListItem disablePadding>
+                <ListItemButton sx={{ height: '38px' }} target="_blank" href={ sheet.sheetUrl } >
+                  <ListItemText primary={ sheet.sheetNm } />
+                </ListItemButton>
+              </ListItem>
+            ))
+          }
+        </CustomList>
+      )
+    : (
+        <Alert
+          severity="error"
+          sx={{ backgroundColor: 'transparent', display: 'flex', justifyContent: 'end' }}
+        >
+          등록된 Sheet가 없습니다. Sheet를 등록해주세요.
+        </Alert>
+      )
 }
 
 // --------------------------------------------------------------------------------

@@ -288,7 +288,7 @@ function Server(): JSX.Element {
           <Typography variant="h4" gutterBottom>
           <FontAwesomeIcon icon={ faServer } style={{ marginRight: '10px' }} />
             Server
-            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+            <Alert severity="info" sx={{ backgroundColor: 'transparent' }}>
               관리 중인 서버 목록입니다.
             </Alert>
           </Typography>

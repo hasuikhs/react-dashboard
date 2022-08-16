@@ -199,7 +199,7 @@ function License(): JSX.Element {
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faKey } style={{ marginRight: '10px' }} />
             License
-            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+            <Alert severity="info" sx={{ backgroundColor: 'transparent' }}>
               NCP 모니터링 서버에 접속 가능한 계정 목록입니다.
             </Alert>
           </Typography>

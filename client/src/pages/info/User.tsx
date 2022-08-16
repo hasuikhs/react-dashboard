@@ -143,7 +143,7 @@ function User(): JSX.Element {
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faUser } style={{ marginRight: '10px' }} />
             User
-            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+            <Alert severity="info" sx={{ backgroundColor: 'transparent' }}>
               모니터링 사이트에 접속 가능한 사용자 목록입니다.
             </Alert>
           </Typography>

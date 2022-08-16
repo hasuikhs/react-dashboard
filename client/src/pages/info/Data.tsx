@@ -106,8 +106,13 @@ function Data(): JSX.Element {
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faCalendarCheck } style={{ marginRight: '10px' }} />
             Data
-            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
-              24시간 전부터 현재 시간까지의 데이터입니다.
+            <Alert severity="info" sx={{ backgroundColor: 'transparent' }}>
+              24시간 전부터 현재 시간까지의 데이터입니다.<br/>
+              {
+                cardData.length > 0
+                  ? `(조회된 시간: ${ cardData[0].data.slice(0, 1)[0].regDt } ~ ${ cardData[0].data.slice(-1)[0].regDt })`
+                  : ''
+              }
             </Alert>
           </Typography>
           <Stack spacing={ 0.5 } display="flex" justifyContent="flex-end">

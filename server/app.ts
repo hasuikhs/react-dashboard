@@ -51,12 +51,10 @@ function runServer(): Express.Application {
     schedule.scheduleJob('40 20/30 * * * *', async () => {
       console.log('---------------------------------');
       console.log('START -', new Date().toLocaleString());
-      console.time('INSERT');
       const data = await getAllMonitoringData();
       const rows = await dataManager.insert(data);
 
       console.log(`INSERT ROWS ${ rows } OK.`)
-      console.timeEnd('INSERT');
       console.log('END ---', new Date().toLocaleString());
       console.log('---------------------------------');
     });

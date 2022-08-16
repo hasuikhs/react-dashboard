@@ -1,8 +1,4 @@
 import { useState } from 'react';
-// redux
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../modules';
-import { Auth } from '../../../modules/auth';
 // material
 import { styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
@@ -25,16 +21,11 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 // --------------------------------------------------------------------------------
 
-function CopyButton({ presentData, overData }: { presentData: any, overData: any }) {
-
-  const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
-
+function CopyButton({ copyText }: { copyText: string }) {
   const [tooltipText, setTooltipText] = useState<string>('copy');
 
   const copyData = async () => {
-    const text = `${ authentificated.user.userNm }`;
-
-    if (await copyToClipboard(text)) {
+    if (await copyToClipboard(copyText)) {
       setTooltipText('copied!');
 
       setTimeout(() => {
