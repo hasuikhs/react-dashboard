@@ -283,7 +283,7 @@ function Server(): JSX.Element {
 
   return (
     <Page title="Server">
-      <Container>
+      <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 2 } >
           <Typography variant="h4" gutterBottom>
           <FontAwesomeIcon icon={ faServer } style={{ marginRight: '10px' }} />

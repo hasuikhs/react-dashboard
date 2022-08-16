@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 // components
 import Page from '../../components/Page';
-import DataCard from '../../components/Card/DataCard';
+import DataCard from '../../sections/data/Card/DataCard';
+import SheetList from '../../sections/data/SheetList';
 // utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
@@ -17,9 +18,15 @@ import { toDatetimeFormat } from '../../common/DateFormat';
 const groupSelectStyles: StylesConfig = {
   control: (base: any, state: any) => ({
     ...base,
-    width: state.isFocused ? 230: 200,
+    width: 200,
+    marginLeft: '220px',
     transition: 'width 300ms, box-shadow 300ms',
-    boxShadow: state.isFocused ? '0 8px 16px 0 rgb(145 158 171 / 24%)' : ''
+    boxShadow: state.isFocused ? '0 8px 16px 0 rgb(145 158 171 / 24%)' : '',
+  }),
+  menu: (base: any) => ({
+    ...base,
+    marginLeft: '220px',
+    width: 200
   })
 };
 
@@ -94,7 +101,7 @@ function Data(): JSX.Element {
 
   return (
     <Page title="Data">
-      <Container>
+      <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={ 2 } >
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faCalendarCheck } style={{ marginRight: '10px' }} />
@@ -103,13 +110,16 @@ function Data(): JSX.Element {
               24시간 전부터 현재 시간까지의 데이터입니다.
             </Alert>
           </Typography>
-          <Select
-            isSearchable={ false }
-            placeholder={ '그룹 필터' }
-            options={ groupOptions }
-            styles={ groupSelectStyles }
-            onChange={ (e: any) => setGroupSeqFilter(e?.value) }
-          />
+          <Stack spacing={ 0.5 } display="flex" justifyContent="flex-end">
+            <SheetList />
+            <Select
+              isSearchable={ false }
+              placeholder={ '그룹 필터' }
+              options={ groupOptions }
+              styles={ groupSelectStyles }
+              onChange={ (e: any) => setGroupSeqFilter(e?.value) }
+            />
+          </Stack>
         </Stack>
 
         <Card sx={{ minHeight: '400px', p: 2, m: -1 }} >

@@ -11,7 +11,7 @@
 	border: 5px solid lightgray;
 	border-top-color: #41AF39;
   border-bottom-color: #41AF39;
-	animation: spinner 1s ease-in-out infinite;
+	animation: spinner 0.7s ease-in-out infinite;
 }
 
 @keyframes spinner {

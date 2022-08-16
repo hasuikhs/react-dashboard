@@ -2,7 +2,7 @@
 import axios, { AxiosInstance } from 'axios';
 import Swal from 'sweetalert2';
 
-const BASE_URL: string = 'http://192.168.0.11:3030';
+const BASE_URL: string = 'http://172.16.208.104:3030';
 const expireSessionCode: number[] = [401, 419]; // 401: invalid token, 419: expire token
 
 const expireSessionAlert = () => {

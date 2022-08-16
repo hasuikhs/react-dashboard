@@ -1,8 +1,8 @@
 import { useState } from 'react';
 // redux
 import { useSelector } from 'react-redux';
-import { RootState } from '../../modules';
-import { Auth } from '../../modules/auth';
+import { RootState } from '../../../modules';
+import { Auth } from '../../../modules/auth';
 // material
 import { styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
@@ -10,6 +10,8 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
+// utils
+import copyToClipboard from '../../../common/copy';
 
 // --------------------------------------------------------------------------------
 
@@ -25,32 +27,20 @@ const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 function CopyButton({ presentData, overData }: { presentData: any, overData: any }) {
 
+  const authentificated: Auth = useSelector<RootState>(state => state.auth) as Auth;
+
   const [tooltipText, setTooltipText] = useState<string>('copy');
 
   const copyData = async () => {
-    const text = 'test111';
+    const text = `${ authentificated.user.userNm }`;
 
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(text);
-
+    if (await copyToClipboard(text)) {
       setTooltipText('copied!');
-    } else {
-      const textarea: HTMLTextAreaElement = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = "fixed";
 
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      document.execCommand('copy');
-
-      document.body.removeChild(textarea);
-      setTooltipText('copied!');
+      setTimeout(() => {
+        setTooltipText('copy');
+      }, 1_000);
     }
-
-    setTimeout(() => {
-      setTooltipText('copy');
-    }, 1_000);
   };
 
   return (
