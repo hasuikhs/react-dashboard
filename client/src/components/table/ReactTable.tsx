@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
 
-  const defaultPageSize = 5;
+  const defaultPageSize = 10;
 
   const {
     getTableProps,
