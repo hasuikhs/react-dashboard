@@ -4,7 +4,7 @@ import cors from 'cors';
 import schedule from 'node-schedule';
 import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
-import { DataManager } from './src/service/impl';
+import { DataManager, SelfManager } from './src/service/impl';
 import { getSyncAllMonitoringData, selfMonitor } from './src/utils/dataUtil';
 import { EventEmitter} from 'events';
 
@@ -47,6 +47,7 @@ function runServer(): Express.Application {
   app.listen(PORT, () => {
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
     const dataManager = new DataManager();
+    const selfManager = new SelfManager();
 
     schedule.scheduleJob('40 20/30 * * * *', async () => {
       console.log('---------------------------------');
@@ -59,18 +60,19 @@ function runServer(): Express.Application {
       console.log('---------------------------------');
     });
 
-    // 매일 01:05:00
+    // 매일 01:10:10
     schedule.scheduleJob('10 10 1 * * *', async () => {
-      console.log('---------------------------------');
-      console.log('START -', new Date().toLocaleString());
-      const rows = await dataManager.delete();
+      const dataRows = await dataManager.delete();
+      const selfRows = await selfManager.delete();
 
-      console.log(`DELETE ROWS ${ rows } OK.`)
-      console.log('END ---', new Date().toLocaleString());
-      console.log('---------------------------------');
+      console.log(new Date().toLocaleString());
+      console.log(`DELETE tb_data ROWS: ${ dataRows }`);
+      console.log(`DELETE tb_self ROWS: ${ selfRows }`);
     });
 
-    schedule.scheduleJob('0 * * * * *', () => selfMonitor('./monitor.log'));
+    schedule.scheduleJob('0 */2 * * * *', async () => {
+      await selfManager.insertOne();
+    });
 
   });
 

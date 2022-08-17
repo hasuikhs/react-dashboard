@@ -4,3 +4,4 @@ export { default as license } from './license.interface';
 export { default as server } from './server.interface';
 export { default as sheet } from './sheet.interface';
 export { default as user } from './user.interface';
+export { default as selfMonitor } from './self.interface';

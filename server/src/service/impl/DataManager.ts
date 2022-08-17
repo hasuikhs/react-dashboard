@@ -166,9 +166,9 @@ class DataManager implements DataManagerInterface {
         // return connection pool
         conn.release();
       });
-
     });
   }
+
 }
 
 export default DataManager;
