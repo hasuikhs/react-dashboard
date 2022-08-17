@@ -28,7 +28,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // https://react-table-v7.tanstack.com/docs/examples/basic
 function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element {
 
-  const [curPage, setCurPage] = useState(0);
   const defaultPageSize = 5;
 
   const {
@@ -52,17 +51,12 @@ function ReactTable({ columns, data }: { columns: any, data: any}): JSX.Element 
     {
       columns,
       data,
-      initialState: { pageSize: defaultPageSize, pageIndex: curPage }
+      initialState: { pageSize: defaultPageSize }
     },
     useGlobalFilter,
     useSortBy,
     usePagination,
   );
-
-  // 테이블 등록, 수정 됐을시 보던 페이지 유지
-  useEffect(() => {
-    setCurPage(pageIndex);
-  }, [pageIndex]);
 
   return (
     <>

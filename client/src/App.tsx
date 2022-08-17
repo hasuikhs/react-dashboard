@@ -27,9 +27,11 @@ function App(): JSX.Element {
   const Home = lazy(() => import('./pages/Home'));
 
   const Data = lazy(() => import('./pages/info/Data'));
+  const User = lazy(() => import('./pages/info/User'));
   const Server = lazy(() => import('./pages/info/Server'));
   const License = lazy(() => import('./pages/info/License'));
-  const User = lazy(() => import('./pages/info/User'));
+  const Sheet = lazy(() => import('./pages/info/Sheet'));
+  const Group = lazy(() => import('./pages/info/Group'));
 
   const NotFound = lazy(() => import('./pages/404'));
   // const Forbidden = lazy(() => import('./pages/403'));
@@ -47,6 +49,8 @@ function App(): JSX.Element {
               <Route path="/user" element={ <User /> } />
               <Route path="/server" element={ <Server /> } />
               <Route path="/license" element={ <License /> } />
+              <Route path="/sheet" element={ <Sheet /> } />
+              <Route path="/group" element={ <Group /> } />
             </Route>
             <Route path="/login" element={ <Login /> } />
             <Route path="*" element={ <NotFound /> } />

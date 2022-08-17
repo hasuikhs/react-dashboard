@@ -60,8 +60,10 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
 
   // mui
   const onPageChange = (e: React.ChangeEvent<unknown>, page: number) => {
-    gotoPage(page);
+    gotoPage(page - 1);
   };
+
+  console.log(pageCount)
 
   return (
     <Stack direction="row" spacing={ 1 } sx={{ p: 1, float: 'right', margin: '5px' }} >
@@ -77,16 +79,16 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
       </StyledSelect>
 
       <Pagination
-        disabled={ pageCount === 1 ? true : false }
+        // disabled={ pageCount === 1 ? true : false }
         showFirstButton
         showLastButton
-        count={ pageCount -1 }
-        page={ pageIndex }
+        count={ pageCount }
+        page={ pageIndex + 1 }
         onChange={ onPageChange }
         size="medium"
-        renderItem={ (item) => (
-          <PaginationItem { ...item } sx={{ fontSize: 14 }} />
-        ) }
+        // renderItem={ (item) => (
+        //   <PaginationItem { ...item } sx={{ fontSize: 14 }} />
+        // ) }
         />
 
     </Stack>
