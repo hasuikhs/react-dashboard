@@ -29,3 +29,26 @@
     # 변경사항 저장
     $ pm2 save
   ```
+
+  - `service.json` 작성
+  ```json
+    {
+      "apps": [{
+        "name": "server",
+        "cwd": "./server",
+        "script": "./app.ts",
+        "cron_restart": "30 */6 * * *",
+        "watch": true
+      }, {
+        "name": "client",
+        "cwd": "./client",
+        "script": "npm",
+        "args": "start",
+        "watch": true
+      }]
+    }
+  ```
+  ```bash
+    # root directory에서
+    $ pm2 start service.json
+  ```
