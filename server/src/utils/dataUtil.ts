@@ -1,7 +1,10 @@
+import os from 'os';
+import fs from 'fs';
+
 import axios from 'axios';
 import { data, license, server } from '../domain';
 import { Crawler, LicenseManager, ServerManager } from '../service/impl';
-import { dateToStringFormat } from './common';
+import { dateToStringFormat, unixToDatetimeString } from './common';
 
 // --------------------------------------------------------------------------------
 
@@ -223,6 +226,29 @@ async function getSyncAllMonitoringData(): Promise<data[]> {
   return allData;
 }
 
+function selfMonitor(dir: string) {
+  const curDate = new Date().toISOString();
+
+  const cpu: number = os.cpus().length;
+  const [mi01, mi05, mi15]: number[] = os.loadavg();
+
+  const totalMem: number = os.totalmem() / 1024 / 1024 / 1024;
+  const freeMem: number = os.freemem() / 1024 / 1024 / 1024;
+  const usedMem: number = totalMem - freeMem;
+
+  const result: string[] = [
+    curDate,
+    cpu.toString(),
+    mi01.toFixed(3),
+    mi05.toFixed(3),
+    mi15.toFixed(3),
+    totalMem.toFixed(3),
+    usedMem.toFixed(3)
+  ];
+
+  return fs.appendFileSync(dir, `${ result.join(',') }\n`);
+}
+
 // --------------------------------------------------------------------------------
 
-export { getAsyncAllMonitoringData, getSyncAllMonitoringData };
+export { getAsyncAllMonitoringData, getSyncAllMonitoringData, selfMonitor };

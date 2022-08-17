@@ -5,7 +5,7 @@ import schedule from 'node-schedule';
 import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
 import { DataManager } from './src/service/impl';
-import { getSyncAllMonitoringData } from './src/utils/dataUtil';
+import { getSyncAllMonitoringData, selfMonitor } from './src/utils/dataUtil';
 import { EventEmitter} from 'events';
 
 const PORT: number = 3030;
@@ -69,6 +69,8 @@ function runServer(): Express.Application {
       console.log('END ---', new Date().toLocaleString());
       console.log('---------------------------------');
     });
+
+    schedule.scheduleJob('0 * * * * *', () => selfMonitor('./monitor.log'));
 
   });
 
