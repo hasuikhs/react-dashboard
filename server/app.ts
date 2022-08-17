@@ -5,7 +5,7 @@ import schedule from 'node-schedule';
 import { apiRouter, jwtRouter, graphqlRouter } from './src/router';
 import verifyToken from './src/utils/verifyToken';
 import { DataManager } from './src/service/impl';
-import getAllMonitoringData from './src/utils/dataUtil';
+import { getSyncAllMonitoringData } from './src/utils/dataUtil';
 import { EventEmitter} from 'events';
 
 const PORT: number = 3030;
@@ -51,7 +51,7 @@ function runServer(): Express.Application {
     schedule.scheduleJob('40 20/30 * * * *', async () => {
       console.log('---------------------------------');
       console.log('START -', new Date().toLocaleString());
-      const data = await getAllMonitoringData();
+      const data = await getSyncAllMonitoringData();
       const rows = await dataManager.insert(data);
 
       console.log(`INSERT ROWS ${ rows } OK.`)

@@ -160,7 +160,8 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
   return tgtData;
 }
 
-async function getAllMonitoringData(): Promise<data[]> {
+// spec이 좋은 환경에서 사용
+async function getAsyncAllMonitoringData(): Promise<data[]> {
   // 라이센스 정보 가져오기
   const licenses: license[] = await getLicenseData();
 
@@ -195,6 +196,33 @@ async function getAllMonitoringData(): Promise<data[]> {
   return allData;
 }
 
+// spec이 부족한 환경에서 사용
+async function getSyncAllMonitoringData(): Promise<data[]> {
+
+  let allData: data[] = [];
+
+  const serverManager = new ServerManager();
+
+  // 라이센스 정보 가져오기
+  const licenses: license[] = await getLicenseData();
+
+  for await (const license of licenses) {
+    const tokenWithLicense = await setToken(license);
+
+    const groupSeqs = tokenWithLicense.groupSeq.split(',');
+
+    for await (const group of groupSeqs) {
+      const servers: server[] = await serverManager.selectAllByGroupSeq(parseInt(group));
+
+      for await (const server of servers) {
+        allData = [ ...allData, await getMonitoringData(server, license.token)];
+      }
+    }
+  }
+
+  return allData;
+}
+
 // --------------------------------------------------------------------------------
 
-export default getAllMonitoringData;
+export { getAsyncAllMonitoringData, getSyncAllMonitoringData };
