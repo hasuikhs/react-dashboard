@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import LicenseManager from '../../service/impl/LicenseManager';
+import { LicenseManager } from '../../service/impl';
 
 const licenseRouter = Router();
 const licenseManager = new LicenseManager();

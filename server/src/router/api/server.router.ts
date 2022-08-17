@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import ServerManager from '../../service/impl/ServerManager';
+import { ServerManager } from '../../service/impl';
 
 const serverRouter = Router();
 const serverManager = new ServerManager();

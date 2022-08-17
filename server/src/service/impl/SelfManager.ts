@@ -27,8 +27,7 @@ class SelfManager implements SelfManagerInterface {
     let checkedDisk = await checkDiskSpace('/');
 
     let usedDisk = Math.round((checkedDisk.size - checkedDisk.free) / UNIT_GB * 1_000) / 1_000;
-    
-    
+
     const sql: string = `
       INSERT INTO tb_self(mi01, mi05, mi15, used_mem, used_disk)
       VALUES (?, ?, ?, ?, ?)

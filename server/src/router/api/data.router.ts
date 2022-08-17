@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import DataManager from '../../service/impl/DataManager';
+import { DataManager } from '../../service/impl';
 
 const dataRouter = Router();
 const dataManager = new DataManager();
