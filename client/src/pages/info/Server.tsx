@@ -34,24 +34,24 @@ function Server(): JSX.Element {
   const groupSelectStyles: StylesConfig = {
     control: (base: any, state: any) => ({
       ...base,
-      height: '62px',
+      height: '56px',
       minHeight: '31px',
       borderColor: '#DBE0E4',
       '&:hover': { borderColor: '#DBE0E4' },
       borderRadius: '10px',
       width: state.isFocused ? 230 : 200,
       transition: 'width 300ms, box-shadow 300ms',
-      marginTop: '15px',
+      marginTop: '18px',
       marginRight: '25px',
       boxShadow: state.isFocused ? '0 8px 16px 0 rgb(145 158 171 / 24%)' : ''
     }),
     placeholder: (base: any) => ({
       ...base,
-      height: '40px'
+      height: '30px'
     }),
     container: (base: any) => ({
       ...base,
-      height: '50px'
+      height: '40px'
     }),
     valueContainer: (base: any) => ({
       ...base,
@@ -59,11 +59,11 @@ function Server(): JSX.Element {
     }),
     singleValue: (base: any) => ({
       ...base,
-      height: '52px',
+      height: '32px',
     }),
     indicatorsContainer: (base: any) => ({
       ...base,
-      height: '60px'
+      height: '52px'
     }),
     menu: (base: any) => ({
       ...base,
