@@ -1,0 +1,12 @@
+{
+  "apps": [{
+    "name": "server",
+    "script": "./server/app.ts",
+    "cron_restart": "30 */6 * * *"
+  }, {
+    "name": "client",
+    "cwd": "./client",
+    "script": "npm",
+    "args": "start"
+  }]
+}
