@@ -7,7 +7,7 @@ import { faUser, faFaceAngry, faFaceLaughBeam } from '@fortawesome/free-solid-sv
 
 import { requestAPI } from '../../common/API';
 
-function UserModal({ showModal, setShowModal, modalData, setModalData, updateList }: { showModal: any, setShowModal: any, modalData: any, setModalData: any, updateList: any }) {
+function UserModal({ showModal, setShowModal, modalData, setModalData, updateList }: { showModal: any, setShowModal: any, modalData: any, setModalData: any, updateList?: any }) {
 
   const [userSeq, setUserSeq] = useState<number|null>(null);
 
@@ -134,6 +134,7 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
                 value={ userId }
                 onChange={ e => setUserId(e.target.value) }
                 readOnly={ userSeq ? true : false }
+                disabled={ userSeq ? true : false }
                 autoComplete="off"
               />
             </Form.Group>

@@ -70,7 +70,7 @@ function runServer(): Express.Application {
       console.log(`DELETE tb_self ROWS: ${ selfRows }`);
     });
 
-    schedule.scheduleJob('0 */2 * * * *', async () => {
+    schedule.scheduleJob('0 * * * * *', async () => {
       await selfManager.insertOne();
     });
 
