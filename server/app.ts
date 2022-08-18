@@ -45,6 +45,7 @@ function runServer(): Express.Application {
   });
 
   app.listen(PORT, () => {
+    console.log(`${ new Date().toLocaleString() } Start...`);
     console.log(`Express server listening on port ${ PORT } and worker ${ process.pid }`);
     const dataManager = new DataManager();
     const selfManager = new SelfManager();
