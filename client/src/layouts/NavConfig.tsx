@@ -14,37 +14,37 @@ const navConfig = [
     path: '/data',
     icon: <FontAwesomeIcon icon={ faCalendarCheck } size="lg" />,
   },
-  {
-    title: 'info',
-    icon: <FontAwesomeIcon icon={ faDatabase } size="lg" />,
-    children: [
-      {
-        title: 'user',
-        path: '/user',
-        icon: <FontAwesomeIcon icon={ faUser } size="lg" />
-      },
-      {
-        title: 'server',
-        path: '/server',
-        icon: <FontAwesomeIcon icon={ faServer } size="lg" />
-      },
-      {
-        title: 'license',
-        path: '/license',
-        icon: <FontAwesomeIcon icon={ faKey } size="lg" />
-      },
-      {
-        title: 'sheet',
-        path: '/sheet',
-        icon: <FontAwesomeIcon icon={ faTableList } size="lg" />
-      },
-      {
-        title: 'group',
-        path: '/group',
-        icon: <FontAwesomeIcon icon={ faUserGroup } size="lg" />
-      }
-    ]
-  },
+  // {
+  //   title: 'info',
+  //   icon: <FontAwesomeIcon icon={ faDatabase } size="lg" />,
+  //   children: [
+  //     {
+  //       title: 'user',
+  //       path: '/user',
+  //       icon: <FontAwesomeIcon icon={ faUser } size="lg" />
+  //     },
+  //     {
+  //       title: 'server',
+  //       path: '/server',
+  //       icon: <FontAwesomeIcon icon={ faServer } size="lg" />
+  //     },
+  //     {
+  //       title: 'license',
+  //       path: '/license',
+  //       icon: <FontAwesomeIcon icon={ faKey } size="lg" />
+  //     },
+  //     {
+  //       title: 'sheet',
+  //       path: '/sheet',
+  //       icon: <FontAwesomeIcon icon={ faTableList } size="lg" />
+  //     },
+  //     {
+  //       title: 'group',
+  //       path: '/group',
+  //       icon: <FontAwesomeIcon icon={ faUserGroup } size="lg" />
+  //     }
+  //   ]
+  // },
   {
     title: 'user',
     path: '/user',

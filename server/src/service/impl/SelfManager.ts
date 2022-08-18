@@ -6,7 +6,7 @@ import mysql from 'mysql';
 import os from 'os';
 import checkDiskSpace from 'check-disk-space';
 
-const UNIT_GB: number = 1024 * 1024 * 1024;
+const UNIT_MB: number = 1024 * 1024;
 
 class SelfManager implements SelfManagerInterface {
 
@@ -23,10 +23,10 @@ class SelfManager implements SelfManagerInterface {
     mi05 = Math.round(mi05 * 1_000) / 1_000;
     mi15 = Math.round(mi15 * 1_000) / 1_000;
 
-    let usedMem: number = Math.round((os.totalmem() - os.freemem()) / UNIT_GB * 1_000) / 1_000;
+    let usedMem: number = Math.round((os.totalmem() - os.freemem()) / UNIT_MB * 1_000) / 1_000;
     let checkedDisk = await checkDiskSpace('/');
 
-    let usedDisk = Math.round((checkedDisk.size - checkedDisk.free) / UNIT_GB * 1_000) / 1_000;
+    let usedDisk = Math.round((checkedDisk.size - checkedDisk.free) / UNIT_MB * 1_000) / 1_000;
 
     const sql: string = `
       INSERT INTO tb_self(mi01, mi05, mi15, used_mem, used_disk)

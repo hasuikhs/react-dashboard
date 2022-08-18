@@ -179,6 +179,7 @@ function Navbar({ onOpenSidebar }: NavbarInterface) {
           </Stack>
         </ToolbarStyle>
       </RootStyle>
+
       <UserModal
         showModal={ showModal }
         setShowModal={ setShowModal }
