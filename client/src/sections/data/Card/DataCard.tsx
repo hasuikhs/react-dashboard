@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // mui
 import { styled } from '@mui/material/styles';
 import { Card, CardContent, CardActions } from '@mui/material';
@@ -33,7 +33,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 // --------------------------------------------------------------------------------
 
-function DataCard({ data }: { data: any }) {
+function DataCard({ data, groupSeqFilter }: { data: any, groupSeqFilter: any }) {
   const [expanded, setExpanded] = useState<boolean>(false);
   const serverInfo = data.info;
   const monitoringData = data.data;
@@ -59,6 +59,10 @@ function DataCard({ data }: { data: any }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    setExpanded(false);
+  }, [groupSeqFilter]);
 
   return (
     <Card sx={{ minWidth: '300px', maxWidth: '100%', borderRadius: '5px', border: '0.5px solid lightgray' }}>
@@ -86,8 +90,8 @@ function DataCard({ data }: { data: any }) {
       </CardActions>
 
       <Collapse in={ expanded } timeout="auto" unmountOnExit>
-        <CardContent>
-          <CardChart data={ monitoringData } serverInfo={ serverInfo } />
+        <CardContent sx={{ paddingTop: 0 }}>
+          <CardChart monitoringData={ monitoringData } serverInfo={ serverInfo } />
         </CardContent>
       </Collapse>
 

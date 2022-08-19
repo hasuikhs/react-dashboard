@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+// material
+import { InputLabel, MenuItem, FormControl } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 // chart
 import {
   Chart as ChartJS,
@@ -19,27 +23,45 @@ ChartJS.register(
   annotationPlugin
 );
 
-// export const data = {
-//   labels,
-//   datasets: [
-//     {
-//       label: 'Dataset 1',
-//       data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-//       borderColor: 'rgb(255, 99, 132)',
-//       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//     },
-//     {
-//       label: 'Dataset 2',
-//       data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-//       borderColor: 'rgb(53, 162, 235)',
-//       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-//     },
-//   ],
-// };
+function CardChart({ monitoringData, serverInfo }: { monitoringData: any, serverInfo: any }) {
+  const [indicator, setIndicator] = useState('cpu');
+  const [limit, setLimit] = useState(undefined);
+  const [datasets, setDatasets] = useState<any[]>([]);
+  // const [chartData, setChartData] = useState();
 
-function CardChart({ data, serverInfo }: { data: any, serverInfo: any }) {
+  const percentLimit: number = 90;
+  const diskUsageLimit: number = 80;
 
-  const labels: string[] = data.map((item : any) => item.regDt);
+  const chartField = [
+    {
+      title: 'cpu',
+      values: [ 'cpu' ]
+    },
+    {
+      title: 'loadAvg',
+      values: [ 'mi01', 'mi05', 'mi15' ],
+      limit: serverInfo.cpuCnt
+    },
+    {
+      title: 'memory',
+      values: [ 'mem' ],
+      limit: percentLimit
+    },
+    {
+      title: 'swap',
+      values: [ 'swap' ],
+      limit: percentLimit
+    },
+    {
+      title: 'disk',
+      values: [ 'totalDisk', 'disk1', 'disk2', 'disk3' ],
+      limit: diskUsageLimit
+    }
+  ];
+
+  const colorPalette: string[] = [ '#80CBC4', '#FFCC80', '#B39DDB', '#B0BEC5' ];
+
+  const labels: string[] = monitoringData.map((item : any) => item.regDt);
 
   const options = {
     responsive: true,
@@ -53,7 +75,7 @@ function CardChart({ data, serverInfo }: { data: any, serverInfo: any }) {
       },
       annotation: {
         annotations: [{
-          value: 80,
+          value: limit,
           type: 'line' as const,
           mode: 'horizontal',
           scaleID: 'y',
@@ -71,21 +93,49 @@ function CardChart({ data, serverInfo }: { data: any, serverInfo: any }) {
     }
   }
 
-  const chartData: any[] = data.map((item: any) => item.swap);
-
   const chartConfigData = {
     labels,
-    datasets: [
-      {
-        borderColor: '#80CBC4',
-        backgroundColor: '#80CBC4',
-        data: chartData
-      }
-    ]
+    datasets
   }
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setIndicator(event.target.value);
+  }
+
+  useEffect(() => {
+    const matchRet = chartField.find((item: any) => item.title === indicator);
+
+    const chartData = matchRet?.values.map((value: string, idx: number) => ({
+      label: value,
+      data: monitoringData.map((item: any) => item?.[value]),
+      borderColor: colorPalette[idx],
+      backgroundColor: colorPalette[idx]
+    })) || [];
+
+    setLimit(matchRet?.limit);
+    setDatasets(chartData);
+  }, [ indicator ]);
+
   return (
-    <Line options={ options } data={ chartConfigData } />
+    <>
+      <FormControl sx={{ m:1, width: 110 }} size="small">
+        <InputLabel id="chart-select">Indicator</InputLabel>
+        <Select
+          labelId="chart-select"
+          value={ indicator }
+          label="Indicatddor"
+          onChange={ handleChange }
+        >
+          <MenuItem value="cpu">CPU</MenuItem>
+          <MenuItem value="loadAvg">Load Avg</MenuItem>
+          <MenuItem value="memory">Memory</MenuItem>
+          <MenuItem value="swap">Swap</MenuItem>
+          <MenuItem value="disk">Disk</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Line options={ options } data={ chartConfigData } />
+    </>
   );
 }
 

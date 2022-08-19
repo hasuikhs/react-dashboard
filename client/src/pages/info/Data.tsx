@@ -140,7 +140,7 @@ function Data(): JSX.Element {
                     {
                       cardData.map((data: any, idx: number) => (
                         <Grid key={ idx } item xs={ 4 } >
-                          <DataCard data={ data } />
+                          <DataCard data={ data } groupSeqFilter={ groupSeqFilter } />
                         </Grid>
                       ))
                     }
