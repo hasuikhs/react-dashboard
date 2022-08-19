@@ -2,7 +2,7 @@ import { useState } from 'react';
 // mui
 import { styled } from '@mui/material/styles';
 import { Card, CardContent, CardActions } from '@mui/material';
-import { Collapse, Typography } from '@mui/material';
+import { Collapse } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 // components
 import CardHeader from './CardHeader';
 import CardTable from './CardTable';
+import CardChart from './CardChart';
 
 // --------------------------------------------------------------------------------
 
@@ -86,9 +87,7 @@ function DataCard({ data }: { data: any }) {
 
       <Collapse in={ expanded } timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography>
-            test
-          </Typography>
+          <CardChart data={ monitoringData } serverInfo={ serverInfo } />
         </CardContent>
       </Collapse>
 

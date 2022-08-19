@@ -158,8 +158,8 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
                 {
                   userPw
                     ? pwRegex.test(userPw)
-                      ? <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceLaughBeam } color="#43a047"/></span>
-                      : <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceAngry } color="#e53935"/></span>
+                      ? <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceLaughBeam } color="#43A047"/></span>
+                      : <span>{ '6~10자리 사이의 영문, 숫자' } <FontAwesomeIcon icon={ faFaceAngry } color="#E53935"/></span>
                     : 'Passwords는 6~10자리 사이의 영문, 숫자입니다.'
                 }
               </Form.Text>

@@ -32,7 +32,7 @@ function ControlButtonGroup({ selectFunc, deleteFunc}: { selectFunc: MouseEventH
           onClick={ deleteFunc }
         >
           <ListItemIcon>
-            <FontAwesomeIcon icon={ faTrash } color="#ef5350" />
+            <FontAwesomeIcon icon={ faTrash } color="#EF5350" />
           </ListItemIcon>
           <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>

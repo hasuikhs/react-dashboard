@@ -11,13 +11,13 @@ import TableRow from '@mui/material/TableRow';
 const CustomTableCell = styled(TableCell)(({ theme }) => ({
   textAlign: 'right',
   paddingRight: '20px',
-  borderLeft: '3px solid #f1f3f4'
+  borderLeft: '3px solid #F1F3F4'
 }));
 
 const CellHaed = styled(TableCell)(({ theme }) => ({
   fontWeight: 'bolder',
   textAlign: 'center',
-  borderLeft: '1px solid #f1f3f4'
+  borderLeft: '1px solid #F1F3F4'
 }));
 
 // --------------------------------------------------------------------------------
