@@ -27,7 +27,6 @@ function CardChart({ monitoringData, serverInfo }: { monitoringData: any, server
   const [indicator, setIndicator] = useState('cpu');
   const [limit, setLimit] = useState(undefined);
   const [datasets, setDatasets] = useState<any[]>([]);
-  // const [chartData, setChartData] = useState();
 
   const percentLimit: number = 90;
   const diskUsageLimit: number = 80;
@@ -67,7 +66,7 @@ function CardChart({ monitoringData, serverInfo }: { monitoringData: any, server
     responsive: true,
     interaction: {
       mode: 'index' as const,
-      intersect: false,
+      intersect: false
     },
     plugins: {
       legend: {
@@ -109,11 +108,14 @@ function CardChart({ monitoringData, serverInfo }: { monitoringData: any, server
       label: value,
       data: monitoringData.map((item: any) => item?.[value]),
       borderColor: colorPalette[idx],
-      backgroundColor: colorPalette[idx]
+      backgroundColor: colorPalette[idx],
+      pointRadius: 2,
+      tension: 0.2
     })) || [];
 
     setLimit(matchRet?.limit);
     setDatasets(chartData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ indicator ]);
 
   return (

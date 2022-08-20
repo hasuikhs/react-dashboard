@@ -24,7 +24,7 @@ function App(): JSX.Element {
   // --------------------------------------------------------------------------------
 
   const Login = lazy(() => import('./pages/Login_new'));
-  const Home = lazy(() => import('./pages/Home'));
+  const Dashboard = lazy(() => import('./pages/Dashboard'));
 
   const Data = lazy(() => import('./pages/info/Data'));
   const User = lazy(() => import('./pages/info/User'));
@@ -44,7 +44,7 @@ function App(): JSX.Element {
         <Suspense fallback={ <Spinner /> }>
           <Routes>
             <Route path="/" element={ <ProtectedRoute isLogin={ authentificated.user.isLogin } /> }>
-              <Route path="/home" element={ <Home /> } />
+              <Route path="/dashboard" element={ <Dashboard /> } />
               <Route path="/data" element={ <Data /> } />
               <Route path="/user" element={ <User /> } />
               <Route path="/server" element={ <Server /> } />

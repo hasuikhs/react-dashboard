@@ -95,7 +95,7 @@ function LoginForm() {
         }
       }));
 
-      return navigate('/data');
+      return navigate('/dashboard');
     } catch (error) {
       const err = error as AxiosError;
       const errBody = err.response?.data as LoginErrorInterface;

@@ -91,10 +91,10 @@ class SelfManager implements SelfManagerInterface {
   }
 
   public async delete(): Promise<number> {
-    // 일주일 이전 데이터 삭제
+    // 하루 이전 데이터 삭제
     const sql: string = `
       DELETE FROM tb_self
-      WHERE reg_dt < DATE_ADD(NOW(), INTERVAL -6 DAY)
+      WHERE reg_dt < DATE_ADD(NOW(), INTERVAL -2 DAY)
     `;
 
     return new Promise<number>((resolve, reject) => {

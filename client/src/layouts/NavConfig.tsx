@@ -5,8 +5,8 @@ import { faCalendarCheck, faDatabase, faServer, faChartPie, faUser, faKey, faTab
 
 const navConfig = [
   {
-    title: 'dash',
-    path: '/dash',
+    title: 'dashboard',
+    path: '/dashboard',
     icon: <FontAwesomeIcon icon={ faChartPie } size="lg" />,
   },
   {

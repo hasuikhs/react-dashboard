@@ -136,10 +136,10 @@ function Data(): JSX.Element {
                   </Typography>
                 )
               : (
-                  <Grid container spacing={ 3 } sx={{ p: 2 }}>
+                  <Grid container spacing={ 3 } columns={{ xs: 12, sm: 12, md: 12 }}  sx={{ p: 2 }}>
                     {
                       cardData.map((data: any, idx: number) => (
-                        <Grid key={ idx } item xs={ 4 } >
+                        <Grid key={ idx } item xs={ 12 } sm={ 6 } md={ 4 } >
                           <DataCard data={ data } groupSeqFilter={ groupSeqFilter } />
                         </Grid>
                       ))
