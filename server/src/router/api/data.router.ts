@@ -18,4 +18,8 @@ dataRouter.get('/group/:idx([0-9]+)', async (req: Request, res: Response) => {
   return res.status(200).json( await dataManager.selectByGroupSeq(parseInt(req.params.idx), req.query.ps as string) );
 });
 
+dataRouter.get('/all', async (req: Request, res: Response) => {
+  return res.status(200).json( await dataManager.selectAll(req.query.ps as string) );
+});
+
 export default dataRouter;

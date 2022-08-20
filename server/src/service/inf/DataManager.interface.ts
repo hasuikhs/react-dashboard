@@ -7,6 +7,8 @@ interface DataManagerInterface {
 
   selectByGroupSeq(groupSeq: number, psUnixtime: string): Promise<data[]>;
 
+  selectAll(psUnixtime: string): Promise<data[]>;
+
   delete(): Promise<number>;
 }
 

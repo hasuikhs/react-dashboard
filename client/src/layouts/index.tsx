@@ -20,7 +20,7 @@ const RootStyle = styled('div')({
 const MainStyle = styled('div')(({ theme }) => ({
   flexGrow: 1,
   overflow: 'auto',
-  minHeight: '100%',
+  minHeight: '100vh',
   paddingTop: APP_BAR_MOBILE + 10,
   paddingBottom: theme.spacing(10),
   [theme.breakpoints.up('lg')]: {
@@ -30,19 +30,35 @@ const MainStyle = styled('div')(({ theme }) => ({
   }
 }));
 
+const FootStyle = styled('div')(({ theme }) => ({
+  // width: '100%',
+  display: 'flex',
+  height: '30px',
+  justifyContent: 'end',
+  fontSize: '10px',
+  padding: '6px 10px',
+  color: '#bdbdbd',
+  backgroundColor: '#f5f5f5'
+}))
+
 // --------------------------------------------------------------------------------
 
 function Layout() {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
-    <RootStyle>
-      <Navbar onOpenSidebar={ () => setOpen(true) } />
-      <Sidebar isOpenSidebar={ open } onCloseSidebar={ () => setOpen(false) } />
-      <MainStyle>
-        <Outlet />
-      </MainStyle>
-    </RootStyle>
+    <>
+      <RootStyle>
+        <Navbar onOpenSidebar={ () => setOpen(true) } />
+        <Sidebar isOpenSidebar={ open } onCloseSidebar={ () => setOpen(false) } />
+        <MainStyle>
+          <Outlet />
+        </MainStyle>
+      </RootStyle>
+      <FootStyle>
+        2022. 08
+      </FootStyle>
+    </>
   );
 }
 

@@ -95,7 +95,7 @@ function TablePagination({ pageIndex, pageCount, gotoPage, previousPage, canPrev
   // bootstrap
   // return (
   //   <>
-  //     <Pagination className="justify-content-md-center fr">
+  //     <Pagination className="fy-content-md-center fr">
   //     <Pagination.First onClick={ () => gotoPage(0) } disabled={ !canPreviousPage } />
   //       <Pagination.Prev onClick={ () => previousPage() } disabled={ !canPreviousPage } />
 

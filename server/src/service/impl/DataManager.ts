@@ -148,6 +148,55 @@ class DataManager implements DataManagerInterface {
     });
   }
 
+  public async selectAll(psUnixtime: string): Promise<data[]> {
+    const psDate = unixToDatetimeString(parseInt(psUnixtime));
+
+    const sql: string = `
+      SELECT d.*
+      FROM tb_Data d
+      LEFT JOIN tb_server s
+      on d.server_seq = s.seq
+      WHERE d.reg_dt >= ?
+      ORDER BY d.reg_dt
+    `;
+    const params: string[] = [ psDate ];
+
+    return new Promise<data[]>((resolve, reject) => {
+      this._conn.getConnection((connErr, conn) => {
+        if (connErr) reject(new Error(`Connection pool error. cause: ${ connErr }`));
+
+        conn.query(sql, params, (err, rows) => {
+          if (err) reject(new Error(`DataManager selectByGroupSeq error. cause: ${ err }`));
+
+          const dataList: data[] = [];
+          if (rows.length) {
+            for (const row of rows) {
+              dataList.push({
+                serverSeq: row.server_seq,
+                cpu: row.cpu,
+                mi01: row.mi01,
+                mi05: row.mi05,
+                mi15: row.mi15,
+                mem: row.mem,
+                swap: row.swap,
+                totalDisk: row.total_disk,
+                disk1: row.disk1,
+                disk2: row.disk2,
+                disk3: row.disk3,
+                regDt: row.reg_dt
+              });
+            }
+          }
+
+          resolve(dataList);
+        });
+
+        // return connection pool
+        conn.release();
+      });
+    });
+  }
+
   public async delete(): Promise<number> {
     // 일주일 이전 데이터 삭제
     const sql: string = `

@@ -19,17 +19,27 @@ selfRouter.get('/spec', async (req: Request, res: Response) => {
 
   const checkedDisk = await checkDiskSpace('/');
 
+  const ip: string = os.networkInterfaces().en0?.[1].address || '';
   const cpu: number = os.cpus().length;
   const mem: number = Math.round(os.totalmem() / UNIT_MB * 1_000) / 1_000;
   const disk: number = Math.round(checkedDisk.size / UNIT_MB * 1_000) / 1_000;
 
-  return res.status(200).json({ cpu, mem, disk });
+  return res.status(200).json({ ip, cpu, mem, disk });
 });
 
 selfRouter.get('/status-real', async (req: Request, res: Response) => {
 
   const checkedDisk = await checkDiskSpace('/');
 
+  const totalMem: number = Math.round(os.totalmem() / UNIT_MB * 1_000) / 1_000;
+  const freeMem: number = Math.round(os.freemem() / UNIT_MB * 1_000) / 1_000;
+  const usedMem: number = totalMem - freeMem;
+
+  const totalDisk: number = Math.round(checkedDisk.size / UNIT_MB * 1_000) / 1_000;
+  const freeDisk: number = Math.round(checkedDisk.free / UNIT_MB * 1_000) / 1_000;
+  const usedDisk: number = totalDisk - freeDisk;
+
+  return res.status(200).json({ mem: { usedMem, freeMem }, disk: { usedDisk, freeDisk } });
 });
 
 selfRouter.get('/status', async (req: Request, res: Response) => {
