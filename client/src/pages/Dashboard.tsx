@@ -8,6 +8,7 @@ import { faChartPie } from '@fortawesome/free-solid-svg-icons';
 import Page from '../components/Page';
 import LoadAverageChart from '../sections/dashboard/LoadAverageChart';
 import { MemoryChart, DiskChart } from '../sections/dashboard/MemoryDiskChart';
+import ScoreCardGroup from '../sections/dashboard/ScoreCardGroup';
 import { requestAPI } from '../common/API';
 
 function Dashboard(): JSX.Element {
@@ -39,29 +40,33 @@ function Dashboard(): JSX.Element {
               크롤링 서버{ `(${ serverInfo?.ip })` }의 상태와 문제가 있는 서버의 정보를 가져옵니다.
             </Alert>
           </Typography>
-
         </Stack>
 
-        <Grid container spacing={ 3 } columns={{ xs: 12, sm: 12, md: 12 }}>
+        <Stack direction="row">
+          <Grid container spacing={ 3 } columns={{ xs: 12, sm: 12, md: 12 }}>
 
-          <Grid item xs={ 12 } sm={ 12 } md={ 9 } >
-            <Card sx={{ p: 2, height: 505 }}>
-              <LoadAverageChart serverInfo={ serverInfo } />
-            </Card>
-          </Grid>
+            <ScoreCardGroup />
 
-          <Grid item xs={ 12 } sm={ 12 } md={ 3 } >
-            <Stack spacing={ 3 }>
-              <Card sx={{ p: 1.5, height: 240 }}>
-                <MemoryChart />
+            <Grid item xs={ 12 } sm={ 12 } md={ 9 } >
+              <Card sx={{ p: 2, height: 505 }}>
+                <LoadAverageChart serverInfo={ serverInfo } />
               </Card>
+            </Grid>
 
-              <Card sx={{ p: 1.5, height: 240 }}>
-                <DiskChart />
-              </Card>
-            </Stack>
+            <Grid item xs={ 12 } sm={ 12 } md={ 3 } >
+              <Stack spacing={ 3 }>
+                <Card sx={{ p: 1.5, height: 240 }}>
+                  <MemoryChart />
+                </Card>
+
+                <Card sx={{ p: 1.5, height: 240 }}>
+                  <DiskChart />
+                </Card>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
+        </Stack>
+
 
       </Container>
     </Page>
