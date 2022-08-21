@@ -38,8 +38,8 @@ const FootStyle = styled('div')(({ theme }) => ({
   fontSize: '10px',
   padding: '6px 10px',
   color: '#bdbdbd',
-  backgroundColor: '#f5f5f5'
-}))
+  backgroundColor: 'rgba(245, 245, 245, 0.4)'
+}));
 
 // --------------------------------------------------------------------------------
 

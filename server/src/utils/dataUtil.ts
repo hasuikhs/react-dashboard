@@ -4,7 +4,7 @@ import fs from 'fs';
 import axios from 'axios';
 import { data, license, server } from '../domain';
 import { Crawler, LicenseManager, ServerManager } from '../service/impl';
-import { dateToStringFormat, unixToDatetimeString } from './common';
+import { dateToStringFormat } from './common';
 
 // --------------------------------------------------------------------------------
 
