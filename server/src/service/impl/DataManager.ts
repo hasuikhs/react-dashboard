@@ -153,7 +153,7 @@ class DataManager implements DataManagerInterface {
 
     const sql: string = `
       SELECT d.*
-      FROM tb_Data d
+      FROM tb_data d
       LEFT JOIN tb_server s
       on d.server_seq = s.seq
       WHERE d.reg_dt >= ?
