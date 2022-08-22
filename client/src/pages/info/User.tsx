@@ -96,7 +96,7 @@ function User(): JSX.Element {
       confirmButtonText: '확인',
       showCancelButton: true,
       cancelButtonText: '취소'
-    }).then( async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         // 2차 확인
         Swal.fire({
