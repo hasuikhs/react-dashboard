@@ -2,7 +2,7 @@ import os from 'os';
 
 describe('Test dataManager methods.', () => {
 
-  it('test', async () => {
+  it.skip('test', async () => {
 
     console.log(new Date().getTime())
     // let ret = await getNCPToken();

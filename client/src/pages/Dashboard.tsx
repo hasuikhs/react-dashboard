@@ -36,16 +36,25 @@ function Dashboard(): JSX.Element {
           <Typography variant="h4" gutterBottom>
             <FontAwesomeIcon icon={ faChartPie } style={{ marginRight: '10px' }} />
             Dashboard
-            <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
-              크롤링 서버{ `(${ serverInfo?.ip })` }의 상태와 문제가 있는 서버의 정보를 가져옵니다.
-            </Alert>
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <Grid container spacing={ 3 } columns={{ xs: 12, sm: 12, md: 12 }}>
 
+            <Grid item md={ 12 }>
+              <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+                모든 서버의 정보입니다. 카드에 마우스 오버시 서버 목록이 나타납니다.
+              </Alert>
+            </Grid>
+
             <ScoreCardGroup />
+
+            <Grid item md={ 12 }>
+              <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
+                크롤링 서버{ `(${ serverInfo?.ip })` }의 Load average, memory, disk 정보를 가져옵니다.
+              </Alert>
+            </Grid>
 
             <Grid item xs={ 12 } sm={ 12 } md={ 9 } >
               <Card sx={{ p: 2, height: 505 }}>

@@ -18,8 +18,9 @@ selfRouter.use((req: Request, res: Response, next: NextFunction) => {
 selfRouter.get('/spec', async (req: Request, res: Response) => {
 
   const checkedDisk = await checkDiskSpace('/');
+  const network = os.networkInterfaces();
 
-  const ip: string = os.networkInterfaces().en0?.[1].address || '';
+  const ip: string = network.en0?.[1].address || network.eth0?.[0].address || '';
   const cpu: number = os.cpus().length;
   const mem: number = Math.round(os.totalmem() / UNIT_MB * 1_000) / 1_000;
   const disk: number = Math.round(checkedDisk.size / UNIT_MB * 1_000) / 1_000;

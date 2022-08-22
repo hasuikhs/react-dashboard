@@ -71,6 +71,7 @@ function CardHeader({ serverInfo, monitoringData, overData }: { serverInfo: any,
 
     let curDay: string = '';
     let time: string[] = [];
+
     for (let i = 0, len = datetime.length; i < len; i++) {
 
       let curDatetime = datetime[i].split(' ');

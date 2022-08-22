@@ -37,7 +37,7 @@ const FootStyle = styled('div')(({ theme }) => ({
   justifyContent: 'end',
   fontSize: '10px',
   padding: '6px 10px',
-  color: '#bdbdbd',
+  color: '#EAEAEA',
   backgroundColor: 'rgba(245, 245, 245, 0.4)'
 }));
 
