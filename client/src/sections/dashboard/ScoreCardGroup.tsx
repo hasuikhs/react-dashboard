@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 // material
 import { Typography, Alert, Grid, Card } from '@mui/material';
+// components
+import CardPopover from './CardPopover';
 // utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
@@ -68,49 +70,15 @@ function ScoreCardGroup() {
 
   return (
     <>
-    {
-      observeMetric.map((metric: string, idx: number) => {
-
-        const cnt: number = cardData.find((item: any) => item.metric === metric)?.data.length || 0;
-
-        return (
-          <Grid key={ idx } item xs={ 6 } sm={ 3 } md={ 1.5 }>
-            <Card sx={{ p: 2, backgroundColor: cnt > 0 ? 'rgb(250, 232, 229)' : 'rgb(255, 255, 255)' }}>
-              <Typography variant="overline">
-                { metric }
-              </Typography>
-              <Typography variant="h3" align="center">
-                { cnt }
-              </Typography>
-            </Card>
-          </Grid>
-        )
-      })
-    }
-      {/* <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid>
-      <Grid item xs={ 6 } sm={ 3 } md={ 1.5 }>
-        <Card> 1</Card>
-      </Grid> */}
+      {
+        observeMetric.map((metric: string, idx: number) => {
+          return (
+            <Grid key={ idx } item xs={ 6 } sm={ 3 } md={ 1.5 } >
+              <CardPopover data={ cardData } metric={ metric } />
+            </Grid>
+          );
+        })
+      }
     </>
   );
 }

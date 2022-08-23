@@ -40,8 +40,8 @@ function SheetList(): JSX.Element {
   return sheetData.length > 0
     ? ( <CustomList sx={{ float: 'right' }} >
           {
-            sheetData.map((sheet: any) => (
-              <ListItem disablePadding>
+            sheetData.map((sheet: any, idx: number) => (
+              <ListItem key={ idx } disablePadding>
                 <ListItemButton sx={{ height: '38px' }} target="_blank" href={ sheet.sheetUrl } >
                   <ListItemText primary={ sheet.sheetNm } />
                 </ListItemButton>

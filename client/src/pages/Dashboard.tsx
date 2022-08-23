@@ -44,7 +44,7 @@ function Dashboard(): JSX.Element {
 
             <Grid item md={ 12 }>
               <Alert severity="info" security='' sx={{ backgroundColor: 'transparent' }}>
-                모든 서버의 정보입니다. 카드에 마우스 오버시 서버 목록이 나타납니다.
+                모든 서버의 정보입니다. 카드에 마우스를 올리면 서버 목록이 나타납니다.
               </Alert>
             </Grid>
 
