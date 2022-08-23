@@ -72,7 +72,7 @@ function GroupModal({ showModal, setShowModal, modalData, setModalData, updateLi
   return (
     <Modal show={ showModal } onHide={ closeModal } backdrop="static" keyboard={ false }>
       <Modal.Header closeButton>
-        <Modal.Title><FontAwesomeIcon icon={ faUserGroup } />GROUP</Modal.Title>
+        <Modal.Title><FontAwesomeIcon icon={ faUserGroup } /> GROUP</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>

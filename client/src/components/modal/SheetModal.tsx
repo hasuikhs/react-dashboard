@@ -85,7 +85,7 @@ function SheetModal({ showModal, setShowModal, modalData, setModalData, updateLi
   return (
     <Modal show={ showModal } onHide={ closeModal } backdrop="static" keyboard={ false }>
       <Modal.Header closeButton>
-        <Modal.Title><FontAwesomeIcon icon={ faTableList } />GROUP</Modal.Title>
+        <Modal.Title><FontAwesomeIcon icon={ faTableList } /> SHEET</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
