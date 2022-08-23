@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Swal from 'sweetalert2';
 // material
-import { Container, Card, Stack, Typography, Button, Alert } from '@mui/material';
+import { Container, Card, Stack, Typography, Button, Alert, Link } from '@mui/material';
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTableList } from '@fortawesome/free-solid-svg-icons';
@@ -13,8 +13,6 @@ import Page from '../../components/Page';
 // utils
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
-
-import { Link } from 'react-router-dom';
 
 // --------------------------------------------------------------------------------
 
@@ -34,7 +32,8 @@ function Sheet(): JSX.Element {
     },
     {
       Header: '시트명',
-      Cell: ({ row }: any) => <Link to={ row.original.sheetUrl }>{ row.original.sheetNm }</Link>
+      accessor: 'sheetNm',
+      Cell: ({ row }: any) => <Link href={ row.original.sheetUrl } target="_blank" rel="noopener">{ row.original.sheetNm }</Link>
     },
     {
       Header: '등록 시간',
