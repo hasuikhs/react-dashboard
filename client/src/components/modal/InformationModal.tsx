@@ -21,6 +21,7 @@ function InformationModal() {
   }
 
   const closeModal = () => {
+    setActiveStep(0);
     setShowModal(false);
   }
 
@@ -72,14 +73,14 @@ function InformationModal() {
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',  pt: 2 }}>
             <Button
-              variant="light"
+              variant="link"
               disabled={ activeStep === 0 }
               onClick={ handleBack }
             >
               뒤로
             </Button>
             <Button
-              variant="light"
+              variant="link"
               disabled={ activeStep === steps.length - 1 }
               onClick={ handleNext }
             >
