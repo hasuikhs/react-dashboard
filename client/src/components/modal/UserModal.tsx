@@ -146,7 +146,7 @@ function UserModal({ showModal, setShowModal, modalData, setModalData, updateLis
                 type="password"
                 placeholder={ 
                   userSeq
-                    ? '입력할 경우 Password가 수정됩니다.'
+                    ? '입력할 경우 Password를 수정할 수 있습니다.'
                     : 'Password를 입력해주세요.'
                 }
                 value={ userPw }

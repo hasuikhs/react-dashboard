@@ -9,6 +9,7 @@ import { faPlus, faServer } from '@fortawesome/free-solid-svg-icons';
 // components
 import UpdateSwitch from '../../components/UpdateSwitch';
 import ControlButtonGroup from '../../components/ControlButtonGroup';
+import InformationModal from '../../components/modal/InformationModal';
 import ServerModal from '../../components/modal/ServerModal';
 import ReactTable from '../../components/table/ReactTable';
 import Page from '../../components/Page';
@@ -87,7 +88,9 @@ function Server(): JSX.Element {
     {
       Header: '서버 ID',
       accessor: 'serverId',
-      Cell: ({ value }: any) => <div className="tc">{ value }</div>
+      Cell: ({ value }: any) => {
+        return <div className="tc">{ value }</div>
+      }
     },
     {
       Header: 'CPU',
@@ -292,13 +295,16 @@ function Server(): JSX.Element {
               관리 중인 서버 목록입니다.
             </Alert>
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
-            onClick={ () => setShowModal(true) }
-          >
-            New Server
-          </Button>
+          <Stack>
+            <Button
+              variant="contained"
+              startIcon={ <FontAwesomeIcon icon={ faPlus } /> }
+              onClick={ () => setShowModal(true) }
+            >
+              New Server
+            </Button>
+            <InformationModal />
+          </Stack>
         </Stack>
 
         <Card>
