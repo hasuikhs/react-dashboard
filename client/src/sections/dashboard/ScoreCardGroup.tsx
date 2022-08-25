@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 // material
-import { Typography, Alert, Grid, Card } from '@mui/material';
+import { Grid } from '@mui/material';
 // components
 import CardPopover from './CardPopover';
 // utils
 import { requestAPI } from '../../common/API';
-import { toDatetimeFormat } from '../../common/DateFormat';
 
 function ScoreCardGroup() {
   const [cardData, setCardData] = useState<any[]>([]);
@@ -66,6 +65,7 @@ function ScoreCardGroup() {
 
   useEffect(() => {
     getAllServerData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
