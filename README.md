@@ -1,4 +1,4 @@
-# ts-react-board
+# react-dashboard
 
 - `.env`
   - jwt 토큰 생성
