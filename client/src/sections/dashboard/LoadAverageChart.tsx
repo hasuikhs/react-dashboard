@@ -16,7 +16,7 @@ import { Line } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { requestAPI } from '../../common/API';
 // utils
-import { toDatetimeFormat } from '../../common/DateFormat';
+import { toDatetimeFormat } from '../../common/Date';
 
 ChartJS.register(
   CategoryScale,

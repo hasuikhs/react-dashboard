@@ -1,13 +1,13 @@
 import { styled } from '@mui/material/styles';
 
-import { Card, Container, Typography } from '@mui/material';
+import { Alert, Card, Container, Typography } from '@mui/material';
 
 import Page from '../components/Page';
 
 import LoginForm from '../sections/auth/LoginForm';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { toDateFormat } from '../common/DateFormat';
+import { toDateFormat } from '../common/Date';
 
 // --------------------------------------------------------------------------------
 
@@ -16,22 +16,6 @@ const RootStyle = styled('div')(({ theme }) => ({
     display: 'flex',
   },
 }));
-
-// const HeaderStyle = styled('header')(({ theme }) => ({
-//   top: 0,
-//   zIndex: 9,
-//   lineHeight: 0,
-//   width: '100%',
-//   display: 'flex',
-//   alignItems: 'center',
-//   position: 'absolute',
-//   padding: theme.spacing(3),
-//   justifyContent: 'space-between',
-//   [theme.breakpoints.up('md')]: {
-//     alignItems: 'flex-start',
-//     padding: theme.spacing(7, 5, 0, 7),
-//   },
-// }));
 
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -58,16 +42,16 @@ function Login() {
 
   useEffect(() => {
     // notice
-    if (toDateFormat(new Date().toString()) <= '2022-11-18') {
+    if (toDateFormat(new Date().toString()) <= '2022-11-17') {
       Swal.fire({
         title: 'Note',
         html: `
           <p class="tl"><strong>1. busan-web01, media</strong></p>
           <p class="tl">&nbsp;&nbsp;- disk가 모두 0인 현상</p>
           <p class="tl">&nbsp;&nbsp;- 데이터 복사시 xvda2 데이터를 xvda1으로 복사</p>
-          <p class="tl"><strong>2. 위 부분으로 인해 DB 내 tb_data 컬럼 disk4, 5, 6 추가</strong></p>
+          <p class="tl"><strong>2. DB 내 tb_data 컬럼 disk4, 5, 6 추가</strong></p>
           <p class="tl">&nbsp;&nbsp;- 순서대로 /dev/xvda2, /dev/xvdb2, /dev/xvdc2</p>
-          <p class="tl fs12 color-gray">* 본 Note는 금요일(11-18)까지 노출됩니다.</p>
+          <p class="tl fs12 color-gray">* Note는 2일간 보여집니다.</p>
         `,
         confirmButtonText: '확인'
       });
@@ -90,6 +74,9 @@ function Login() {
             </Typography>
 
             <LoginForm />
+            <Alert severity="warning" sx={{ mt: 3 }} >
+              본 서비스는 로그인 인증 문제로 언제든 <span className="color-red">중단</span> 가능합니다.
+            </Alert>
           </ContentStyle>
         </Container>
       </RootStyle>

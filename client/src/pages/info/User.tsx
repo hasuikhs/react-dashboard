@@ -12,7 +12,7 @@ import ReactTable from '../../components/table/ReactTable';
 import Page from '../../components/Page';
 // utils
 import { requestAPI } from '../../common/API';
-import { toDatetimeFormat } from '../../common/DateFormat';
+import { toDatetimeFormat } from '../../common/Date';
 
 // --------------------------------------------------------------------------------
 

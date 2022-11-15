@@ -11,7 +11,7 @@ import DataCard from '../../sections/data/Card/DataCard';
 import SheetList from '../../sections/data/SheetList';
 // utils
 import { requestAPI } from '../../common/API';
-import { toDatetimeFormat } from '../../common/DateFormat';
+import { toDatetimeFormat, setCheckedData, getCheckedData } from '../../common/Date';
 
 import Swal from 'sweetalert2';
 
@@ -91,13 +91,17 @@ function Data(): JSX.Element {
   useEffect(() => {
     getGroupOptions();
 
-    if (!localStorage.getItem('checked')) {
+    if (getCheckedData()) {
       Swal.fire({
-        html: '단순 복사 & 붙여넣기가 아닌 데이터를 확인하시고<br>이상 있을시 담당자에게 문의 바랍니다.',
+        html: '단순 복사 & 붙여넣기가 아닌 <strong class="color-red">데이터를 확인</strong>하고<br>이상 있을시 담당자에게 문의 바랍니다.',
         icon: 'warning',
+        showDenyButton: true,
+        denyButtonText: '30일간 열지 않기',
+        denyButtonColor: '#F15F5F',
         confirmButtonText: '확인',
-        didClose: () => {
-          localStorage.setItem('checked', 'ok');
+      }).then(result => {
+        if (result.isDenied) {
+          setCheckedData(true);
         }
       });
     }
