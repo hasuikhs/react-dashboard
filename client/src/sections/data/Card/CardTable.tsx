@@ -78,7 +78,7 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
 
 
           <TableRow>
-            <CellHaed rowSpan={ 4 }>Disk <br></br> disk1: ({ serverInfo.disk1 }GB) <br></br> disk2: ({ serverInfo.disk2 }GB)</CellHaed>
+            <CellHaed rowSpan={ 5 }>Disk <br></br> disk1: ({ serverInfo.disk1 }GB) <br></br> disk2: ({ serverInfo.disk2 }GB)</CellHaed>
             <CellHaed>total</CellHaed>
             <CustomTableCell
               sx={{ color: (presentData?.totalDisk || 0) > diskUsageLimit ? 'red' : 'black' }}
@@ -108,6 +108,14 @@ function CardTable({ serverInfo, monitoringData, overData }: { serverInfo: any, 
               sx={{ color: (presentData?.disk3 || 0) > diskUsageLimit ? 'red' : 'black' }}
             >
               { (presentData?.disk3 || 0).toFixed(2) } %
+            </CustomTableCell>
+          </TableRow>
+          <TableRow>
+            <CellHaed>xvda2</CellHaed>
+            <CustomTableCell
+              sx={{ color: (presentData?.disk4 || 0) > diskUsageLimit ? 'red' : 'black' }}
+            >
+              { (presentData?.disk4 || 0).toFixed(2) } %
             </CustomTableCell>
           </TableRow>
 

@@ -11,6 +11,9 @@ interface data {
   disk1: number;
   disk2: number;
   disk3: number;
+  disk4: number;
+  disk5: number;
+  disk6: number;
   regDt?: Date;
 }
 

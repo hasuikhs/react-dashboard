@@ -42,7 +42,7 @@ function DataCard({ data, groupSeqFilter }: { data: any, groupSeqFilter: any }) 
   const percentLimit: number = 90;
   const diskUsageLimit: number = 80;
 
-  const observeMetric: string[] = ['mi01', 'mi05', 'mi15', 'mem', 'swap', 'totalDisk', 'disk1', 'disk2', 'disk3'];
+  const observeMetric: string[] = ['mi01', 'mi05', 'mi15', 'mem', 'swap', 'totalDisk', 'disk1', 'disk2', 'disk3', 'disk4'];
 
   const overData = observeMetric.reduce((obj: any, cur) => {
     if (cur.includes('mi')) {

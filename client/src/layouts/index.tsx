@@ -37,7 +37,7 @@ const FootStyle = styled('div')(({ theme }) => ({
   justifyContent: 'end',
   fontSize: '10px',
   padding: '6px 10px',
-  color: '#EAEAEA',
+  color: '#D5D5D5',
   backgroundColor: 'rgba(245, 245, 245, 0.4)'
 }));
 
@@ -56,7 +56,7 @@ function Layout() {
         </MainStyle>
       </RootStyle>
       <FootStyle>
-        2022. 08
+        2022. 11
       </FootStyle>
     </>
   );

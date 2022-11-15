@@ -23,7 +23,7 @@ function App(): JSX.Element {
 
   // --------------------------------------------------------------------------------
 
-  const Login = lazy(() => import('./pages/Login_new'));
+  const Login = lazy(() => import('./pages/Login'));
   const Dashboard = lazy(() => import('./pages/Dashboard'));
 
   const Data = lazy(() => import('./pages/info/Data'));

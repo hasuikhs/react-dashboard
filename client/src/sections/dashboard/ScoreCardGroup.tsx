@@ -8,7 +8,7 @@ import { requestAPI } from '../../common/API';
 
 function ScoreCardGroup() {
   const [cardData, setCardData] = useState<any[]>([]);
-  const observeMetric: string[] = ['mi01', 'mi05', 'mi15', 'mem', 'swap', 'disk1', 'disk2', 'disk3'];
+  const observeMetric: string[] = ['mi01', 'mi05', 'mi15', 'mem', 'swap', 'disk1', 'disk2', 'disk3', 'disk4'];
 
   const getAllServerData = async () => {
     // 조회 시점으로부터 1일 전
@@ -73,7 +73,7 @@ function ScoreCardGroup() {
       {
         observeMetric.map((metric: string, idx: number) => {
           return (
-            <Grid key={ idx } item xs={ 6 } sm={ 3 } md={ 1.5 } >
+            <Grid key={ idx } item xs={ 6 } sm={ 3 } md={ 1.33 } >
               <CardPopover data={ cardData } metric={ metric } />
             </Grid>
           );

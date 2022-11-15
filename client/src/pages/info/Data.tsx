@@ -13,6 +13,8 @@ import SheetList from '../../sections/data/SheetList';
 import { requestAPI } from '../../common/API';
 import { toDatetimeFormat } from '../../common/DateFormat';
 
+import Swal from 'sweetalert2';
+
 // --------------------------------------------------------------------------------
 
 const groupSelectStyles: StylesConfig = {
@@ -88,6 +90,17 @@ function Data(): JSX.Element {
   // 최초 랜더링
   useEffect(() => {
     getGroupOptions();
+
+    if (!localStorage.getItem('checked')) {
+      Swal.fire({
+        html: '단순 복사 & 붙여넣기가 아닌 데이터를 확인하시고<br>이상 있을시 담당자에게 문의 바랍니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        didClose: () => {
+          localStorage.setItem('checked', 'ok');
+        }
+      });
+    }
   }, []);
 
   // 필터 선택

@@ -27,7 +27,7 @@ function CardHeader({ serverInfo, monitoringData, overData }: { serverInfo: any,
   let note: string[] = [];
   let monitorResult: string[] = [];
 
-  let disk1: string = `${ presentData?.disk1 || 0 }%`;
+  let disk1: string = `${ presentData?.disk1 || presentData?.disk4 || 0 }%`;
   let disk2: string = `${ presentData?.disk2 || presentData?.disk3 || '' }%`;
   if (disk2.length === 1) disk2 = '';
 

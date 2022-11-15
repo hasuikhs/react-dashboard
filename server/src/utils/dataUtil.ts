@@ -22,8 +22,11 @@ const metricInfo: string[] = [
 
 const fileSystem: string[] = [
   '/dev/xvda1',
+  '/dev/xvda2',
   '/dev/xvdb1',
-  '/dev/xvdc1'
+  '/dev/xvdb2',
+  '/dev/xvdc1',
+  '/dev/xvdc2'
 ];
 
 // --------------------------------------------------------------------------------
@@ -106,7 +109,10 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
     totalDisk: 0,
     disk1: 0,
     disk2: 0,
-    disk3: 0
+    disk3: 0,
+    disk4: 0,
+    disk5: 0,
+    disk6: 0
   };
 
   // parsing
@@ -154,6 +160,15 @@ async function getMonitoringData(server: server, token?: string): Promise<data> 
         break;
       case '/dev/xvdc1':
         tgtData.disk3 = Math.round(parseFloat(findData?.usedPer || 0) * 100) / 100;
+        break;
+      case '/dev/xvda2':
+        tgtData.disk4 = Math.round(parseFloat(findData?.usedPer || 0) * 100) / 100;
+        break;
+      case '/dev/xvdb2':
+        tgtData.disk5 = Math.round(parseFloat(findData?.usedPer || 0) * 100) / 100;
+        break;
+      case '/dev/xvdc2':
+        tgtData.disk6 = Math.round(parseFloat(findData?.usedPer || 0) * 100) / 100;
         break;
       default:
         break;

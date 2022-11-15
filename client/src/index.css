@@ -26,4 +26,6 @@ code {
 .fl { float: left !important; }
 .fr { float: right !important; }
 
+.fs12 { font-size: 14px;}
+
 .color-gray { color: gray; }

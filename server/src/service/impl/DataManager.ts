@@ -16,11 +16,11 @@ class DataManager implements DataManagerInterface {
 
   public async insert(data: data[]): Promise<number> {
     const sql: string = `
-      INSERT INTO tb_data(server_seq, cpu, mi01, mi05, mi15, mem, swap, total_disk, disk1, disk2, disk3)
+      INSERT INTO tb_data(server_seq, cpu, mi01, mi05, mi15, mem, swap, total_disk, disk1, disk2, disk3, disk4, disk5, disk6)
       VALUES ?
     `;
 
-    const values: number[][] = data.map(item => ([
+    const values: number[][] = data.map((item: data) => ([
       item.serverSeq,
       item.cpu,
       item.mi01,
@@ -31,7 +31,10 @@ class DataManager implements DataManagerInterface {
       item.totalDisk,
       item.disk1,
       item.disk2,
-      item.disk3
+      item.disk3,
+      item.disk4,
+      item.disk5,
+      item.disk6
     ]));
 
     return new Promise<number>((resolve, reject) => {
@@ -84,6 +87,9 @@ class DataManager implements DataManagerInterface {
                 disk1: row.disk1,
                 disk2: row.disk2,
                 disk3: row.disk3,
+                disk4: row.disk4,
+                disk5: row.disk5,
+                disk6: row.disk6,
                 regDt: row.reg_dt
               });
             }
@@ -134,6 +140,9 @@ class DataManager implements DataManagerInterface {
                 disk1: row.disk1,
                 disk2: row.disk2,
                 disk3: row.disk3,
+                disk4: row.disk4,
+                disk5: row.disk5,
+                disk6: row.disk6,
                 regDt: row.reg_dt
               });
             }
@@ -183,6 +192,9 @@ class DataManager implements DataManagerInterface {
                 disk1: row.disk1,
                 disk2: row.disk2,
                 disk3: row.disk3,
+                disk4: row.disk4,
+                disk5: row.disk5,
+                disk6: row.disk6,
                 regDt: row.reg_dt
               });
             }

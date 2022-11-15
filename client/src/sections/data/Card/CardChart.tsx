@@ -53,7 +53,7 @@ function CardChart({ monitoringData, serverInfo }: { monitoringData: any, server
     },
     {
       title: 'disk',
-      values: [ 'totalDisk', 'disk1', 'disk2', 'disk3' ],
+      values: [ 'totalDisk', 'disk1', 'disk2', 'disk3', 'disk4' ],
       limit: diskUsageLimit
     }
   ];
