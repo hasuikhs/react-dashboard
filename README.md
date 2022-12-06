@@ -7,7 +7,7 @@
 - 서버 ID를 가져오는 방법은 잘 모르기 때문에 서버 ID를 가져오는 가이드라인 필요
 
 ### 2. 기술 스택
-- **FrontEnd** : `React` `TypeScript` `Redux` `Material UI`
+- **FrontEnd** : `React` `TypeScript` `Redux` `Material UI` `stlyed-components`
 - **BackEnd** : `Express` `TypeScript`
 - **DB** : `MySQL`
 
