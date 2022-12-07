@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
 // material
 import { styled, alpha } from '@mui/material/styles';

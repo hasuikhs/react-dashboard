@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // material
 import { Typography, Card, Popover, CardActionArea } from '@mui/material';
 // components

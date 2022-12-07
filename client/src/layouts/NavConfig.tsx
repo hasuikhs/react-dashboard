@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarCheck, faDatabase, faServer, faChartPie, faUser, faKey, faTableList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faServer, faChartPie, faUser, faKey, faTableList, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 

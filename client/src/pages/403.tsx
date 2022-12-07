@@ -1,7 +1,24 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './css/error.module.css';
+import styled from 'styled-components';
+
+import { Button } from 'react-bootstrap';
 
 import Page from '../components/Page';
+
+const ErrorDiv = styled.div`
+  margin-top: 10%;
+  padding: 40px 15px;
+  text-align: center;
+`;
+
+const ErrorActionDiv = styled.div`
+  margin-top:15px;
+  margin-bottom:15px;
+`;
+
+const TextDiv = styled.div`
+  margin-top: 20px;
+`;
 
 function NotFound(): JSX.Element {
 
@@ -11,20 +28,21 @@ function NotFound(): JSX.Element {
     <Page title="403">
       <div className="row">
         <div className="col-md-12">
-          <div className={ styles['error-template'] }>
-            <h2>403 Forbidden</h2>
-            <div className="error-details">
-              죄송합니다. 권한이 없습니다.
-            </div>
-            <div className={ styles['error-actions'] }>
-              <button 
+          <ErrorDiv>
+            <TextDiv>
+              <h2>403 Forbidden</h2>
+              <div>
+                죄송합니다. 권한이 없습니다.
+              </div>
+            </TextDiv>
+            <ErrorActionDiv>
+              <Button 
                 onClick={ () => navigate('/login') }
-                className="btn btn-primary btn-md"
               >
                 로그인 하기
-              </button>
-            </div>
-          </div>
+              </Button>
+            </ErrorActionDiv>
+          </ErrorDiv>
         </div>
       </div>
     </Page>

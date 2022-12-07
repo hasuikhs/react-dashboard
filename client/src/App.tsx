@@ -12,6 +12,7 @@ import API from './common/API';
 import Spinner from './components/spinner/Spinner';
 
 import ThemeProvider from './theme';
+import GlobalStyles from './style/global';
 
 // --------------------------------------------------------------------------------
 
@@ -40,6 +41,7 @@ function App(): JSX.Element {
 
   return (
     <ThemeProvider>
+      <GlobalStyles />
       <div className="app">
         <Suspense fallback={ <Spinner /> }>
           <Routes>
