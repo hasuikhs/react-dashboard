@@ -1,4 +1,4 @@
-# ts-react-board
+# react-dashboard
 
 ### 1. 목표
 - 관리 안되는 스프링 코드를 `React` `Express`로 변경
